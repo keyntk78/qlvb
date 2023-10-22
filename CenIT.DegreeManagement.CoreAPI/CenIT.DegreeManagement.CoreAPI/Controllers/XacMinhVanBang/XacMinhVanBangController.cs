@@ -289,10 +289,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
 
         [HttpPost("DeleteImport")]
         [AllowAnonymous]
-        public async Task<IActionResult> DeleteImport(string idTruong, string nguoiThucHien,string idDanhMucTotNghiep)
+        public async Task<IActionResult> DeleteImport(string nguoiThucHien)
         {
 
-            var response = await _hocSinhTmpCl.Delete(idTruong, nguoiThucHien, idDanhMucTotNghiep);
+            var response = await _hocSinhTmpCl.Delete(idTruong);
             if (response == (int)HocSinhEnum.Fail)
                 return ResponseHelper.BadRequest("Xóa Thất BẠI");
             return ResponseHelper.Success("Xóa thành công");

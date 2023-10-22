@@ -63,9 +63,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
             return result;
         }
 
-        public async Task<int> Delete(string idTruong, string nguoiThucHien, string idDanhMucTotNghiep)
+        public async Task<int> Delete(string nguoiThucHien)
         {
-            var result = await _BL.DeleteImport(idTruong, nguoiThucHien, idDanhMucTotNghiep);
+            var result = await _BL.DeleteImport(nguoiThucHien);
             if (result > 0)
             {
                 // Invalidate the cache

@@ -148,7 +148,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
             return thongKe;
         }
 
-        public async Task<int> DeleteImport(string idTruong, string nguoiThucHien, string idDanhMucTotNghiep)
+        public async Task<int> DeleteImport(string nguoiThucHien)
         {
             try
             {
@@ -156,9 +156,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
 
                 var filters = new List<FilterDefinition<HocSinhTmpModel>>
                 {
-                    filterBuilder.Eq("IdTruong", idTruong),
                     filterBuilder.Eq("NguoiTao", nguoiThucHien),
-                    filterBuilder.Eq("IdDanhMucTotNghiep", idDanhMucTotNghiep),
                 };
                 filters.RemoveAll(filter => filter == null);
 
