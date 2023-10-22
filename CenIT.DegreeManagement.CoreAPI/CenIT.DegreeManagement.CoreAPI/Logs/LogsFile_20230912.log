@@ -1,0 +1,240 @@
+2023-09-12 00:29:37.499 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 01:01:56.037 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 01:03:20.873 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 01:05:28.323 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 01:06:57.826 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:06:07.787 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:08:19.906 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:11:18.925 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:15:14.111 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:15:45.763 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:16:36.519 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:17:25.370 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:17:41.398 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:19:00.657 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:37:52.735 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:40:46.125 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:46:23.378 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:49:27.796 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 04:51:40.838 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 05:38:23.994 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 05:38:25.471 [ERR] An unhandled exception has occurred while executing the request. 
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/path combination "GET api/ThongKe/GetHocSinhDoTotNghiepByTruongAndNam" for actions - CenIT.DegreeManagement.CoreAPI.Controllers.ThongKe.ThongKeController.GetHocSinhDoTotNghiepByTruongAndNam (CenIT.DegreeManagement.CoreAPI),CenIT.DegreeManagement.CoreAPI.Controllers.ThongKe.ThongKeController.GetThongKeInPhoiBang (CenIT.DegreeManagement.CoreAPI). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-09-12 05:38:45.965 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 05:43:01.779 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 06:07:22.751 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 07:22:13.440 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 07:24:11.490 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 07:43:10.403 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 07:44:57.083 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 07:48:11.886 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 07:49:37.772 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 07:50:48.815 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 07:52:41.790 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 07:53:18.823 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 07:55:30.167 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 08:04:14.756 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 08:08:57.263 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 08:11:01.482 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 09:53:17.609 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 10:14:51.148 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 10:19:12.285 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 10:20:32.639 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 10:21:46.881 [ERR] An unhandled exception has occurred while executing the request. 
+System.FormatException: JSON reader was expecting ':' but found '',
+                                          let: { phoiGocId: ''.
+   at MongoDB.Bson.IO.JsonReader.ReadBsonType()
+   at MongoDB.Bson.Serialization.Serializers.BsonDocumentSerializer.DeserializeValue(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonValueSerializerBase`1.Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonValueSerializer.DeserializeValue(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonValueSerializerBase`1.Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonDocumentSerializer.DeserializeValue(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonValueSerializerBase`1.Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonValueSerializer.DeserializeValue(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonValueSerializerBase`1.Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonArraySerializer.DeserializeValue(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonValueSerializerBase`1.Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonValueSerializer.DeserializeValue(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonValueSerializerBase`1.Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonDocumentSerializer.DeserializeValue(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.Serialization.Serializers.BsonValueSerializerBase`1.Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+   at MongoDB.Bson.BsonDocument.Parse(String json)
+   at MongoDB.Driver.JsonCommand`1.Render(IBsonSerializerRegistry serializerRegistry)
+   at MongoDB.Driver.MongoDatabaseImpl.CreateRunCommandOperation[TResult](Command`1 command)
+   at MongoDB.Driver.MongoDatabaseImpl.RunCommand[TResult](IClientSessionHandle session, Command`1 command, ReadPreference readPreference, CancellationToken cancellationToken)
+   at MongoDB.Driver.MongoDatabaseImpl.<>c__DisplayClass50_0`1.<RunCommand>b__0(IClientSessionHandle session)
+   at MongoDB.Driver.MongoDatabaseImpl.UsingImplicitSession[TResult](Func`2 func, CancellationToken cancellationToken)
+   at MongoDB.Driver.MongoDatabaseImpl.RunCommand[TResult](Command`1 command, ReadPreference readPreference, CancellationToken cancellationToken)
+   at CenIT.DegreeManagement.CoreAPI.Bussiness.ThongKeBL.GetThongKeInPhoiBang(Int32& total, ThongKeInPhoiBangSearchModel modelSearch) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Bussiness\ThongKeBL.cs:line 794
+   at CenIT.DegreeManagement.CoreAPI.Caching.ThongKeCL.GetThongKeInPhoiBang(Int32& total, ThongKeInPhoiBangSearchModel modelSearch) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Caching\ThongKeCL.cs:line 151
+   at CenIT.DegreeManagement.CoreAPI.Controllers.ThongKe.ThongKeController.GetThongKeInPhoiBang(ThongKeInPhoiBangSearchModel modelSearch) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\ThongKe\ThongKeController.cs:line 103
+   at lambda_method12(Closure , Object , Object[] )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-09-12 10:23:55.804 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 10:25:12.298 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 10:26:55.815 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 10:29:28.027 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 10:31:54.696 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 10:33:38.444 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 14:05:25.743 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 14:07:05.452 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 14:09:54.684 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 14:12:29.232 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 15:50:07.754 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 15:51:13.752 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 15:55:12.494 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:00:29.596 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:02:47.783 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:15:21.131 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:20:24.179 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:22:35.466 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:25:49.781 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:29:17.001 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:31:21.464 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:35:54.027 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:39:16.341 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:41:14.074 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:41:36.802 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:45:00.579 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 16:48:27.634 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 20:15:58.812 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 20:25:36.706 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 20:32:42.135 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 20:37:53.878 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 20:41:15.405 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 20:43:54.693 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 20:53:47.839 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 20:56:09.921 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 20:56:41.204 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 21:03:10.656 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 21:04:12.208 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 21:06:28.889 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 21:10:41.784 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 21:16:48.017 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 21:30:53.299 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 21:31:55.860 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 22:05:49.085 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 22:08:22.495 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 22:09:06.913 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 22:13:00.243 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 23:57:26.467 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-12 23:58:59.790 [WRN] Failed to determine the https port for redirect. 
+

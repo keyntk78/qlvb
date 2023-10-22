@@ -1,0 +1,333 @@
+2023-09-11 03:19:58.776 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 03:29:02.291 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 03:51:51.528 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 04:02:15.559 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 04:07:45.641 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 04:32:48.118 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 04:37:46.494 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 04:40:15.138 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 04:49:52.608 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 04:57:12.028 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 05:12:45.168 [ERR] An unhandled exception has occurred while executing the request. 
+System.FormatException: Input string was not in a correct format.
+   at System.Text.ValueStringBuilder.ThrowFormatError()
+   at System.Text.ValueStringBuilder.AppendFormatHelper(IFormatProvider provider, String format, ParamsArray args)
+   at System.String.FormatHelper(IFormatProvider provider, String format, ParamsArray args)
+   at System.String.Format(String format, Object[] args)
+   at CenIT.DegreeManagement.CoreAPI.Controllers.CapBang.CapBangBanSaoController.DuyetDonYeuCau(DuyetDonYeuCauInputModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\CapBang\CapBangBanSaoController.cs:line 214
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-09-11 05:14:23.224 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 05:15:42.755 [ERR] An unhandled exception has occurred while executing the request. 
+System.FormatException: Input string was not in a correct format.
+   at System.Text.ValueStringBuilder.ThrowFormatError()
+   at System.Text.ValueStringBuilder.AppendFormatHelper(IFormatProvider provider, String format, ParamsArray args)
+   at System.String.FormatHelper(IFormatProvider provider, String format, ParamsArray args)
+   at System.String.Format(String format, Object[] args)
+   at CenIT.DegreeManagement.CoreAPI.Controllers.CapBang.CapBangBanSaoController.DuyetDonYeuCau(DuyetDonYeuCauInputModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\CapBang\CapBangBanSaoController.cs:line 214
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-09-11 05:17:52.907 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 05:18:45.811 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 05:19:23.356 [ERR] An unhandled exception has occurred while executing the request. 
+System.FormatException: Input string was not in a correct format.
+   at System.Text.ValueStringBuilder.ThrowFormatError()
+   at System.Text.ValueStringBuilder.AppendFormatHelper(IFormatProvider provider, String format, ParamsArray args)
+   at System.String.FormatHelper(IFormatProvider provider, String format, ParamsArray args)
+   at System.String.Format(String format, Object[] args)
+   at CenIT.DegreeManagement.CoreAPI.Controllers.CapBang.CapBangBanSaoController.DuyetDonYeuCau(DuyetDonYeuCauInputModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\CapBang\CapBangBanSaoController.cs:line 214
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-09-11 05:20:35.834 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 05:22:11.613 [ERR] An unhandled exception has occurred while executing the request. 
+System.FormatException: Input string was not in a correct format.
+   at System.Text.ValueStringBuilder.ThrowFormatError()
+   at System.Text.ValueStringBuilder.AppendFormatHelper(IFormatProvider provider, String format, ParamsArray args)
+   at System.String.FormatHelper(IFormatProvider provider, String format, ParamsArray args)
+   at System.String.Format(String format, Object[] args)
+   at CenIT.DegreeManagement.CoreAPI.Controllers.CapBang.CapBangBanSaoController.DuyetDonYeuCau(DuyetDonYeuCauInputModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\CapBang\CapBangBanSaoController.cs:line 225
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-09-11 05:23:10.968 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 05:24:16.210 [ERR] An unhandled exception has occurred while executing the request. 
+System.InvalidCastException: Parameter p_color must be set
+   at Npgsql.NpgsqlParameter.ValidateAndGetLength()
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(TypeMapper typeMapper, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteNonQuery(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteNonQuery()
+   at CenIT.DegreeManagement.CoreAPI.Core.Business.NpgsqlConnector.ExcuteStoreProcedureReturnINT(String procedureName, DbParameter[] parameters) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Core\Business\NpgsqlConnector.cs:line 154
+   at CenIT.DegreeManagement.CoreAPI.Core.Processor.ConnectionProcessor.ExcuteProcedureReturnValue(String procedureName, DbParameter[] parameters) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Core\Processor\ConnectionProcessor.cs:line 59
+   at CenIT.DegreeManagement.CoreAPI.Bussiness.Sys.MessageBL.Save(MessageInputModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Bussiness\Sys\MessageBL.cs:line 129
+   at CenIT.DegreeManagement.CoreAPI.Caching.Sys.MessageCL.Save(MessageInputModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Caching\Sys\MessageCL.cs:line 39
+   at CenIT.DegreeManagement.CoreAPI.Controllers.CapBang.CapBangBanSaoController.DuyetDonYeuCau(DuyetDonYeuCauInputModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\CapBang\CapBangBanSaoController.cs:line 235
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-09-11 05:25:07.321 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 05:26:08.114 [ERR] An unhandled exception has occurred while executing the request. 
+System.InvalidCastException: Parameter p_color must be set
+   at Npgsql.NpgsqlParameter.ValidateAndGetLength()
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(TypeMapper typeMapper, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteNonQuery(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteNonQuery()
+   at CenIT.DegreeManagement.CoreAPI.Core.Business.NpgsqlConnector.ExcuteStoreProcedureReturnINT(String procedureName, DbParameter[] parameters) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Core\Business\NpgsqlConnector.cs:line 154
+   at CenIT.DegreeManagement.CoreAPI.Core.Processor.ConnectionProcessor.ExcuteProcedureReturnValue(String procedureName, DbParameter[] parameters) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Core\Processor\ConnectionProcessor.cs:line 59
+   at CenIT.DegreeManagement.CoreAPI.Bussiness.Sys.MessageBL.Save(MessageInputModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Bussiness\Sys\MessageBL.cs:line 129
+   at CenIT.DegreeManagement.CoreAPI.Caching.Sys.MessageCL.Save(MessageInputModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Caching\Sys\MessageCL.cs:line 39
+   at CenIT.DegreeManagement.CoreAPI.Controllers.CapBang.CapBangBanSaoController.DuyetDonYeuCau(DuyetDonYeuCauInputModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\CapBang\CapBangBanSaoController.cs:line 235
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-09-11 05:28:22.014 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 14:58:46.470 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 17:45:11.656 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 17:46:13.958 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 17:47:28.463 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 17:49:57.763 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 17:53:13.580 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:08:39.211 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:14:16.600 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:16:47.154 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:19:19.485 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:21:21.023 [ERR] Execution DelayedJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04 
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:locks:schedulepoller': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.DelayedJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.DelayedJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-11 22:21:21.023 [ERR] Execution RecurringJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04 
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:recurring-jobs:lock': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.RecurringJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.RecurringJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-11 22:22:17.015 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:24:19.226 [ERR] Execution RecurringJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04 
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:recurring-jobs:lock': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.RecurringJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.RecurringJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-11 22:24:19.226 [ERR] Execution DelayedJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04 
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:locks:schedulepoller': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.DelayedJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.DelayedJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-11 22:25:27.426 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:28:21.344 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:30:24.583 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:31:02.084 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:32:50.238 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:34:29.727 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:44:42.563 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:46:41.902 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:48:11.869 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 22:50:12.572 [ERR] Execution RecurringJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04 
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:recurring-jobs:lock': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.RecurringJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.RecurringJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-11 22:52:53.544 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:00:12.085 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:01:13.331 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:02:18.682 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:04:53.678 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:06:11.026 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:08:14.069 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:15:16.760 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:23:47.622 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:42:22.380 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:43:32.274 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:47:12.400 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:53:06.642 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:54:49.091 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-11 23:59:53.068 [WRN] Failed to determine the https port for redirect. 
+

@@ -1,0 +1,26 @@
+2023-10-12 08:31:29.534 [WRN] Failed to determine the https port for redirect. 
+
+2023-10-12 09:08:13.112 [WRN] Failed to determine the https port for redirect. 
+
+2023-10-12 09:08:14.696 [ERR] An unhandled exception has occurred while executing the request. 
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/path combination "DELETE api/User/Delete" for actions - CenIT.DegreeManagement.CoreAPI.Controllers.Sys.UserController.Delete (CenIT.DegreeManagement.CoreAPI),CenIT.DegreeManagement.CoreAPI.Controllers.Sys.UserController.Test (CenIT.DegreeManagement.CoreAPI). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-10-12 09:09:58.691 [ERR] An unhandled exception has occurred while executing the request. 
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/path combination "DELETE api/User/Delete" for actions - CenIT.DegreeManagement.CoreAPI.Controllers.Sys.UserController.Delete (CenIT.DegreeManagement.CoreAPI),CenIT.DegreeManagement.CoreAPI.Controllers.Sys.UserController.Test (CenIT.DegreeManagement.CoreAPI). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-10-12 09:10:47.434 [WRN] Failed to determine the https port for redirect. 
+
+2023-10-12 16:58:15.837 [WRN] Failed to determine the https port for redirect. 
+

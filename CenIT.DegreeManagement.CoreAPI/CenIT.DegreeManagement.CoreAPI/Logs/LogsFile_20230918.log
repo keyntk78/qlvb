@@ -1,0 +1,149 @@
+2023-09-18 07:24:47.453 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 09:22:40.323 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 09:37:21.778 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 10:35:19.843 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 11:53:09.727 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 11:57:06.682 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 12:42:12.059 [FTL] Execution loop Worker:badb9810 was unable to wait for '00:01:04' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.066 [FTL] Execution loop Worker:77104538 was unable to wait for '00:00:49' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.077 [FTL] Execution loop Worker:80bb44f1 was unable to wait for '00:00:36' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.059 [FTL] Execution loop Worker:f21da4ea was unable to wait for '00:01:21' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.092 [FTL] Execution loop Worker:68d6c799 was unable to wait for '00:05:00' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.059 [FTL] Execution loop Worker:c5138f2a was unable to wait for '00:02:24' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.059 [FTL] Execution loop Worker:cb25c47a was unable to wait for '00:05:00' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.181 [FTL] Execution loop Worker:9e2c7901 was unable to wait for '00:02:01' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.218 [FTL] Execution loop Worker:5412d3d8 was unable to wait for '00:03:16' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.224 [FTL] Execution loop Worker:3957b7fd was unable to wait for '00:02:49' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.231 [FTL] Execution loop Worker:342733a6 was unable to wait for '00:04:49' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.248 [FTL] Execution loop Worker:c26a35bb was unable to wait for '00:04:16' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.266 [FTL] Execution loop Worker:be95f6bb was unable to wait for '00:03:45' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.278 [FTL] Execution loop Worker:870db7a4 was unable to wait for '00:01:40' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 12:42:12.289 [FTL] Execution loop Worker:5fc64758 was unable to wait for '00:05:00' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-18 13:50:53.498 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 13:53:54.239 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 13:56:58.833 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 14:08:59.477 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 14:12:47.167 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 14:27:10.579 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 14:28:58.790 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 16:21:57.086 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 16:25:21.986 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 16:26:26.262 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 17:10:54.760 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 17:12:47.031 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 17:14:49.414 [ERR] Execution DelayedJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04 
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:locks:schedulepoller': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.DelayedJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.DelayedJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-18 17:18:14.181 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 17:24:12.360 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 17:27:53.349 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 20:23:13.555 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 20:27:53.851 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-18 20:28:58.565 [WRN] Failed to determine the https port for redirect. 
+

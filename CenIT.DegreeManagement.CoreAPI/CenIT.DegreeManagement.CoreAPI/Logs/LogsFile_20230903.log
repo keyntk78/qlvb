@@ -1,0 +1,42 @@
+2023-09-03 07:54:48.390 [FTL] Execution loop Worker:ddce5832 was unable to wait for '00:01:04' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-03 07:54:48.390 [FTL] Execution loop Worker:6e9097e2 was unable to wait for '00:01:40' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-03 07:54:48.390 [FTL] Execution loop Worker:3fd4666d was unable to wait for '00:01:21' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-03 07:54:48.390 [FTL] Execution loop Worker:9a189ed9 was unable to wait for '00:00:36' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-03 07:54:48.394 [FTL] Execution loop Worker:f8b9866e was unable to wait for '00:02:01' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-03 07:54:48.390 [FTL] Execution loop Worker:9a0a7d03 was unable to wait for '00:00:25' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-03 07:54:48.391 [FTL] Execution loop Worker:1c1fd817 was unable to wait for '00:00:49' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+

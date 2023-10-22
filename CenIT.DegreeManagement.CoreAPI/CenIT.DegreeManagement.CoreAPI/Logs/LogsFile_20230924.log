@@ -1,0 +1,10 @@
+2023-09-24 16:01:10.060 [WRN] Overriding address(es) 'http://localhost:5203'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead. 
+
+2023-09-24 16:02:01.108 [WRN] Overriding address(es) 'http://localhost:5203'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead. 
+
+2023-09-24 16:02:28.477 [WRN] Overriding address(es) 'http://localhost:5203'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead. 
+
+2023-09-24 16:05:15.135 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-24 17:45:49.206 [WRN] Failed to determine the https port for redirect. 
+

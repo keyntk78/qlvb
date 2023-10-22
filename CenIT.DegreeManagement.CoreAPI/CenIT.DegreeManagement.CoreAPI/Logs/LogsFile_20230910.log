@@ -1,0 +1,447 @@
+2023-09-10 02:44:21.272 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 02:46:55.155 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 02:51:07.084 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 03:02:32.127 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 03:06:20.883 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 03:10:51.136 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 03:15:41.153 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 03:29:14.162 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 03:32:19.031 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 03:37:51.557 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 03:41:30.462 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 03:51:17.749 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 03:52:54.544 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 03:57:07.277 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 04:00:56.422 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 12:26:54.420 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 12:29:36.530 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 12:41:49.994 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 12:44:07.019 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 12:51:39.956 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 12:56:31.989 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 13:00:31.900 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 13:12:12.791 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 13:12:56.771 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 13:21:21.651 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 13:22:09.130 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 13:24:18.469 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 14:00:35.392 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 14:03:17.079 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 14:06:31.678 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 14:26:54.726 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 14:27:41.909 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 14:31:58.998 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 14:45:15.434 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 14:48:25.638 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 14:49:40.428 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 14:50:42.584 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 14:59:52.465 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 15:06:44.825 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 15:07:57.460 [ERR] An unhandled exception has occurred while executing the request. 
+Npgsql.PostgresException (0x80004005): 42703: column "NOTIFICATION" does not exist
+   at Npgsql.Internal.NpgsqlConnector.<ReadMessage>g__ReadMessageLong|233_0(NpgsqlConnector connector, Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult()
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at CenIT.DegreeManagement.CoreAPI.Core.Business.NpgsqlConnector.ExcuteQuery(String queryString, DbParameter[] parameters) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Core\Business\NpgsqlConnector.cs:line 44
+   at CenIT.DegreeManagement.CoreAPI.Core.Processor.ConnectionProcessor.ExcuteStoreProcedureReturnQuery(String procedureName, DbParameter[] parameters) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Core\Processor\ConnectionProcessor.cs:line 48
+   at CenIT.DegreeManagement.CoreAPI.Bussiness.Sys.MessageBL.GetByPageSize(Int32 userId, Int32 pageSize) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Bussiness\Sys\MessageBL.cs:line 75
+   at CenIT.DegreeManagement.CoreAPI.Caching.Sys.MessageCL.GetByPageSize(Int32 userId, Int32 pageSize) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Caching\Sys\MessageCL.cs:line 33
+   at CenIT.DegreeManagement.CoreAPI.Controllers.TrangChu.TrangChuController.GetTop10Message(Int32 userId, Int32 pageSize) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\TrangChu\TrangChuController.cs:line 96
+   at lambda_method23(Closure , Object , Object[] )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column "NOTIFICATION" does not exist
+    InternalPosition: 360
+    InternalQuery: SELECT
+        m.id_message,
+        m."action",
+        m.message_type,
+        m.sending_method,
+        m.title,
+        m."content",
+        m.color,
+        m.status,
+        m.user_id,
+        m.recipient,
+        m.url ,
+        m."time" ::timestamp without time zone
+    FROM
+        messages m
+    WHERE
+        m.user_id = _user_id and m."action" = "NOTIFICATION"
+    ORDER BY
+        m."time" DESC
+    LIMIT page_size
+    Where: PL/pgSQL function fn_sys_message_getbypagesize(integer,integer) line 3 at RETURN QUERY
+    File: parse_relation.c
+    Line: 3656
+    Routine: errorMissingColumn
+
+2023-09-10 15:11:09.518 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 15:16:38.549 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 15:18:54.733 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 16:09:43.312 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 16:12:12.003 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 16:13:12.411 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 16:21:18.933 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 16:22:47.546 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 16:24:50.398 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 16:31:36.301 [ERR] An unhandled exception has occurred while executing the request. 
+Npgsql.PostgresException (0x80004005): 42804: structure of query does not match function result type
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.<ReadMessage>g__ReadMessageLong|233_0(NpgsqlConnector connector, Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult()
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at CenIT.DegreeManagement.CoreAPI.Core.Business.NpgsqlConnector.ExcuteQuery(String queryString, DbParameter[] parameters) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Core\Business\NpgsqlConnector.cs:line 44
+   at CenIT.DegreeManagement.CoreAPI.Core.Processor.ConnectionProcessor.ExcuteStoreProcedureReturnQuery(String procedureName, DbParameter[] parameters) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Core\Processor\ConnectionProcessor.cs:line 48
+   at CenIT.DegreeManagement.CoreAPI.Bussiness.Sys.MessageBL.GetAllMessages(SearchParamFilterDateModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Bussiness\Sys\MessageBL.cs:line 102
+   at CenIT.DegreeManagement.CoreAPI.Caching.Sys.MessageCL.GetAllMessages(SearchParamFilterDateModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Caching\Sys\MessageCL.cs:line 58
+   at CenIT.DegreeManagement.CoreAPI.Controllers.Sys.NotificationController.View(SearchParamFilterDateModel model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\Sys\NotificationController.cs:line 33
+   at lambda_method408(Closure , Object , Object[] )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+  Exception data:
+    Severity: ERROR
+    SqlState: 42804
+    MessageText: structure of query does not match function result type
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    Where: SQL statement "WITH T AS (
+        SELECT 
+            ROW_NUMBER() OVER (
+                ORDER BY
+                    CASE _order
+                        WHEN '0' THEN "time" 
+                        WHEN '1' THEN "time" 
+                    END ASC
+            ) AS "rowIndex",
+            id_message,
+            "action",
+            message_type,
+            sending_method,
+            "title",
+            "content",
+            color,
+            status,
+            u.user_id,
+            u.username,
+            recipient,
+            url,
+            "time"
+        FROM
+            messages 
+        LEFT JOIN sys_users u ON  messages.user_id = u.user_id
+        WHERE
+            (_search IS NULL OR u."username" ILIKE '%' || _search || '%')
+            AND (_search IS NULL OR "recipient" ILIKE '%' || _search || '%')
+            AND UPPER(_order_dir) = 'ASC'
+            AND "time" >= _fromdate AND "time" <= _todate
+        UNION ALL
+        SELECT 
+            ROW_NUMBER() OVER (
+                ORDER BY
+                    CASE _order
+                        WHEN '0' THEN "time"
+                        WHEN '1' THEN "time"
+                    END ASC
+            ) AS "rowIndex",
+            id_message,
+            "action",
+            message_type,
+            sending_method,
+            "title",
+            "content",
+            color,
+            status,
+            u.user_id,
+            u.username,
+            recipient,
+            url,
+            "time"
+        FROM
+            messages 
+        LEFT JOIN sys_users u ON messages.user_id = u.user_id 
+        WHERE
+            (_search IS NULL OR u."username" ILIKE '%' || _search || '%')
+            AND (_search IS NULL OR "recipient" ILIKE '%' || _search || '%')
+            AND UPPER(_order_dir) = 'DESC'
+            AND "time" >= _fromdate AND "time" <= _todate
+    )
+    SELECT
+        T."rowIndex"::INT,
+        T."id_message",
+        T."action",
+        T."message_type",
+        T."sending_method",
+        T."title",
+        T."content",
+        T."color",
+        T."status",
+        T."user_id",
+        T."username",
+        T."recipient",
+        T."url",
+        T."time",
+        CAST((
+            SELECT
+                COUNT("rowIndex")
+            FROM
+                T
+        ) AS INT) AS "TotalRow"
+    FROM
+        T
+    WHERE
+        (_page_size > 0 AND T."rowIndex" BETWEEN (_page_index * _page_size) + 1 AND (_page_index + 1) * _page_size)
+        OR _page_size <= 0"
+PL/pgSQL function fn_sys_message_getsearch(character varying,character varying,character varying,integer,integer,timestamp without time zone,timestamp without time zone) line 10 at RETURN QUERY
+    File: attmap.c
+    Line: 119
+    Routine: build_attrmap_by_position
+
+2023-09-10 16:40:09.216 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 17:07:44.853 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 17:12:05.023 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 17:13:36.942 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 17:16:43.119 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 17:18:04.623 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 17:19:26.250 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 17:20:46.904 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 20:20:31.701 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 20:21:41.483 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 20:22:37.290 [ERR] An unhandled exception has occurred while executing the request. 
+System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+   at MongoDB.Bson.BsonArray.get_Item(Int32 index)
+   at CenIT.DegreeManagement.CoreAPI.Bussiness.ThongKeBL.TongSoHocSinhTotNghiepTheoTruong(String idTruong) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Bussiness\ThongKeBL.cs:line 434
+   at CenIT.DegreeManagement.CoreAPI.Bussiness.ThongKeBL.ThongKeHocSinhDoTotNghiepTheoDMTN(Int32& total, String idTruong, String idNamThi, String idDanhMucTotNghiep) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Bussiness\ThongKeBL.cs:line 303
+   at CenIT.DegreeManagement.CoreAPI.Caching.ThongKeCL.ThongKeHocSinhDoTotNghiepTheoDMTN(Int32& total, String idTruong, String idNamThi, String idDanhMucTotNghiep) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI.Caching\ThongKeCL.cs:line 78
+   at CenIT.DegreeManagement.CoreAPI.Controllers.ThongKe.ThongKeController.ThongKeHocSinhDoTotNghiepTheoDMTN(String idTruong, String idNamThi, String idDanhMucTotNghiep) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\ThongKe\ThongKeController.cs:line 60
+   at lambda_method12(Closure , Object , Object[] )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-09-10 20:25:17.276 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 20:53:05.900 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 20:54:13.009 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 20:57:42.642 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 20:59:30.132 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 21:34:14.548 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 21:40:33.442 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 21:44:01.456 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 21:48:15.410 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 21:49:52.467 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 21:50:33.903 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 21:57:06.938 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 22:04:02.751 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 23:08:41.523 [ERR] An unhandled exception has occurred while executing the request. 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at CenIT.DegreeManagement.CoreAPI.Controllers.DuLieuHocSinh.DanhMucTotNghiepController.<>c__DisplayClass10_0.<GetSearch>b__0(DanhMucTotNghiepViewModel danhMucTotNghep) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\DuLieuHocSinh\DanhMucTotNghiepController.cs:line 74
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at CenIT.DegreeManagement.CoreAPI.Controllers.DuLieuHocSinh.DanhMucTotNghiepController.GetSearch(DanhMucTotNghiepSearchParam model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\DuLieuHocSinh\DanhMucTotNghiepController.cs:line 71
+   at lambda_method451(Closure , Object , Object[] )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-09-10 23:11:46.740 [ERR] An unhandled exception has occurred while executing the request. 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at CenIT.DegreeManagement.CoreAPI.Controllers.DuLieuHocSinh.DanhMucTotNghiepController.<>c__DisplayClass10_0.<GetSearch>b__0(DanhMucTotNghiepViewModel danhMucTotNghep) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\DuLieuHocSinh\DanhMucTotNghiepController.cs:line 74
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at CenIT.DegreeManagement.CoreAPI.Controllers.DuLieuHocSinh.DanhMucTotNghiepController.GetSearch(DanhMucTotNghiepSearchParam model) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Controllers\DuLieuHocSinh\DanhMucTotNghiepController.cs:line 71
+   at lambda_method451(Closure , Object , Object[] )
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at CenIT.DegreeManagement.CoreAPI.Middleware.EnableRequestBodyBufferingMiddleware.InvokeAsync(HttpContext context) in D:\Workpace_VNPT\QuanLyVanBang\BackEnd\CenIT.DegreeManagement\CenIT.DegreeManagement.CoreAPI\CenIT.DegreeManagement.CoreAPI\Middleware\EnableRequestBodyBufferingMiddleware.cs:line 21
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+
+2023-09-10 23:24:06.950 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 23:24:51.254 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-10 23:47:28.160 [WRN] Failed to determine the https port for redirect. 
+

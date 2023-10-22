@@ -1,0 +1,199 @@
+2023-09-15 03:48:22.307 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 04:02:39.274 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 04:21:13.942 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 04:31:51.128 [ERR] Execution Worker is in the Failed state now due to an exception, execution will be retried no more than in 00:03:45 
+Npgsql.NpgsqlException (0x80004005): Exception while reading from stream
+ ---> System.TimeoutException: Timeout during reading attempt
+   at Npgsql.Internal.NpgsqlConnector.<ReadMessage>g__ReadMessageLong|233_0(NpgsqlConnector connector, Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult()
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   at Dapper.SqlMapper.ExecuteReaderWithFlagsFallback(IDbCommand cmd, Boolean wasClosed, CommandBehavior behavior) in /_/Dapper/SqlMapper.cs:line 1066
+   at Dapper.SqlMapper.QueryImpl[T](IDbConnection cnn, CommandDefinition command, Type effectiveType)+MoveNext() in /_/Dapper/SqlMapper.cs:line 1094
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Dapper.SqlMapper.Query[T](IDbConnection cnn, String sql, Object param, IDbTransaction transaction, Boolean buffered, Nullable`1 commandTimeout, Nullable`1 commandType) in /_/Dapper/SqlMapper.cs:line 734
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.<>c__DisplayClass13_0.<Dequeue_Transaction>b__0()
+   at Hangfire.PostgreSql.Utils.Utils.TryExecute[T](Func`1 func, T& result, Func`2 swallowException, Nullable`1 tryCount)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue_Transaction(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlConnection.FetchNextJob(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.Server.Worker.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-15 04:32:17.553 [ERR] Execution RecurringJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:25 
+Npgsql.NpgsqlException (0x80004005): Failed to connect to 113.160.252.203:5432
+ ---> System.Net.Sockets.SocketException (10065): A socket operation was attempted to an unreachable host.
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|215_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|28_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|45_0(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.Open()
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.RecurringJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.RecurringJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-15 04:32:18.607 [ERR] Execution DelayedJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:25 
+Npgsql.NpgsqlException (0x80004005): Failed to connect to 113.160.252.203:5432
+ ---> System.Net.Sockets.SocketException (10065): A socket operation was attempted to an unreachable host.
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|215_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|28_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|45_0(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.Open()
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.DelayedJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.DelayedJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-15 04:52:11.804 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 04:58:53.163 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 05:01:39.004 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 05:03:44.850 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 05:05:25.292 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 05:07:14.805 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 05:13:01.772 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 05:25:24.883 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 05:28:34.274 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 08:17:02.358 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 08:23:13.241 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 08:30:55.192 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 08:48:01.832 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 09:01:57.240 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 10:34:49.581 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 10:44:17.126 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 11:04:56.769 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 11:07:45.624 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 11:17:16.943 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 11:37:32.770 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 11:41:11.728 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 11:42:37.440 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 13:22:01.927 [FTL] Execution loop Worker:14358cc4 was unable to wait for '00:02:01' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.936 [FTL] Execution loop Worker:d4d0d8cd was unable to wait for '00:02:24' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.927 [FTL] Execution loop Worker:09d39fa6 was unable to wait for '00:00:36' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.927 [FTL] Execution loop Worker:83e0d7aa was unable to wait for '00:00:16' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.936 [FTL] Execution loop Worker:7c4e901d was unable to wait for '00:04:16' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.927 [FTL] Execution loop Worker:b3319c32 was unable to wait for '00:00:49' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.928 [FTL] Execution loop Worker:fafb54b7 was unable to wait for '00:01:21' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.927 [FTL] Execution loop Worker:64441854 was unable to wait for '00:01:40' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.928 [FTL] Execution loop Worker:0377884e was unable to wait for '00:00:25' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.928 [FTL] Execution loop Worker:54bf3b7b was unable to wait for '00:03:45' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.938 [FTL] Execution loop Worker:a7f438ae was unable to wait for '00:03:16' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.943 [FTL] Execution loop Worker:e6f5c157 was unable to wait for '00:01:04' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 13:22:01.963 [FTL] Execution loop Worker:2a9575c0 was unable to wait for '00:02:49' delay due to an exception. Execution will be stopped. 
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Hangfire.Processing.TaskExtensions.WaitOne(WaitHandle waitHandle, TimeSpan timeout, CancellationToken token)
+   at Hangfire.Processing.BackgroundExecution.HandleDelay(Guid executionId, TimeSpan delay)
+
+2023-09-15 15:38:44.987 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 15:47:33.497 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-15 15:51:27.075 [WRN] Failed to determine the https port for redirect. 
+

@@ -1,0 +1,94 @@
+2023-09-14 08:21:36.725 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 08:31:52.690 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 08:36:46.341 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 08:39:45.576 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 08:41:45.643 [ERR] Execution DelayedJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04 
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:locks:schedulepoller': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.DelayedJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.DelayedJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-14 08:41:45.643 [ERR] Execution RecurringJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04 
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:recurring-jobs:lock': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.RecurringJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.RecurringJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-14 08:46:32.404 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 08:48:33.519 [ERR] Execution DelayedJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04 
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:locks:schedulepoller': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.DelayedJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.DelayedJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-14 08:48:33.519 [ERR] Execution RecurringJobScheduler is in the Failed state now due to an exception, execution will be retried no more than in 00:00:04 
+Hangfire.PostgreSql.PostgreSqlDistributedLockException: Could not place a lock on the resource 'hangfire:recurring-jobs:lock': Lock timeout.
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.LockHandler.Lock(String resource, TimeSpan timeout, IDbConnection connection, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlDistributedLock.Acquire(IDbConnection connection, String resource, TimeSpan timeout, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireLock(String resource, TimeSpan timeout)
+   at Hangfire.PostgreSql.PostgreSqlConnection.AcquireDistributedLock(String resource, TimeSpan timeout)
+   at Hangfire.Server.RecurringJobScheduler.UseConnectionDistributedLock[T](JobStorage storage, Func`2 action)
+   at Hangfire.Server.RecurringJobScheduler.Execute(BackgroundProcessContext context)
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state)
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state)
+
+2023-09-14 08:55:23.871 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 09:01:59.954 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 09:28:10.690 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 10:37:12.209 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 11:21:56.430 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 11:25:15.971 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 11:29:47.030 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 11:30:54.370 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 13:52:58.734 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 14:02:31.423 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 14:27:09.010 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 14:50:19.160 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 15:19:36.758 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 15:29:49.398 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 15:51:27.780 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 16:05:36.675 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 16:22:31.583 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 16:35:35.731 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 17:08:44.020 [WRN] Failed to determine the https port for redirect. 
+
+2023-09-14 17:41:18.721 [WRN] Failed to determine the https port for redirect. 
+
