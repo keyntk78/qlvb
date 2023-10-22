@@ -12,8 +12,6 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh
 {
     public class ChinhSuaVanBangModel : BaseModel
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
         public string? LyDo { get; set; }
         public string PathFileVanBan{ get; set; }

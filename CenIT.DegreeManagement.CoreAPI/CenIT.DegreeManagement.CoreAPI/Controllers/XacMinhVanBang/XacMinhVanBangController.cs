@@ -292,7 +292,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
         public async Task<IActionResult> DeleteImport(string nguoiThucHien)
         {
 
-            var response = await _hocSinhTmpCl.Delete(idTruong);
+            var response = await _hocSinhTmpCl.Delete(nguoiThucHien);
             if (response == (int)HocSinhEnum.Fail)
                 return ResponseHelper.BadRequest("Xóa Thất BẠI");
             return ResponseHelper.Success("Xóa thành công");

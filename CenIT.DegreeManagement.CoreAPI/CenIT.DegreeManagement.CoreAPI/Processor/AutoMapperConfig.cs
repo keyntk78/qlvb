@@ -16,13 +16,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Processor
         {
             CreateMap<HocSinhImportViewModel, HocSinhModel>();
             CreateMap<CauHinhPhoiGocInputModel, CauHinhPhoiGocModel>();
-       
+            CreateMap<HocSinhImportVM, HocSinhTmpModel>();
+            CreateMap<HocSinhTmpModel, HocSinhModel>();
+
+
             //CreateMap<SoGocModel, SoGocViewModel>();
             CreateMap<DanhMucTotNghiepModel, DanhMucTotNghiepViewModel>();
             CreateMap<SoGocModel, ThongTinHocSinhInVanBangViewModel>();
             CreateMap<SoGocModel, ThongTinDanhSachHocSinhInVanBangViewModel>();
             CreateMap<TinTucViewModel, TinTucListModel>();
-
+                    CreateMap<TinTucViewModel, TinTucListModel>();
             //truong
             CreateMap<TruongModel, TruongDTO>();
             CreateMap<HocSinhViewModel, HocSinhDTO>();

@@ -49,6 +49,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
 
                 var chinhSuaVanBang = new ChinhSuaVanBangModel()
                 {
+                    Id = Guid.NewGuid().ToString(),
                     DanTocCu = hocSinh.DanToc,
                     HoTenCu = hocSinh.HoTen,
                     CCCDCu = hocSinh.CCCD,
