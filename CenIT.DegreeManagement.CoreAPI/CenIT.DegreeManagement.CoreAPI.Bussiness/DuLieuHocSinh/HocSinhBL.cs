@@ -55,14 +55,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                 if (checkExistHTDT < 0)
                     return new ImportResultModel { ErrorCode = checkExistHTDT };
 
-                //if(phong == false)
-                //{
-                //    //kiểm tra trường đã có học sinh đã được duyệt danh sách chưa
-                //    if (KiemTraTruongDaDuyetDanhSach(idTruong, idDanhMucTotNghiep))
-                //        return new ImportResultModel { ErrorCode = (int)HocSinhEnum.Approved };
-                //}
+ 
 
-                int maxSTT = collectionHoSinh.Find(x => x.Xoa == false && x.IdTruong == idTruong && x.IdDanhMucTotNghiep == idDanhMucTotNghiep)
+                int maxSTT = collectionHoSinh.Find(x => x.Xoa == false && x.IdTruong == idTruong)
                                      .Sort(Builders<HocSinhModel>.Sort.Descending(x => x.STT))
                                      .Limit(1)
                                      .FirstOrDefault()?.STT ?? 0;
@@ -238,7 +233,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                 if (!KiemTraKhoaThi(dmtn.IdNamThi, model.IdKhoaThi)) return (int)HocSinhEnum.NotExist;
 
                 var hocSinhs = collectionHocSinh
-                                        .Find(h => h.Xoa == false && h.IdDanhMucTotNghiep == model.IdDanhMucTotNghiep && h.IdTruong == model.IdTruong)
+                                        .Find(h => h.Xoa == false && h.IdTruong == model.IdTruong)
                                         .ToList();
                 int stt = 1;
                 if(hocSinhs.Count > 0)
@@ -2254,7 +2249,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
         }
         #endregion
 
-        #region Xác Minh Văn Bằng
+        #region Tra Cứu
         public string GetSearchHocSinhXacMinhVanBang(HocSinhSearchXacMinhVBModel modelSearch)
         {
             //Phân trang
@@ -2482,6 +2477,82 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                 result = result.Skip(modelSearch.PageSize * modelSearch.StartIndex).Take(modelSearch.PageSize).ToList();
             }
             return result;
+        }
+
+        public List<HocSinhModel> GetAllHocSinhDaCoSoHieu()
+        {
+            var filterBuilder = Builders<HocSinhModel>.Filter;
+
+            var filters = new List<FilterDefinition<HocSinhModel>>
+            {
+                 filterBuilder.In("TrangThai", new List<TrangThaiHocSinhEnum>
+                {
+                        TrangThaiHocSinhEnum.DaDuaVaoSoGoc,
+                        TrangThaiHocSinhEnum.DaCapBang,
+                        TrangThaiHocSinhEnum.DaInBang,
+                        TrangThaiHocSinhEnum.DaNhanBang
+                }),
+            };
+
+            filters.RemoveAll(filter => filter == null);
+
+            var combinedFilter = filterBuilder.And(filters);
+            var hocSinhs = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName)
+                                .Find(combinedFilter)
+                                .ToList();
+            return hocSinhs;
+        }
+
+        public async Task<HocSinhResult> SaveImport(string idTruong, string idDanhMucTotNghiep ,List<HocSinhModel> models)
+        {
+            try
+            {
+                var conllectionPhoiGoc = _mongoDatabase.GetCollection<PhoiGocModel>(_collectionNamePhoiGoc);
+                var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
+                var conllectionDMTN = _mongoDatabase.GetCollection<DanhMucTotNghiepModel>(_collectionNameDanhMucTotNghiep);
+                var conllectionSoGoc = _mongoDatabase.GetCollection<SoGocModel>(_collectionNameSoGoc);
+
+
+                var conllectionTruong = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong);
+
+                var truong = conllectionTruong.Find(dm => dm.Xoa == false && dm.Id == idTruong).FirstOrDefault();
+                var dmtn = conllectionDMTN.Find(dm => dm.Xoa == false && dm.Id == idDanhMucTotNghiep).FirstOrDefault();
+
+
+
+                if (truong == null)
+                    return new HocSinhResult() { MaLoi = (int)HocSinhEnum.NotExistTruong };
+                if (dmtn == null)
+                    return new HocSinhResult() { MaLoi = (int)HocSinhEnum.NotExistDanhMucTotNghiep };
+
+                var soGoc = conllectionSoGoc.Find(dm => dm.Xoa == false && dm.IdNamThi == dmtn.IdNamThi).FirstOrDefault();
+
+
+                var phoiGoc = conllectionPhoiGoc.Find(pg => pg.Xoa == false
+                && pg.TinhTrang == TinhTrangPhoiEnum.DangSuDung && pg.MaHeDaoTao == truong.MaHeDaoTao).FirstOrDefault();
+                if (phoiGoc == null)
+                    return new HocSinhResult() { MaLoi = (int)HocSinhEnum.NotExistPhoi };
+
+                int maxSTT = conllectionHocSinh.Find(x => x.Xoa == false && x.IdTruong == idTruong)
+                                    .Sort(Builders<HocSinhModel>.Sort.Descending(x => x.STT))
+                                    .Limit(1)
+                                    .FirstOrDefault()?.STT ?? 0;
+
+                // Increment STT for new entries
+                foreach (var model in models)
+                {
+                    model.STT = ++maxSTT;
+                    model.IdPhoiGoc = phoiGoc.Id;
+                    model.IdSoGoc = soGoc.Id;
+                }
+
+                conllectionHocSinh.InsertMany(models);
+                return new HocSinhResult { MaLoi = (int)HocSinhEnum.Success };
+            }
+            catch
+            {
+                return new HocSinhResult() { MaLoi = (int)HocSinhEnum.Fail };
+            }
         }
 
         #endregion

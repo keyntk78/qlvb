@@ -29,6 +29,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
         public string _collectionPhoiBanSaoLogName = "PhoiBanSaoLog";
         public string _collectionDanTocName = "DanToc";
         public string _collectionHocSinhName = "HocSinh";
+        public string _collectionHocSinhTmpName = "HocSinhTmp";
         public string _collectionDonYeuCauCapBanSaoName = "DonYeuCauCapBanSao";
         public string _collectionLichSuXacMinhVanBangName = "LichSuXacMinhVanBang";
 

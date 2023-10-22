@@ -171,4 +171,29 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh
         public NamThiModel NamThi { get; set; }
         public DateTime KhoaThi { get; set; }
     }
+
+
+
+    public class HocSinhImportVM : HocSinhModel
+    {
+        public string? SoHieuVanBang { get; set; } = string.Empty;
+        public string? SoVaoSoCapBang { get; set; } = string.Empty;
+        public double? DiemMon1 { get; set; } = 0;
+        public double? DiemMon2 { get; set; } = 0;
+        public double? DiemMon3 { get; set; } = 0;
+        public double? DiemMon4 { get; set; } = 0;
+        public double? DiemMon5 { get; set; } = 0;
+        public double? DiemMon6 { get; set; } = 0;
+        public string? Mon1 { get; set; } = string.Empty;
+        public string? Mon2 { get; set; } = string.Empty;
+        public string? Mon3 { get; set; } = string.Empty;
+        public string? Mon4 { get; set; } = string.Empty;
+        public string? Mon5 { get; set; } = string.Empty;
+        public string? Mon6 { get; set; } = string.Empty;
+
+
+        public string? Message { get; set; } = string.Empty;
+        public int ErrorCode { get; set; }
+    }
+
 }

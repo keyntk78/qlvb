@@ -36,62 +36,73 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
             _mongoDatabase = client.GetDatabase(dbName);
         }
 
-        public async Task<int> Create(ChinhSuaVanBangInputModel model)
-        {
+        //public async Task<int> Create(ChinhSuaVanBangInputModel model)
+        //{
 
-            try
-            {
-                var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
-                var hocSinh = conllectionHocSinh.Find(t => t.Xoa == false && t.Id == model.IdHocSinh && t.TrangThai == TrangThaiHocSinhEnum.DaNhanBang).FirstOrDefault();
+        //    try
+        //    {
+        //        var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
+        //        var hocSinh = conllectionHocSinh.Find(t => t.Xoa == false && t.Id == model.IdHocSinh && t.TrangThai == TrangThaiHocSinhEnum.DaNhanBang).FirstOrDefault();
 
-                if (hocSinh == null) return (int)LichSuChinhSuaVanBangEnum.NotExist;
+        //        if (hocSinh == null) return (int)LichSuChinhSuaVanBangEnum.NotExist;
 
-                var chinhSuaVanBang = new ChinhSuaVanBangModel();
+        //        var chinhSuaVanBang = new ChinhSuaVanBangModel();
+        //        chinhSuaVanBang.NgayTao = DateTime.Now;
+        //        chinhSuaVanBang.NguoiTao = model.NguoiThucHien;
+        //        chinhSuaVanBang.HoTenCu = hocSinh.HoTen;
+        //        chinhSuaVanBang.DanTocCu = hocSinh.DanToc;
+        //        chinhSuaVanBang.CCCDCu = hocSinh.CCCD;
+        //        chinhSuaVanBang.NgaySinhCu = hocSinh.NgaySinh;
+        //        chinhSuaVanBang.NoiSinhCu = hocSinh.NoiSinh;
+        //        chinhSuaVanBang.GioiTinhCu = hocSinh.GioiTinh;
+        //        chinhSuaVanBang.PathFileVanBan = model.PathFileVanBan;
+        //        hocSinh.LichSuChinhSuaVanBang.Add(chinhSuaVanBang);
 
-                ModelProvider.MapProperties(model, chinhSuaVanBang);
-                chinhSuaVanBang.NgayTao = DateTime.Now;
-                chinhSuaVanBang.NguoiTao = model.NguoiThucHien;
-                hocSinh.LichSuChinhSuaVanBang.Add(chinhSuaVanBang);
+        //        if(!string.IsNullOrEmpty(model.HoTen)) hocSinh.HoTen = model.HoTen;
+        //        if (!string.IsNullOrEmpty(model.DanToc)) hocSinh.DanToc = model.DanToc;
+        //        if (!string.IsNullOrEmpty(model.CCCD)) hocSinh.CCCD = model.CCCD;
+        //        if (!string.IsNullOrEmpty(model.NoiSinh)) hocSinh.HoTen = model.NoiSinh;
+        //        if (model.GioiTinh != hocSinh.GioiTinh ) hocSinh.GioiTinh = model.GioiTinh;
 
-                var updateResult = await conllectionHocSinh.ReplaceOneAsync(h => h.Id == hocSinh.Id, hocSinh);
+        //        var updateResult = await conllectionHocSinh.ReplaceOneAsync(h => h.Id == hocSinh.Id, hocSinh);
 
 
-                if (updateResult.ModifiedCount == 0)
-                {
-                    return (int)LichSuChinhSuaVanBangEnum.Fail;
-                }
-                return (int)LichSuChinhSuaVanBangEnum.Success;
+        //        if (updateResult.ModifiedCount == 0)
+        //        {
+        //            return (int)LichSuChinhSuaVanBangEnum.Fail;
+        //        }
+        //        return (int)LichSuChinhSuaVanBangEnum.Success;
 
-            }
-            catch
-            {
-                return (int)LichSuChinhSuaVanBangEnum.Fail;
+        //    }
+        //    catch
+        //    {
+        //        return (int)LichSuChinhSuaVanBangEnum.Fail;
 
-            }
-        }
+        //    }
+        //}
 
-        public List<ChinhSuaVanBangModel> GetSerachChinhSuaVanBang(out int total, string idHocSinh, SearchParamModel modelSearch)
-        {
-            var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
-            var hocSinh = conllectionHocSinh.Find(t => t.Xoa == false && t.Id == idHocSinh).FirstOrDefault();
+        //public List<ChinhSuaVanBangModel> GetSerachChinhSuaVanBang(out int total, string idHocSinh, SearchParamModel modelSearch)
+        //{
+        //    var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
+        //    var hocSinh = conllectionHocSinh.Find(t => t.Xoa == false && t.Id == idHocSinh).FirstOrDefault();
 
-            var chinhSuaVanBang = hocSinh.LichSuChinhSuaVanBang.OrderBy(x=>x.NgayTao).ToList();
+        //    var chinhSuaVanBang = hocSinh.LichSuChinhSuaVanBang.OrderBy(x=>x.NgayTao).ToList();
 
-            total = chinhSuaVanBang.Count;
+        //    total = chinhSuaVanBang.Count;
 
-            switch (modelSearch.Order)
-            {
-                case "0":
-                    chinhSuaVanBang = modelSearch.OrderDir.ToUpper() == "ASC"
-                        ? chinhSuaVanBang.OrderBy(x => x.NgayTao).ToList()
-                        : chinhSuaVanBang.OrderByDescending(x => x.NgayTao).ToList();
-                    break;
-            }
-            if (modelSearch.PageSize > 0)
-            {
-                chinhSuaVanBang = chinhSuaVanBang.Skip(modelSearch.PageSize * modelSearch.StartIndex).Take(modelSearch.PageSize).ToList();
-            }
-            return chinhSuaVanBang;
-        }
+        //    switch (modelSearch.Order)
+        //    {
+        //        case "0":
+        //            chinhSuaVanBang = modelSearch.OrderDir.ToUpper() == "ASC"
+        //                ? chinhSuaVanBang.OrderBy(x => x.NgayTao).ToList()
+        //                : chinhSuaVanBang.OrderByDescending(x => x.NgayTao).ToList();
+        //            break;
+        //    }
+        //    if (modelSearch.PageSize > 0)
+        //    {
+        //        chinhSuaVanBang = chinhSuaVanBang.Skip(modelSearch.PageSize * modelSearch.StartIndex).Take(modelSearch.PageSize).ToList();
+        //    }
+        //    return chinhSuaVanBang;
+        //}
     }
 }

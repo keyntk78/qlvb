@@ -815,6 +815,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
        
 
         #endregion
+
         #region Trường
         /// <summary>
         /// Lấy tổng số học sinh của trường theo năm học (Trang chủ - trường)

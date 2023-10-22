@@ -20,8 +20,6 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
         private string _masterCacheKeyThongKe = "ThongKeCL";
         private string _masterCacheKeyTrangChu = "TrangChuCL";
 
-
-
         private CacheLayer _cache;
         private HocSinhBL _BL;
         public HocSinhCL(ICacheService cacheService, IConfiguration configuration)
@@ -672,7 +670,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
         }
         #endregion
 
-        #region Xác minh văn bằng
+        #region TraCứu
 
         public string GetSearchHocSinhXacMinhVanBang(HocSinhSearchXacMinhVBModel modelSearch)
         {
@@ -711,7 +709,31 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
         }
 
 
-      
+        public List<HocSinhModel> GetAllHocSinhDaCoSoHieu()
+        {
+            string rawKey = string.Concat("HocSinhs-GetAllHocSinhDaCoSoHieu-");
+
+            // See if the item is in the cache
+            List<HocSinhModel> hocSinhs = _cache.GetCacheKey<List<HocSinhModel>>(rawKey, _masterCacheKey)!;
+            if (hocSinhs != null) return hocSinhs;
+            // Item not found in cache - retrieve it and insert it into the cache
+            hocSinhs = _BL.GetAllHocSinhDaCoSoHieu();
+            _cache.AddCacheItem(rawKey, hocSinhs);
+            return hocSinhs;
+        }
+
+        public async Task<HocSinhResult> SaveImport(string idTruong,string idDanhMucTotNghiep ,List<HocSinhModel> models)
+        {
+            var result = await _BL.SaveImport(idTruong, idDanhMucTotNghiep, models);
+            if (result.MaLoi > 0)
+            {
+                // Invalidate the cache
+                _cache.InvalidateCache(_masterCacheKey);
+            }
+            return result;
+        }
+
+
         #endregion
 
     }
