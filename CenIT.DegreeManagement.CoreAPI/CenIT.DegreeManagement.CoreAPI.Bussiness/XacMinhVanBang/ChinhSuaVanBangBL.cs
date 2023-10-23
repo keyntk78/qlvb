@@ -1,11 +1,15 @@
 ﻿using CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc;
+using CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Core.Enums;
 using CenIT.DegreeManagement.CoreAPI.Core.Enums.TraCuu;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Core.Provider;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.XacMinhVanBang;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.QuanLySo;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -39,7 +43,6 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
 
         public async Task<int> Create(ChinhSuaVanBangInputModel model)
         {
-
             try
             {
                 var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
@@ -47,37 +50,34 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
 
                 if (hocSinh == null) return (int)LichSuChinhSuaVanBangEnum.NotExist;
 
-                var chinhSuaVanBang = new ChinhSuaVanBangModel()
+                var chinhSuaVanBang = new PhuLucSoGocModel();
+                ModelProvider.MapProperties(model, chinhSuaVanBang);
+                chinhSuaVanBang.NguoiTao = model.NguoiThucHien;
+                chinhSuaVanBang.NgayTao = DateTime.Now;
+                chinhSuaVanBang.SoHieuVanBangCu = hocSinh.SoHieuVanBang;
+                chinhSuaVanBang.SoVaoSoCapBangCu = hocSinh.SoVaoSoCapBang;
+                chinhSuaVanBang.IdHocSinh = hocSinh.Id;
+
+                if (model.SoHieuVanBang != hocSinh.SoHieuVanBang)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    DanTocCu = hocSinh.DanToc,
-                    HoTenCu = hocSinh.HoTen,
-                    CCCDCu = hocSinh.CCCD,
-                    NgaySinhCu = hocSinh.NgaySinh,
-                    NoiSinhCu = hocSinh.NoiSinh,
-                    GioiTinhCu = hocSinh.GioiTinh,
-                    PathFileVanBan = model.PathFileVanBan,
-                    LyDo = model.LyDo,
-                };
-
-                hocSinh.LichSuChinhSuaVanBang.Add(chinhSuaVanBang);
-
-                hocSinh.DanToc = model.DanToc;
-                hocSinh.HoTen = model.HoTen;
-                hocSinh.CCCD = model.CCCD;
-                hocSinh.NgaySinh = model.NgaySinh;
-                hocSinh.NoiSinh = model.NoiSinh;
-                hocSinh.GioiTinh = model.GioiTinh;
-
-                var updateResult = await conllectionHocSinh.ReplaceOneAsync(h => h.Id == hocSinh.Id, hocSinh);
-
-
-                if (updateResult.ModifiedCount == 0)
-                {
-                    return (int)LichSuChinhSuaVanBangEnum.Fail;
+                    if(KiemTraSoHieuVanBang(model.SoHieuVanBang, hocSinh.Id)) return (int)LichSuChinhSuaVanBangEnum.SoHieuExist;
+                    chinhSuaVanBang.SoHieuVanBangCapLai = model.SoHieuVanBang;
                 }
-                return (int)LichSuChinhSuaVanBangEnum.Success;
 
+                if (model.SoVaoSoCapBang != hocSinh.SoVaoSoCapBang)
+                {
+                    if (KiemTraSoVaoSo(model.SoVaoSoCapBang, hocSinh.Id)) return (int)LichSuChinhSuaVanBangEnum.SoVaoSoExist;
+                    chinhSuaVanBang.SoVaoSoCapBangCapLai = model.SoVaoSoCapBang;
+                }
+
+
+                await _mongoDatabase.GetCollection<PhuLucSoGocModel>(_collectionPhuLucSoGocName).InsertOneAsync(chinhSuaVanBang);
+                if (chinhSuaVanBang.Id != null)
+                {
+                    return (int)LichSuChinhSuaVanBangEnum.Success;
+
+                }
+                return (int)LichSuChinhSuaVanBangEnum.Fail;
             }
             catch
             {
@@ -86,40 +86,127 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
             }
         }
 
-        public List<ChinhSuaVanBangModel> GetSerachChinhSuaVanBang(out int total, string idHocSinh, SearchParamModel modelSearch)
+        public List<PhuLucSoGocModel> GetSerachChinhSuaVanBang(out int total, string idHocSinh, SearchParamModel modelSearch)
         {
-            var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
-            var hocSinh = conllectionHocSinh.Find(t => t.Xoa == false && t.Id == idHocSinh).FirstOrDefault();
+            var conllectionPhuLucSoGoc = _mongoDatabase.GetCollection<PhuLucSoGocModel>(_collectionPhuLucSoGocName);
+            var hocSinh = conllectionPhuLucSoGoc.Find(t => t.Xoa == false && t.IdHocSinh == idHocSinh).ToList();
 
-            var chinhSuaVanBang = hocSinh.LichSuChinhSuaVanBang.OrderBy(x=>x.NgayTao).ToList();
+            //var chinhSuaVanBang = hocSinh.LichSuChinhSuaVanBang.OrderBy(x=>x.NgayTao).ToList();
 
-            total = chinhSuaVanBang.Count;
+            total = hocSinh.Count;
 
             switch (modelSearch.Order)
             {
                 case "0":
-                    chinhSuaVanBang = modelSearch.OrderDir.ToUpper() == "ASC"
-                        ? chinhSuaVanBang.OrderBy(x => x.NgayTao).ToList()
-                        : chinhSuaVanBang.OrderByDescending(x => x.NgayTao).ToList();
+                    hocSinh = modelSearch.OrderDir.ToUpper() == "ASC"
+                        ? hocSinh.OrderBy(x => x.NgayTao).ToList()
+                        : hocSinh.OrderByDescending(x => x.NgayTao).ToList();
+                    break;
+
+                case "1":
+                    hocSinh = modelSearch.OrderDir.ToUpper() == "ASC"
+                        ? hocSinh.OrderBy(x => x.NgayTao).ToList()
+                        : hocSinh.OrderByDescending(x => x.NgayTao).ToList();
                     break;
             }
             if (modelSearch.PageSize > 0)
             {
-                chinhSuaVanBang = chinhSuaVanBang.Skip(modelSearch.PageSize * modelSearch.StartIndex).Take(modelSearch.PageSize).ToList();
+                hocSinh = hocSinh.Skip(modelSearch.PageSize * modelSearch.StartIndex).Take(modelSearch.PageSize).ToList();
             }
-            return chinhSuaVanBang;
+            return hocSinh;
         }
 
-        public ChinhSuaVanBangModel GetChinhSuaVanBangById(string cccd, string idLichSuChinhSua)
+        public LichSuChinhSuaModel GetChinhSuaVanBangById(string idPhuLuc)
+        {
+            var conllectionPhuLucSoGoc = _mongoDatabase.GetCollection<LichSuChinhSuaModel>(_collectionPhuLucSoGocName);
+            var hocSinh = conllectionPhuLucSoGoc.Find(t => t.Xoa == false && t.Id == idPhuLuc).ToList();
+            // Join với bảng hình thức đào tạo và nam thi
+            var namThiCollection = _mongoDatabase.GetCollection<NamThiModel>(_collectionNameNamThi);
+            var htdtCollection = _mongoDatabase.GetCollection<HinhThucDaoTaoModel>(_collectionNamHinhThucDaoTao);
+            hocSinh = hocSinh
+                      .Join(
+                          htdtCollection.AsQueryable(),
+                          hs => hs.MaHTDT,
+                          htdt => htdt.Ma,
+                          (hs, htdt) =>
+                          {
+                              hs.TenHinhThucDaoTao = htdt.Ten;
+                              return hs;
+                          }
+                      )
+                      .Join(
+                          namThiCollection.AsQueryable(),
+                          hs => hs.IdNamThi,
+                          nt => nt.Id,
+                          (hs, nt) =>
+                          {
+                              hs.NamThi = nt.Ten;
+                              hs.KhoaThi = nt.KhoaThis.Where(x=>x.Id == hs.IdKhoaThi).FirstOrDefault().Ngay;
+                              return hs;
+                          }
+                      ).ToList();
+                 
+            return hocSinh.FirstOrDefault();
+        }
+
+        #region Phụ Lục
+        public List<PhuLucSoGocModel> GetSerachPhuLuc(out int total, string namThi, SearchParamModel modelSearch)
+        {
+
+            var phuLucs = _mongoDatabase.GetCollection<PhuLucSoGocModel>(_collectionPhuLucSoGocName)
+                                .Find(x=>x.Xoa == false)
+                                .ToList();
+
+            if (!string.IsNullOrEmpty(namThi))
+            {
+                var namThiValue = !string.IsNullOrEmpty(namThi) ? Int32.Parse(namThi) : 0;
+
+                phuLucs = phuLucs.Where(x => x.NgayTao.Year == namThiValue).ToList();
+            }
+
+          
+            total = phuLucs.Count;
+
+            switch (modelSearch.Order)
+            {
+                case "0":
+                    phuLucs = modelSearch.OrderDir.ToUpper() == "ASC"
+                        ? phuLucs.OrderBy(x => x.NgayTao).ToList()
+                        : phuLucs.OrderByDescending(x => x.NgayTao).ToList();
+                    break;
+                case "1":
+                    phuLucs = modelSearch.OrderDir.ToUpper() == "ASC"
+                        ? phuLucs.OrderBy(x => x.NgayTao).ToList()
+                        : phuLucs.OrderByDescending(x => x.NgayTao).ToList();
+                    break;
+            }
+            if (modelSearch.PageSize > 0)
+            {
+                phuLucs = phuLucs.Skip(modelSearch.PageSize * modelSearch.StartIndex).Take(modelSearch.PageSize).ToList();
+            }
+            return phuLucs;
+        }
+        #endregion
+
+
+        private bool KiemTraSoHieuVanBang(string soHieuVanBang, string idHocSinh)
         {
             var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
-            var hocSinh = conllectionHocSinh.Find(t => t.Xoa == false && t.CCCD == cccd).FirstOrDefault();
 
-            var chinhSuaVanBangLists = hocSinh.LichSuChinhSuaVanBang.OrderBy(x => x.NgayTao).ToList();
-            var chinhSuaVanBang = chinhSuaVanBangLists.Where(x => x.Id == idLichSuChinhSua).FirstOrDefault();
+            var checkSoHieuVanBang = conllectionHocSinh.Find(t => t.Xoa == false && t.Id != idHocSinh && t.SoHieuVanBang == soHieuVanBang).FirstOrDefault();
 
-           
-            return chinhSuaVanBang;
+            return checkSoHieuVanBang != null ? true : false;
         }
+
+        private bool KiemTraSoVaoSo(string soVaoSo, string idHocSinh)
+        {
+            var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
+
+            var checkSoHieuVanBang = conllectionHocSinh.Find(t => t.Xoa == false && t.Id != idHocSinh && t.SoVaoSoCapBang == soVaoSo).FirstOrDefault();
+
+            return checkSoHieuVanBang != null ? true : false;
+        }
+
+
     }
 }

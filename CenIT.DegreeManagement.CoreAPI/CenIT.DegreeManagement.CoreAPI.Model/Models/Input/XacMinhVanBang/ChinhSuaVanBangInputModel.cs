@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Input.XacMinhVanBang
 {
-    public class ChinhSuaVanBangInputModel
+    public class ChinhSuaVanBangInputModel 
     {
         public string IdHocSinh { get; set; }
         public string HoTen { get; set; }
@@ -17,10 +17,19 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Input.XacMinhVanBang
         public string NoiSinh { get; set; }
         public bool GioiTinh { get; set; }
         public string DanToc { get; set; }
+        public string IdNamThi { get; set; }
+        public string XepLoai { get; set; }
+        public string MaHTDT { get; set; }
+        public DateTime NgayCap { get; set; }
+        public string SoHieuVanBang { get; set; }
+        public string SoVaoSoCapBang { get; set; }
         public string? PathFileVanBan { get; set; }
         public IFormFile FileVanBan { get; set; }
         public string NguoiThucHien { get; set; }
+        public string NoiDungChinhSua { get; set; }
         public string LyDo { get; set; }
+        public string? HoiDongThi { get; set; }
+        public string IdKhoaThi { get; set; }
 
     }
 }

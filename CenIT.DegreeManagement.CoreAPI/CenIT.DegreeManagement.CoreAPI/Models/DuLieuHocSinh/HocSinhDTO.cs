@@ -48,6 +48,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Models.DuLieuHocSinh
         public ThongTinPhatBangModel ThongTinPhatBang { get; set; } = new ThongTinPhatBangModel();
         public string NamThi { get; set; } = string.Empty;
         public DateTime KhoaThi { get; set; }
+        public string MaHinhThucDaoTao { get; set; }
         public SoGocModel SoGoc { get; set; } = new SoGocModel();
         public DanhMucTotNghiepModel DanhMucTotNghiep { get; set; } = new DanhMucTotNghiepModel();
         public TruongModel Truong { get; set; } = new TruongModel();

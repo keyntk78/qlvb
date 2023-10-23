@@ -6,6 +6,7 @@ using CenIT.DegreeManagement.CoreAPI.Core.Utils;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.XacMinhVanBang;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.QuanLySo;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.XacMinhVanBang
             return result;
         }
 
-        public List<ChinhSuaVanBangModel> GetSearchLichSuChinhSuaVanBang(out int total,string idHocSinh ,SearchParamModel modelSearch)
+        public List<PhuLucSoGocModel> GetSearchLichSuChinhSuaVanBang(out int total, string idHocSinh, SearchParamModel modelSearch)
         {
             string objectKey = EHashMd5.FromObject(modelSearch) + idHocSinh;
             string rawKey = string.Concat("HocSinhs-GetSearchLichSuChinhSuaVanBang-", objectKey);
@@ -55,28 +56,50 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.XacMinhVanBang
             total = cacheTotal ?? 0;
 
             // See if the item is in the cache
-            List<ChinhSuaVanBangModel> hocSinhs = _cache.GetCacheKey<List<ChinhSuaVanBangModel>>(rawKey, _masterCacheKey)!;
+            List<PhuLucSoGocModel> hocSinhs = _cache.GetCacheKey<List<PhuLucSoGocModel>>(rawKey, _masterCacheKey)!;
             if (hocSinhs != null) return hocSinhs;
             // Item not found in cache - retrieve it and insert it into the cache
-            hocSinhs = _BL.GetSerachChinhSuaVanBang(out total, idHocSinh ,modelSearch);
+            hocSinhs = _BL.GetSerachChinhSuaVanBang(out total, idHocSinh, modelSearch);
             _cache.AddCacheItem(rawKey, hocSinhs);
             _cache.AddCacheItem(rawKeyTotal, total);
             return hocSinhs;
         }
 
-        public ChinhSuaVanBangModel GetChinhSuaVanBangById(string cccd, string idLichSuChinhSua)
+        public LichSuChinhSuaModel GetChinhSuaVanBangById(string idPhuLuc)
         {
-            string objectKey = cccd + idLichSuChinhSua;
-            string rawKey = string.Concat("HocSinhs-GetChinhSuaVanBangById-", objectKey);
+            string rawKey = string.Concat("HocSinhs-GetChinhSuaVanBangById-", idPhuLuc);
 
             // See if the item is in the cache
-            ChinhSuaVanBangModel hocSinhs = _cache.GetCacheKey<ChinhSuaVanBangModel>(rawKey, _masterCacheKey)!;
+            LichSuChinhSuaModel hocSinhs = _cache.GetCacheKey<LichSuChinhSuaModel>(rawKey, _masterCacheKey)!;
             if (hocSinhs != null) return hocSinhs;
             // Item not found in cache - retrieve it and insert it into the cache
-            hocSinhs = _BL.GetChinhSuaVanBangById(cccd, idLichSuChinhSua);
+            hocSinhs = _BL.GetChinhSuaVanBangById(idPhuLuc);
             _cache.AddCacheItem(rawKey, hocSinhs);
             return hocSinhs;
         }
+
+        #region Phụ lục
+        public List<PhuLucSoGocModel> GetSerachPhuLuc(out int total, string namThi, SearchParamModel modelSearch)
+        {
+            string objectKey = EHashMd5.FromObject(modelSearch) + namThi;
+            string rawKey = string.Concat("HocSinhs-GetSerachPhuLuc-", objectKey);
+            string rawKeyTotal = string.Concat(rawKey, "-Total");
+
+            total = 0;
+            int? cacheTotal = _cache.GetCacheKey<int>(rawKeyTotal);
+            total = cacheTotal ?? 0;
+
+            // See if the item is in the cache
+            List<PhuLucSoGocModel> hocSinhs = _cache.GetCacheKey<List<PhuLucSoGocModel>>(rawKey, _masterCacheKey)!;
+            if (hocSinhs != null) return hocSinhs;
+            // Item not found in cache - retrieve it and insert it into the cache
+            hocSinhs = _BL.GetSerachPhuLuc(out total, namThi, modelSearch);
+            _cache.AddCacheItem(rawKey, hocSinhs);
+            _cache.AddCacheItem(rawKeyTotal, total);
+            return hocSinhs;
+        }
+
+        #endregion
 
     }
 

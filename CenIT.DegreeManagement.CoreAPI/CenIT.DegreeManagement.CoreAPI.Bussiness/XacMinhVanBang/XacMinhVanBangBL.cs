@@ -148,6 +148,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
             var hocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName)
                                    .Find(h => h.Xoa == false && h.Id == modelSearch.IdHocSinh && trangThaiValues.Contains(h.TrangThai)).FirstOrDefault();
 
+
             if (hocSinh == null)
             {
                 return null;

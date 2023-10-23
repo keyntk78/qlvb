@@ -159,6 +159,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
             var truongCollection = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong);
             var soGocCollection = _mongoDatabase.GetCollection<SoGocModel>(_collectionNameSoGoc);
             var namThiCollection = _mongoDatabase.GetCollection<NamThiModel>(_collectionNameNamThi);
+            var htdtCollection = _mongoDatabase.GetCollection<HinhThucDaoTaoModel>(_collectionNamHinhThucDaoTao);
+
 
             var hocSinhs = hocSinhCollection.Find(filter) .ToList();
             // Join với bảng hình thức đào tạo và nam thi
@@ -180,6 +182,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                           (hs, dmtn) =>
                           {
                               hs.DanhMucTotNghiep = dmtn;
+                              return hs;
+                          }
+                      )
+                      .Join(
+                          htdtCollection.AsQueryable(),
+                          hs => hs.DanhMucTotNghiep.IdHinhThucDaoTao,
+                          htdt => htdt.Id,
+                          (hs, htdt) =>
+                          {
+                              hs.MaHinhThucDaotao = htdt.Ma;
                               return hs;
                           }
                       )
@@ -2389,7 +2401,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                         TrangThaiHocSinhEnum.DaDuaVaoSoGoc,
                         TrangThaiHocSinhEnum.DaCapBang,
                         TrangThaiHocSinhEnum.DaInBang,
-                        TrangThaiHocSinhEnum.DaNhanBang
+                        TrangThaiHocSinhEnum.DaNhanBang,
+                        TrangThaiHocSinhEnum.HuyBo
+
                 }),
 
                 !string.IsNullOrEmpty(modelSearch.HoTen)

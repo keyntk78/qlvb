@@ -205,6 +205,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
         {
             try
             {
+                var deleted = await _hocSinhTmpCl.Delete(model.NguoiThucHien);
+
                 //Kiểm tra định dạng file excel
                 var checkFile = FileHelper.CheckValidFileExcel(model.FileExcel);
                 if (checkFile.Item1 == (int)ErrorFileEnum.InvalidFileImage)
@@ -315,6 +317,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
                 return ResponseHelper.BadRequest("Thêm danh sách học sinh thất bại");
             if (response.MaLoi == (int)HocSinhEnum.NotExistPhoi)
                 return ResponseHelper.BadRequest("Phôi gốc không tồn tại");
+            var deleted = await _hocSinhTmpCl.Delete(nguoiThucHien);
             return ResponseHelper.Success("Thêm danh sách học sinh thành công");
         }
 

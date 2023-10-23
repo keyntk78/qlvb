@@ -15,5 +15,31 @@ namespace CenIT.DegreeManagement.CoreAPI.Core.Enums.TraCuu
         Fail = -1,
         [Description("Học sinh không tồn tại")]
         NotExist = -2,
+        [Description("Số Hiệu đã tồn tại")]
+        SoHieuExist = -3,
+        [Description("Số vào sổ cấp đã tồn tại")]
+        SoVaoSoExist = -4,
+
+
+    }
+
+    public enum LichSuHuyBoVanBangEnum
+    {
+        [Description("Thành công")]
+        Success = 1,
+        [Description("Thất bại")]
+        Fail = -1,
+        [Description("Học sinh không tồn tại")]
+        NotExist = -2,
+    }
+
+    public enum LichSuCapLaiVanBangEnum
+    {
+        [Description("Thành công")]
+        Success = 1,
+        [Description("Thất bại")]
+        Fail = -1,
+        [Description("Học sinh không tồn tại")]
+        NotExist = -2,
     }
 }

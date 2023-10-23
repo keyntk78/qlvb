@@ -2,6 +2,7 @@
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.XacMinhVanBang;
 using ExcelDataReader;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
@@ -56,6 +57,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh
         public int SoLanIn { get; set; } = 0;
         public ThongTinPhatBangModel ThongTinPhatBang { get; set; } = new ThongTinPhatBangModel();
         public List<ChinhSuaVanBangModel> LichSuChinhSuaVanBang { get; set; } = new List<ChinhSuaVanBangModel>();
+        public List<HuyBoVangBangModel> LichSuHuyBoVanBang { get; set; } = new List<HuyBoVangBangModel>();
+        public List<CapLaiVanBangModel> LichSuCapLaiVanBang { get; set; } = new List<CapLaiVanBangModel>();
+
+
 
     }
 
@@ -126,6 +131,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh
         public DanhMucTotNghiepModel DanhMucTotNghiep { get; set; } = new DanhMucTotNghiepModel();
         public TruongModel Truong { get; set; } = new TruongModel();
         public DateTime KhoaThi { get; set; }
+        public string MaHinhThucDaotao { get; set; }
+
     }
 
     public class HocSinhCapPhatBangViewModel : HocSinhModel

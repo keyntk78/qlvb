@@ -37,8 +37,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.Shared
         private HinhThucDaoTaoCL _htdtCl;
         private DanhMucTotNghiepCL _danhMucTotNghiepCL;
         private HocSinhCL _hocSinhCl;
-
-
+        private DanTocCL _danTocCL;
+        private NamThiCL _namThiCL;
 
         private ILogger<SharedController> _logger;
         private readonly ShareResource _localizer;
@@ -53,6 +53,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.Shared
             _heDaoTaoCL = new HeDaoTaoCL(cacheService, configuration);
             _htdtCl = new HinhThucDaoTaoCL(cacheService, configuration);
             _hocSinhCl = new HocSinhCL(cacheService, configuration);
+            _danTocCL = new DanTocCL(cacheService, configuration);
+            _namThiCL = new NamThiCL(cacheService, configuration);
             _logger = logger;
             _localizer = shareResource;
             _fileService = fileService;
@@ -172,6 +174,29 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.Shared
             return hocSinh != null ? ResponseHelper.Ok(hocSinh)
                 : ResponseHelper.NotFound(_localizer.GetNotExistMessage(NameControllerEnum.HocSinh.ToStringValue()), cccd);
         }
-    }
 
+        [HttpGet("GetAllDanToc")]
+        [AllowAnonymous]
+        public IActionResult GetAllDanToc()
+        {
+            var data = _danTocCL.GetAll();
+            return ResponseHelper.Ok(data);
+        }
+
+        [HttpGet("GetAllNamThi")]
+        [AllowAnonymous]
+        public IActionResult GetAllNamThi()
+        {
+            var data = _namThiCL.GetAll();
+            return ResponseHelper.Ok(data);
+        }
+
+        [HttpGet("GetAllKhoaThiByNamThi")]
+        [AllowAnonymous]
+        public IActionResult GetAllKhoaThiByNamThi(string idNamThi)
+        {
+            var data = _namThiCL.GetKhoaThisByNam(idNamThi);
+            return ResponseHelper.Ok(data);
+        }
+    }
 }
