@@ -21,7 +21,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
     {
         private readonly ShareResource _localizer;
         private HocSinhCL _cacheLayer;
-        private CapLaiVanBangCL _cacheCapLaiVanBang;
+        private ChinhSuaVanBangCL _cacheChinhSuaVanBang;
 
         private readonly IMapper _mapper;
         private ILogger<CapLaiVanBangController> _logger;
@@ -32,51 +32,20 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
             _logger = logger;
             _localizer = shareResource;
             _fileService = fileService;
-            _cacheCapLaiVanBang = new CapLaiVanBangCL(cacheService, configuration);
+            _cacheChinhSuaVanBang = new ChinhSuaVanBangCL(cacheService, configuration);
             _mapper = mapper;
         }
 
-        [HttpPost("Create")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Create([FromForm] CapLaiVangBangInputModel model)
-        {
-
-            #region Save File
-
-            if (model.FileVanBan != null)
-            {
-                string folderName = "DonYeuCau/VanBanCapLai";
-                var fileResult = _fileService.SaveFile(model.FileVanBan, folderName);
-                if (fileResult.Item1 == 1)
-                {
-                    model.PathFileVanBan = fileResult.Item2;
-                }
-                else
-                {
-                    return ResponseHelper.BadRequest(fileResult.Item2);
-                }
-            }
-
-            #endregion
-
-            var data = await _cacheCapLaiVanBang.Create(model);
-            if (data == (int)LichSuHuyBoVanBangEnum.Fail)
-                return ResponseHelper.BadRequest("Cấp lại văn bằng thất bại");
-            if (data == (int)LichSuHuyBoVanBangEnum.NotExist)
-                return ResponseHelper.BadRequest("Không tồn tại");
-            return ResponseHelper.Success("Cấp lại văn bằng thành công");
-        }
 
         [HttpGet("GetSearchLichSuCapLaiVanBang")]
         [AllowAnonymous]
-        public IActionResult GetSearchLichSuCapLaiVanBang(string cccd, [FromQuery] SearchParamModel model)
+        public IActionResult GetSearchLichSuChinhSuaVanBang(string cccd, [FromQuery] SearchParamModel model)
         {
             int total;
 
             var hocSinh = _cacheLayer.GetHocSinhByCccd(cccd);
             HocSinhDTO hocSinhMp = _mapper.Map<HocSinhDTO>(hocSinh);
-
-            var data = _cacheCapLaiVanBang.GetSearchLichSuCapLaiVanBang(out total, hocSinhMp.Id, model);
+            var data = _cacheChinhSuaVanBang.GetSearchLichSuCapLaiVanBang(out total, hocSinhMp.Id, model);
 
             var outputData = new
             {
@@ -89,21 +58,5 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
         }
 
 
-        [HttpGet("GetCapLaiVanBangById")]
-        [AllowAnonymous]
-        public IActionResult GetCapLaiVanBangById(string cccd, string idLichSuChinhSua)
-        {
-            var hocSinh = _cacheLayer.GetHocSinhByCccd(cccd);
-            HocSinhDTO hocSinhMp = _mapper.Map<HocSinhDTO>(hocSinh);
-
-            var data = _cacheCapLaiVanBang.GetCapLaiVanBangById(cccd, idLichSuChinhSua);
-
-            var outputData = new
-            {
-                HocSinhs = hocSinhMp,
-                LichSus = data,
-            };
-            return ResponseHelper.Ok(outputData);
-        }
     }
 }

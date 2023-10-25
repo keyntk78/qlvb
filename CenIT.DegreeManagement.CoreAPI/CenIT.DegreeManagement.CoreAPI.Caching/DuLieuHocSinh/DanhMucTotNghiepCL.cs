@@ -3,6 +3,7 @@ using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Utils;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh;
 using Microsoft.Extensions.Configuration;
 
@@ -157,15 +158,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
         /// <param name="idNamThi"></param>
         /// <param name="idHinhThucDaoTao"></param>
         /// <returns></returns>
-        public List<DanhMucTotNghiepViewModel> GetByIdNamThiAndMaHinhThucDaoTao(string idNamThi, string maHinhThucDaoTao)
+        public List<DanhMucTotNghiepViewModel> GetByIdNamThiAndMaHinhThucDaoTao(string idNamThi, string maHinhThucDaoTao, TruongModel donvi)
         {
-            string rawKey = string.Concat("GetByIdNamThiAndMaHinhThucDaoTao", idNamThi + maHinhThucDaoTao);
+            var hashKey = EHashMd5.FromObject(donvi);
+            string rawKey = string.Concat("GetByIdNamThiAndMaHinhThucDaoTao", idNamThi + maHinhThucDaoTao) + hashKey;
 
             // See if the item is in the cache
             List<DanhMucTotNghiepViewModel> danhMucTotNghieps = _cache.GetCacheKey<List<DanhMucTotNghiepViewModel>>(rawKey, _masterCacheKey)!;
             if (danhMucTotNghieps != null) return danhMucTotNghieps;
             // Item not found in cache - retrieve it and insert it into the cache
-            danhMucTotNghieps = _BL.GetByIdNamThiAndMaHinhThucDaoTao(idNamThi, maHinhThucDaoTao);
+            danhMucTotNghieps = _BL.GetByIdNamThiAndMaHinhThucDaoTao(idNamThi, maHinhThucDaoTao, donvi);
             _cache.AddCacheItem(rawKey, danhMucTotNghieps, _masterCacheKey);
             return danhMucTotNghieps;
         }

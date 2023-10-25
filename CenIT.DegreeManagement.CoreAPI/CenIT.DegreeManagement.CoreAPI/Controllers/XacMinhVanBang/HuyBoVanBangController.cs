@@ -45,7 +45,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
 
             if (model.FileVanBan != null)
             {
-                string folderName = "VanBanHuyBo";
+                string folderName = "DonYeuCau/VanBanHuyBo";
                 var fileResult = _fileService.SaveFile(model.FileVanBan, folderName);
                 if (fileResult.Item1 == 1)
                 {
@@ -69,39 +69,35 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
 
         [HttpGet("GetSearchLichSuHuyBoVanBang")]
         [AllowAnonymous]
-        public IActionResult GetSearchLichSuHuyBoVanBang(string cccd, [FromQuery] SearchParamModel model)
+        public IActionResult GetSearchLichSuHuyBoVanBang(string idHocSinh, [FromQuery] SearchParamModel model)
         {
             int total;
 
-            var hocSinh = _cacheLayer.GetHocSinhByCccd(cccd);
-            HocSinhDTO hocSinhMp = _mapper.Map<HocSinhDTO>(hocSinh);
-
-            var data = _cacheHuyBoVanBang.GetSearchLichSuHuyBoVanBang(out total, hocSinhMp.Id, model);
+            var data = _cacheHuyBoVanBang.GetSerachHuyBoVanBangByIdHocSinh(out total, idHocSinh, model);
 
             var outputData = new
             {
                 LichSus = data,
                 totalRow = total,
-                HocSinh = hocSinhMp,
                 searchParam = model
             };
             return ResponseHelper.Ok(outputData);
         }
 
-        [HttpGet("GetHuyBoVanBangById")]
-        [AllowAnonymous]
-        public IActionResult GetHuyBoVanBangById(string cccd, string idLichSuChinhSua)
-        {
-            var hocSinh = _cacheLayer.GetHocSinhByCccd(cccd);
-            HocSinhDTO hocSinhMp = _mapper.Map<HocSinhDTO>(hocSinh);
-            var data = _cacheHuyBoVanBang.GetHuyBoVanBangById(cccd, idLichSuChinhSua);
+        //[HttpGet("GetHuyBoVanBangById")]
+        //[AllowAnonymous]
+        //public IActionResult GetHuyBoVanBangById(string cccd, string idLichSuChinhSua)
+        //{
+        //    var hocSinh = _cacheLayer.GetHocSinhByCccd(cccd);
+        //    HocSinhDTO hocSinhMp = _mapper.Map<HocSinhDTO>(hocSinh);
+        //    var data = _cacheHuyBoVanBang.GetHuyBoVanBangById(cccd, idLichSuChinhSua);
 
-            var outputData = new
-            {
-                HocSinhs = hocSinhMp,
-                LichSus = data,
-            };
-            return ResponseHelper.Ok(outputData);
-        }
+        //    var outputData = new
+        //    {
+        //        HocSinhs = hocSinhMp,
+        //        LichSus = data,
+        //    };
+        //    return ResponseHelper.Ok(outputData);
+        //}
     }
 }

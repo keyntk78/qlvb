@@ -19,6 +19,7 @@ using CenIT.DegreeManagement.CoreAPI.Core.Utils;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Newtonsoft.Json;
 using CenIT.DegreeManagement.CoreAPI.Models.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc;
 
 namespace CenIT.DegreeManagement.CoreAPI.Controllers.CapBang
 {
@@ -40,6 +41,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CapBang
         private MessageCL _messageCL;
         private SysDeviceTokenCL _sysDeviceTokenCL;
         private SysMessageConfigCL _sysMessageConfigCL;
+        private TruongCL _truongCL;
+
 
 
 
@@ -55,7 +58,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CapBang
             _messageCL = new MessageCL(cacheService);
             _sysDeviceTokenCL = new SysDeviceTokenCL(cacheService);
             _sysMessageConfigCL = new SysMessageConfigCL(cacheService);
-
+            _truongCL = new TruongCL(cacheService, configuration);
         }
 
         /// <summary>
@@ -128,8 +131,20 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CapBang
             if (response.MaLoi == (int)HocSinhEnum.NotExistSoGoc)
                 return ResponseHelper.BadRequest(_localizer.GetListEmptyMessage("SoGoc"));
             else
+            {
+                var updateSoVaoSo = new UpdateCauHinhSoVaoSoInputModel()
+                {
+                    DinhDangSoThuTuSoGoc = response.SoluongHocSinh,
+                    Nam = response.Nam,
+                    LoaiHanhDong = SoVaoSoEnum.SoVaoSoGoc,
+                    IdTruong = model.IdTruong
+                };
+
+                var result = _truongCL.UpdateCauHinhSoVaoSo(updateSoVaoSo);
                 await _danhMucTotNghiepCL.CapNhatTrangThaiDaInBang(model.IdDanhMucTotNghiep);
                 return ResponseHelper.Success(_localizer.GetPutInToSuccessMessage(_nameHocSinh));
+            }    
+               
         }
 
         [HttpGet("GetDanhSachHocSinhDaDuaVaoSo")]

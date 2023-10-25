@@ -4,6 +4,7 @@ using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Core.Utils;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.XacMinhVanBang;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.XacMinhVanBang;
 using Microsoft.Extensions.Configuration;
@@ -29,10 +30,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.XacMinhVanBang
             _BL = new XacMinhVanBangBL(configuration);
         }
 
-        public async Task<int> Create(XacMinhVangBangInputModel model)
+        public async Task<int> Create(XacMinhVangBangInputModel model, TruongModel donVi)
         {
 
-            var result = await _BL.Create(model);
+            var result = await _BL.Create(model, donVi);
             if (result > 0)
             {
                 _cache.InvalidateCache(_masterCacheKey);
@@ -42,10 +43,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.XacMinhVanBang
             return result;
         }
 
-        public async Task<int> CreateList(XacMinhVangBangListInputModel model)
+        public async Task<int> CreateList(XacMinhVangBangListInputModel model, TruongModel donVi)
         {
 
-            var result = await _BL.CreateList(model);
+            var result = await _BL.CreateList(model, donVi);
             if (result > 0)
             {
                 _cache.InvalidateCache(_masterCacheKey);

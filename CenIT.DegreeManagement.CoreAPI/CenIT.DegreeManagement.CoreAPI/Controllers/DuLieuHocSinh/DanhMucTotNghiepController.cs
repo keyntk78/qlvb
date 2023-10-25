@@ -204,24 +204,24 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.DuLieuHocSinh
             return ResponseHelper.Ok(data);
         }
 
-        /// <summary>
-        /// Lấy danh mục tốt nghiệp theo idNamThi và idHinhThucDaoTao
-        /// </summary>
-        /// <param name="idDanhMucTotNghiep"></param>
-        /// <returns></returns>
-        [HttpGet("GetByIdNamThi/{idNamThi}/{maHinhThucDaoTao}")]
-        public IActionResult GetByIdNamThiAndMaHinhThucDaoTao(string idNamThi, string maHinhThucDaoTao)
-        {
-            var danhMucTotNghieps = _cacheLayer.GetByIdNamThiAndMaHinhThucDaoTao(idNamThi, maHinhThucDaoTao);
-            var tongSoTruong = _truongCL.GetAll().Count();
+        ///// <summary>
+        ///// Lấy danh mục tốt nghiệp theo idNamThi và idHinhThucDaoTao
+        ///// </summary>
+        ///// <param name="idDanhMucTotNghiep"></param>
+        ///// <returns></returns>
+        //[HttpGet("GetByIdNamThi/{idNamThi}/{maHinhThucDaoTao}")]
+        //public IActionResult GetByIdNamThiAndMaHinhThucDaoTao(string idNamThi, string maHinhThucDaoTao)
+        //{
+        //    var danhMucTotNghieps = _cacheLayer.GetByIdNamThiAndMaHinhThucDaoTao(idNamThi, maHinhThucDaoTao);
+        //    var tongSoTruong = _truongCL.GetAll().Count();
 
-            danhMucTotNghieps.ForEach(danhMucTotNghiep =>
-            {
-                danhMucTotNghiep.TongSoTruong = tongSoTruong;
+        //    danhMucTotNghieps.ForEach(danhMucTotNghiep =>
+        //    {
+        //        danhMucTotNghiep.TongSoTruong = tongSoTruong;
 
-            });
-            return ResponseHelper.Ok(danhMucTotNghieps);
-        }
+        //    });
+        //    return ResponseHelper.Ok(danhMucTotNghieps);
+        //}
 
         /// <summary>
         /// Khóa danh mục tốt nghiệp

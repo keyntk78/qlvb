@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.XacMinhVanBang;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.QuanLySo;
 
 namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
 {
@@ -40,13 +41,15 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
             try
             {
                 var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
-                var hocSinh = conllectionHocSinh.Find(t => t.Xoa == false && t.Id == model.IdHocSinh && t.TrangThai == TrangThaiHocSinhEnum.DaNhanBang).FirstOrDefault();
+                var conllectionHuyBo = _mongoDatabase.GetCollection<LichSuHuyBoModel>(_collectionHuyBoName);
+
+                var hocSinh = conllectionHocSinh.Find(t => t.Xoa == false && t.Id == model.IdHocSinh).FirstOrDefault();
 
                 if (hocSinh == null) return (int)LichSuHuyBoVanBangEnum.NotExist;
 
-                var huyBoVB = new HuyBoVangBangModel()
+                var huyBoVB = new LichSuHuyBoModel()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    IdHocSinh = hocSinh.Id,
                     PathFileVanBan = model.PathFileVanBan,
                     LyDo = model.LyDo,
                     NguoiTao = model.NguoiThucHien,
@@ -54,8 +57,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
                 };
 
                 hocSinh.TrangThai = TrangThaiHocSinhEnum.HuyBo;
-                hocSinh.LichSuHuyBoVanBang.Add(huyBoVB);
-
+                await _mongoDatabase.GetCollection<LichSuHuyBoModel>(_collectionHuyBoName).InsertOneAsync(huyBoVB);
                 var updateResult = await conllectionHocSinh.ReplaceOneAsync(h => h.Id == hocSinh.Id, hocSinh);
 
                 if (updateResult.ModifiedCount == 0)
@@ -72,41 +74,90 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
             }
         }
 
-        public List<HuyBoVangBangModel> GetSerachHuyBoVanBang(out int total, string idHocSinh, SearchParamModel modelSearch)
+        public List<LichSuHuyBoViewModel> GetSerachHuyBoVanBangByIdHocSinh(out int total, string idHocSinh, SearchParamModel modelSearch)
         {
             var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
-            var hocSinh = conllectionHocSinh.Find(t => t.Xoa == false && t.Id == idHocSinh).FirstOrDefault();
+            var conllectionHuyBo = _mongoDatabase.GetCollection<LichSuHuyBoViewModel>(_collectionHuyBoName);
 
-            var huyBoVangBangs = hocSinh.LichSuHuyBoVanBang.OrderBy(x => x.NgayTao).ToList();
+            var hocSinhs = conllectionHuyBo.Find(t => t.Xoa == false && t.IdHocSinh == idHocSinh)
+                                .ToList()
+                                .Join(
+                                      conllectionHocSinh.AsQueryable(),
+                                      h => h.IdHocSinh,
+                                      hs => hs.Id,
+                                      (h, hs) =>
+                                      {
+                                          h.HocSinh = hs;
+                                          return h;
+                                      }
+                                  ).ToList();
 
-            total = huyBoVangBangs.Count;
+
+            total = hocSinhs.Count;
 
             switch (modelSearch.Order)
             {
                 case "0":
-                    huyBoVangBangs = modelSearch.OrderDir.ToUpper() == "ASC"
-                        ? huyBoVangBangs.OrderBy(x => x.NgayTao).ToList()
-                        : huyBoVangBangs.OrderByDescending(x => x.NgayTao).ToList();
+                    hocSinhs = modelSearch.OrderDir.ToUpper() == "ASC"
+                        ? hocSinhs.OrderBy(x => x.NgayTao).ToList()
+                        : hocSinhs.OrderByDescending(x => x.NgayTao).ToList();
                     break;
             }
             if (modelSearch.PageSize > 0)
             {
-                huyBoVangBangs = huyBoVangBangs.Skip(modelSearch.PageSize * modelSearch.StartIndex).Take(modelSearch.PageSize).ToList();
+                hocSinhs = hocSinhs.Skip(modelSearch.PageSize * modelSearch.StartIndex).Take(modelSearch.PageSize).ToList();
             }
-            return huyBoVangBangs;
+            return hocSinhs;
         }
 
-        public HuyBoVangBangModel GetHuyBoVanBangById(string cccd, string idLichSuHuyBo)
+
+        public List<LichSuHuyBoViewModel> GetSerachHuyBoVanBang(out int total, SearchParamModel modelSearch)
         {
             var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
-            var hocSinh = conllectionHocSinh.Find(t => t.Xoa == false && t.CCCD == cccd).FirstOrDefault();
+            var conllectionHuyBo = _mongoDatabase.GetCollection<LichSuHuyBoViewModel>(_collectionHuyBoName);
 
-            var huyBoVangBangs = hocSinh.LichSuHuyBoVanBang.OrderBy(x => x.NgayTao).ToList();
-            var huyBoVangBang = huyBoVangBangs.Where(x => x.Id == idLichSuHuyBo).FirstOrDefault();
+            var hocSinhs = conllectionHuyBo.Find(t => t.Xoa == false)
+                                .ToList()
+                                .Join(
+                                      conllectionHocSinh.AsQueryable(),
+                                      h => h.IdHocSinh,
+                                      hs => hs.Id,
+                                      (h, hs) =>
+                                      {
+                                          h.HocSinh = hs;
+                                          return h;
+                                      }
+                                  ).ToList();
 
 
-            return huyBoVangBang;
+            total = hocSinhs.Count;
+
+            switch (modelSearch.Order)
+            {
+                case "0":
+                    hocSinhs = modelSearch.OrderDir.ToUpper() == "ASC"
+                        ? hocSinhs.OrderBy(x => x.NgayTao).ToList()
+                        : hocSinhs.OrderByDescending(x => x.NgayTao).ToList();
+                    break;
+            }
+            if (modelSearch.PageSize > 0)
+            {
+                hocSinhs = hocSinhs.Skip(modelSearch.PageSize * modelSearch.StartIndex).Take(modelSearch.PageSize).ToList();
+            }
+            return hocSinhs;
         }
+
+        //public HuyBoVangBangModel GetHuyBoVanBangById(string cccd, string idLichSuHuyBo)
+        //{
+        //    var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(_collectionHocSinhName);
+        //    var hocSinh = conllectionHocSinh.Find(t => t.Xoa == false && t.CCCD == cccd).FirstOrDefault();
+
+        //    var huyBoVangBangs = hocSinh.LichSuHuyBoVanBang.OrderBy(x => x.NgayTao).ToList();
+        //    var huyBoVangBang = huyBoVangBangs.Where(x => x.Id == idLichSuHuyBo).FirstOrDefault();
+
+
+        //    return huyBoVangBang;
+        //}
 
     }
 }

@@ -26,10 +26,11 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Input.XacMinhVanBang
         public string? PathFileVanBan { get; set; }
         public IFormFile FileVanBan { get; set; }
         public string NguoiThucHien { get; set; }
-        public string NoiDungChinhSua { get; set; }
+        //public string NoiDungChinhSua { get; set; }
         public string LyDo { get; set; }
         public string? HoiDongThi { get; set; }
         public string IdKhoaThi { get; set; }
+        public LoaiHanhDongEnum LoaiHanhDong { get; set; }
 
     }
 }

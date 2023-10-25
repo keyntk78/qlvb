@@ -12,7 +12,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc
     public class TruongCL
     {
         private string _masterCacheKey = "TruongCache";
-        private string _masterCacheKeyTrangChu = "TrangChuCL";
+        private string _masterCacheKeyTrangChu = "TrangChuCache";
 
         private CacheLayer _cache;
         private TruongBL _BL;
@@ -257,6 +257,18 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc
         public int UpdateSoDonYeuCau(string idTruong)
         {
             var result = _BL.UpdateSoDonYeuCau(idTruong);
+            if (result > 0)
+            {
+                // Invalidate the cache
+                _cache.InvalidateCache(_masterCacheKey);
+            }
+            return result;
+        }
+
+
+        public int UpdateCauHinhSoVaoSo(UpdateCauHinhSoVaoSoInputModel model)
+        {
+            var result = _BL.UpdateCauHinhSoVaoSo(model);
             if (result > 0)
             {
                 // Invalidate the cache

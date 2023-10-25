@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
-using CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc;
-using CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Caching.Sys;
 using CenIT.DegreeManagement.CoreAPI.Caching.XacMinhVanBang;
-using CenIT.DegreeManagement.CoreAPI.Controllers.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Enums;
 using CenIT.DegreeManagement.CoreAPI.Core.Helpers;
-using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Core.Provider;
 using CenIT.DegreeManagement.CoreAPI.Core.Utils;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DuLieuHocSinh;
@@ -19,13 +16,11 @@ using CenIT.DegreeManagement.CoreAPI.Processor.UploadFile;
 using CenIT.DegreeManagement.CoreAPI.Resources;
 using CenIT.DegreeManagement.CoreAPI.Validation;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.Data;
 using static CenIT.DegreeManagement.CoreAPI.Core.Helpers.DataTableValidatorHelper;
-using static Google.Apis.Requests.BatchRequest;
 
 namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
 {
@@ -41,6 +36,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
         private DanTocCL _danTocCL;
         private MonThiCL _monThiCL;
         private HocSinhTmpCl _hocSinhTmpCl;
+        private SysUserCL _sysUserCL;
+
 
         private readonly IMapper _mapper;
 
@@ -60,6 +57,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
             _monThiCL = new MonThiCL(cacheService, configuration);
             _mapper = mapper;
             _hocSinhTmpCl = new HocSinhTmpCl(cacheService, configuration);
+            _sysUserCL = new SysUserCL(cacheService);
 
         }
 
@@ -68,8 +66,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
         public IActionResult GetSearchHocSinhXacMinhVanBang([FromQuery] HocSinhSearchXacMinhVBModel model)
         {
             int total;
+            var user = _sysUserCL.GetByUsername(model.NguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
 
-            var data = _cacheLayer.GetSearchHocSinhXacMinhVB(out total, model);
+            var data = _cacheLayer.GetSearchHocSinhXacMinhVB(out total, model, donVi.Id);
 
             var outputData = new
             {
@@ -117,10 +117,13 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
                 }
             }
 
-            var data = await _cacheXacMinhVB.Create(model);
+            var user = _sysUserCL.GetByUsername(model.NguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+
+            var data = await _cacheXacMinhVB.Create(model, donVi);
             if (data == (int)XacMinhVanBangEnum.Fail)
-                return ResponseHelper.BadRequest(_localizer.GetAddErrorMessage("Thêm lịch sử xác minh thất bại"));
-            return ResponseHelper.Success(_localizer.GetAddSuccessMessage("Thêm lịch sử xác minh thành công"));
+                return ResponseHelper.BadRequest(_localizer.GetAddErrorMessage("Xác minh thất bại"));
+            return ResponseHelper.Success(_localizer.GetAddSuccessMessage("Xác minh thành công"));
 
         }
 
@@ -143,7 +146,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
                 }
             }
 
-            var data = await _cacheXacMinhVB.CreateList(model);
+            var user = _sysUserCL.GetByUsername(model.NguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+            var data = await _cacheXacMinhVB.CreateList(model, donVi);
 
             if (data == (int)XacMinhVanBangEnum.Fail)
                 return ResponseHelper.BadRequest(_localizer.GetAddErrorMessage("Thêm lịch sử xác minh thất bại"));

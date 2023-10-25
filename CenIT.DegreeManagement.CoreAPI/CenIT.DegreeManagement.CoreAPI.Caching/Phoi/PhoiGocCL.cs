@@ -91,6 +91,18 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.Phoi
             return phoiGoc;
         }
 
+        public PhoiGocModel GetPhoiDangSuDungByHDT(string maHeDaoTao)
+        {
+            var rawKey = "PhoiGoc-GetPhoiDangSuDungByHeDaoTao-" + maHeDaoTao;
+            var phoiGoc = _cache.GetCacheKey<PhoiGocModel>(rawKey, _masterCacheKey)!;
+            if (phoiGoc == null)
+            {
+                phoiGoc = _BL.GetPhoiDangSuDungByHDT(maHeDaoTao);
+                _cache.AddCacheItem(rawKey, phoiGoc, _masterCacheKey);
+            }
+            return phoiGoc;
+        }
+
         public List<PhoiGocModel> GetSearchPhoiGoc(out int total, SearchParamModel modelSearch)
         {
             string objectKey = EHashMd5.FromObject(modelSearch);

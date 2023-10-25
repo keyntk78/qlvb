@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CenIT.DegreeManagement.CoreAPI.Core.Enums;
+using Microsoft.AspNetCore.Http;
 
 
 namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DanhMuc
@@ -47,5 +48,14 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DanhMuc
         public IFormFile? FileImage { get; set; }
     }
 
+    public class UpdateCauHinhSoVaoSoInputModel
+    {
+        public string IdTruong { get; set; } = string.Empty;
+        public int DinhDangSoThuTuSoGoc { get; set; } = 0;
+        public int DinhDangSoThuTuCapLai { get; set; } = 0;
+        public string Nam { get; set; } = string.Empty;
+        public int SoDonYeuCau { get; set; } = 0;
+        public SoVaoSoEnum LoaiHanhDong { get; set; }
+    }
 
 }

@@ -19,6 +19,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Core.Enums.TraCuu
         SoHieuExist = -3,
         [Description("Số vào sổ cấp đã tồn tại")]
         SoVaoSoExist = -4,
+        [Description("Không có thông tin chỉnh sửa")]
+        NotEdit = -5,
 
 
     }

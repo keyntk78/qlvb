@@ -160,6 +160,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
             var soGocCollection = _mongoDatabase.GetCollection<SoGocModel>(_collectionNameSoGoc);
             var namThiCollection = _mongoDatabase.GetCollection<NamThiModel>(_collectionNameNamThi);
             var htdtCollection = _mongoDatabase.GetCollection<HinhThucDaoTaoModel>(_collectionNamHinhThucDaoTao);
+            var hdtCollection = _mongoDatabase.GetCollection<HeDaoTaoModel>(_collectionNamHeDaoTao);
 
 
             var hocSinhs = hocSinhCollection.Find(filter) .ToList();
@@ -172,6 +173,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                           (hs, truong) =>
                           {
                               hs.Truong = truong;
+                              return hs;
+                          }
+                      )
+                      .Join(
+                          hdtCollection.AsQueryable(),
+                          hs => hs.Truong.MaHeDaoTao,
+                          hdt => hdt.Ma,
+                          (hs, hdt) =>
+                          {
+                              hs.TenHeDaoTao = hdt.Ten;
                               return hs;
                           }
                       )
@@ -1035,7 +1046,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                 if (hocSinhs.Count > 0)
                 {
 
-                    int soBatDau = int.Parse(phoiGoc.SoBatDau);
+                    int soBatDau = int.Parse(phoiGoc.SoBatDau) + phoiGoc.SoLuongPhoiDaSuDung;
                     int soBatDauLength = phoiGoc.SoBatDau.Length;
 
                     // Cấp số hiệu văn bằng và số vào sổ cấp bằng
@@ -1141,7 +1152,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                 if (hocSinhs.Count > 0)
                 {
 
-                    int soBatDau = int.Parse(phoiGoc.SoBatDau);
+                    int soBatDau = int.Parse(phoiGoc.SoBatDau) + phoiGoc.SoLuongPhoiDaSuDung;
                     int soBatDauLength = phoiGoc.SoBatDau.Length;
 
                     // Cấp số hiệu văn bằng và số vào sổ cấp bằng
@@ -1314,16 +1325,29 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                     };
                 }
 
+                int stt = 0;
+                var nam = truong.CauHinh.Nam;
+                if(truong.CauHinh.Nam == DateTime.Now.Year.ToString())
+                {
+                    stt = truong.CauHinh.DinhDangSoThuTuSoGoc + 1;
+                }else
+                {
+                    nam = DateTime.Now.Year.ToString();
+                    stt += 1; 
+                }
+
                 foreach (var hocSinh in hocSinhs)
                 {
-                    hocSinh.SoVaoSoCapBang = $"{namThi.Ten}/{truong.Ma}/{hocSinh.STT.ToString().PadLeft(4, '0')}";
+                    hocSinh.SoVaoSoCapBang = $"{namThi.Ten}/{truong.Ma}/{stt.ToString().PadLeft(4, '0')}";
                     hocSinh.TrangThai = TrangThaiHocSinhEnum.DaDuaVaoSoGoc;
+                    stt++;
                 }
 
                 return new HocSinhResult
                 {
                     MaLoi = (int)HocSinhEnum.Success,
-                    HocSinhs = hocSinhs
+                    HocSinhs = hocSinhs,
+                    Nam = nam
                 };
             }
             catch
@@ -1603,9 +1627,11 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
 
         public HocSinhInBangModel GetHocSinhDaDuaVaoSoGocById(string idHocSinh)
         {
+            List<TrangThaiHocSinhEnum> trangThais = new List<TrangThaiHocSinhEnum>() { TrangThaiHocSinhEnum.DaDuaVaoSoGoc, TrangThaiHocSinhEnum.DaCapBang };
+
             var filter = Builders<HocSinhInBangModel>.Filter.And(
                                   Builders<HocSinhInBangModel>.Filter.Eq(hs => hs.Xoa, false),
-                                  Builders<HocSinhInBangModel>.Filter.Eq(hs => hs.TrangThai, TrangThaiHocSinhEnum.DaDuaVaoSoGoc),
+                                  Builders<HocSinhInBangModel>.Filter.In(hs => hs.TrangThai, trangThais),
                                   Builders<HocSinhInBangModel>.Filter.Eq(hs => hs.Id, idHocSinh)
                                 );
             var danhMucTotNghiepCollection = _mongoDatabase.GetCollection<DanhMucTotNghiepViewModel>(_collectionNameDanhMucTotNghiep);
@@ -2390,8 +2416,13 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
         /// <param name="modelSearch"></param>
         /// <param name="idTruong"></param>
         /// <returns></returns>
-        public List<HocSinhXMVBModel> GetSearchHocSinhXacMinhVB(out int total, HocSinhSearchXacMinhVBModel modelSearch)
+        public List<HocSinhXMVBModel> GetSearchHocSinhXacMinhVB(out int total, HocSinhSearchXacMinhVBModel modelSearch, string idDonVi)
         {
+            var truongs = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong)
+                           .Find(x=>x.Xoa == false && x.IdCha == idDonVi)
+                           .ToList();
+            var truongIds = truongs.Select(x => x.Id).ToList();
+
             var filterBuilder = Builders<HocSinhXMVBModel>.Filter;
 
             var filters = new List<FilterDefinition<HocSinhXMVBModel>>
@@ -2414,7 +2445,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                     : null,
                 !string.IsNullOrEmpty(modelSearch.IdTruong)
                     ? filterBuilder.Eq("IdTruong", modelSearch.IdTruong)
-                    : null,
+                    : filterBuilder.In("IdTruong", truongIds),
                 !string.IsNullOrEmpty(modelSearch.DanToc)
                     ? filterBuilder.Regex("DanToc", new BsonRegularExpression(modelSearch.DanToc, "i"))
                     : null,
@@ -2542,10 +2573,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                 var soGoc = conllectionSoGoc.Find(dm => dm.Xoa == false && dm.IdNamThi == dmtn.IdNamThi).FirstOrDefault();
 
 
-                var phoiGoc = conllectionPhoiGoc.Find(pg => pg.Xoa == false
-                && pg.TinhTrang == TinhTrangPhoiEnum.DangSuDung && pg.MaHeDaoTao == truong.MaHeDaoTao).FirstOrDefault();
-                if (phoiGoc == null)
-                    return new HocSinhResult() { MaLoi = (int)HocSinhEnum.NotExistPhoi };
+                //var phoiGoc = conllectionPhoiGoc.Find(pg => pg.Xoa == false
+                //&& pg.TinhTrang == TinhTrangPhoiEnum.DangSuDung && pg.MaHeDaoTao == truong.MaHeDaoTao).FirstOrDefault();
+                //if (phoiGoc == null)
+                //    return new HocSinhResult() { MaLoi = (int)HocSinhEnum.NotExistPhoi };
 
                 int maxSTT = conllectionHocSinh.Find(x => x.Xoa == false && x.IdTruong == idTruong)
                                     .Sort(Builders<HocSinhModel>.Sort.Descending(x => x.STT))
@@ -2556,7 +2587,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                 foreach (var model in models)
                 {
                     model.STT = ++maxSTT;
-                    model.IdPhoiGoc = phoiGoc.Id;
+                    //model.IdPhoiGoc = phoiGoc.Id;
                     model.IdSoGoc = soGoc.Id;
                 }
 

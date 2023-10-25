@@ -39,7 +39,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
             _mongoDatabase = client.GetDatabase(dbName);
         }
 
-        public async Task<int> Create(XacMinhVangBangInputModel model)
+        public async Task<int> Create(XacMinhVangBangInputModel model, TruongModel donVi)
         {
 
             var trangThaiValues = new List<TrangThaiHocSinhEnum> {
@@ -55,10 +55,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
             var xacMinhVanBangModel = new XacMinhVanBangModel()
             {
                 IdHocSinh = hocSinh.Id,
-                NguoiKyBang = "Đỗ Hữu Quỳnh",
-                CoQuanCapBang = "SỞ GIÁO DỤC VÀ ĐÀO TẠO",
-                DiaPhuongCapBang = "Khánh Hòa",
-                UyBanNhanDan = "UBND TỈNH KHÁNH HÒA",
+                NguoiKyBang = donVi.CauHinh.HoTenNguoiKySoGoc,
+                CoQuanCapBang = donVi.CauHinh.TenCoQuanCapBang,
+                DiaPhuongCapBang = donVi.CauHinh.TenDiaPhuongCapBang,
+                UyBanNhanDan = donVi.CauHinh.TenUyBanNhanDan,
                 DonViYeuCauXacMinh = model.DonViYeuCauXacMinh,
                 CongVanSo = model.CongVanSo,
                 NgayTrenCongVan = model.NgayTrenCongVan,
@@ -69,7 +69,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
                 var xacMinhVanBang = new LichSuXacMinhVanBangModel();
                 ModelProvider.MapProperties(xacMinhVanBangModel, xacMinhVanBang);
                 xacMinhVanBang.NgayTao = DateTime.Now;
-                xacMinhVanBang.NguoiTao = model.HoTenNguoiThucHien;
+                xacMinhVanBang.NguoiTao = model.NguoiThucHien;
                 xacMinhVanBang.PathFileYeuCau = model.PathFileYeuCau;
                 xacMinhVanBang.IdHocSinhs = new List<string> { hocSinh.Id };
 
@@ -87,28 +87,14 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
             }
         }
 
-        //public async Task<CauHinhXacMinhVanBangModel> GetConfigXacMinhVanBang(string idDonVi)
-        //{
-
-        //    var model = new CauHinhXacMinhVanBangModel()
-        //    {
-        //        NguoiKyBang = "Đỗ Hữu Quỳnh",
-        //        CoQuanCapBang = "SỞ GIÁO DỤC VÀ ĐÀO TẠO",
-        //        DiaPhuongCapBang = "Khánh Hòa",
-        //        UyBanNhanDan = "UBND TỈNH KHÁNH HÒA"
-        //    };
-
-        //    return model;
-        //}
-
-        public async Task<int> CreateList(XacMinhVangBangListInputModel model)
+        public async Task<int> CreateList(XacMinhVangBangListInputModel model, TruongModel donVi)
         {
             var xacMinhVangBangListModel = new XacMinhVanBangListModel()
             {
-                NguoiKyBang = "Đỗ Hữu Quỳnh",
-                CoQuanCapBang = "SỞ GIÁO DỤC VÀ ĐÀO TẠO",
-                DiaPhuongCapBang = "Khánh Hòa",
-                UyBanNhanDan = "UBND TỈNH KHÁNH HÒA",
+                NguoiKyBang = donVi.CauHinh.HoTenNguoiKySoGoc,
+                CoQuanCapBang = donVi.CauHinh.TenCoQuanCapBang,
+                DiaPhuongCapBang = donVi.CauHinh.TenDiaPhuongCapBang,
+                UyBanNhanDan = donVi.CauHinh.TenUyBanNhanDan,
                 DonViYeuCauXacMinh = model.DonViYeuCauXacMinh,
                 CongVanSo = model.CongVanSo,
                 NgayTrenCongVan = model.NgayTrenCongVan
@@ -119,7 +105,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
                 var lichSuXacMinh = new LichSuXacMinhVanBangModel();
                 ModelProvider.MapProperties(xacMinhVangBangListModel, lichSuXacMinh);
                 lichSuXacMinh.NgayTao = DateTime.Now;
-                lichSuXacMinh.NguoiTao = model.HoTenNguoiThucHien;
+                lichSuXacMinh.NguoiTao = model.NguoiThucHien;
                 lichSuXacMinh.PathFileYeuCau = model.PathFileYeuCau;
                 lichSuXacMinh.IdHocSinhs = model.IdHocSinhs;
 

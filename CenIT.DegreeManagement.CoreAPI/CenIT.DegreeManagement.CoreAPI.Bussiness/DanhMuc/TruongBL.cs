@@ -67,6 +67,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc
                 truongModel.NgayTao = DateTime.Now;
                 truongModel.NguoiTao = model.NguoiThucHien;
                 truongModel.STT = maxStt + 1;
+                truongModel.CauHinh.Nam = DateTime.Now.Year.ToString();
                 // insert
                 await _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong).InsertOneAsync(truongModel);
                 return (int)TruongEnum.Success;
@@ -377,7 +378,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc
             var donVi = truongCollection.Find(x => x.Id == idDonVi && x.Xoa == false).FirstOrDefault();
             if (donVi == null) return null;
 
-            var truongVM = truongCollection.Find(x => x.Xoa == false  && x.LaPhong == true && donVi.DonViQuanLy == x.DonViQuanLy)
+            var truongVM = truongCollection.Find(x => x.Xoa == false  && x.LaPhong == true && donVi.IdCha == x.Id)
                                   .FirstOrDefault();
             return truongVM;
         }
@@ -498,7 +499,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc
 
             var cauHinhXacMinh = new CauHinhXacMinhVanBangModel()
             {
-                NguoiKyBang = truong.CauHinh.NguoiKyXacMinh,
+                NguoiKyBang = truong.CauHinh.HoTenNguoiKySoGoc,
                 DiaPhuongCapBang = truong.CauHinh.TenDiaPhuongCapBang,
                 CoQuanCapBang = truong.CauHinh.TenCoQuanCapBang,
                 UyBanNhanDan = truong.CauHinh.TenUyBanNhanDan,
@@ -535,6 +536,50 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc
 
             // tìm trường cần cập nhật
             var filter = Builders<TruongModel>.Filter.Eq(t => t.Id, idTruong);
+
+            //giá trị cập nhật
+            var update = Builders<TruongModel>.Update.Set(t => t.CauHinh, cauHinh);
+
+            UpdateResult u = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong).UpdateOne(filter, update);
+            return 1;
+        }
+
+        public int UpdateCauHinhSoVaoSo(UpdateCauHinhSoVaoSoInputModel model)
+        {
+            var cauHinh = GetById(model.IdTruong).CauHinh;
+
+            if(model.Nam != cauHinh.Nam)
+            {
+                cauHinh.Nam = model.Nam;
+                if(model.LoaiHanhDong == SoVaoSoEnum.SoVaoSoGoc)
+                {
+                    cauHinh.DinhDangSoThuTuSoGoc = model.DinhDangSoThuTuSoGoc;
+                    cauHinh.DinhDangSoThuTuCapLai = 0;
+                    cauHinh.SoDonYeuCau = 0;
+                }
+
+                if (model.LoaiHanhDong == SoVaoSoEnum.SoVaoSoBanSao)
+                {
+                    cauHinh.DinhDangSoThuTuSoGoc = 0;
+                    cauHinh.DinhDangSoThuTuCapLai = 0;
+                    cauHinh.SoDonYeuCau = model.SoDonYeuCau;
+                }
+                else
+                {
+                    cauHinh.DinhDangSoThuTuSoGoc = 0;
+                    cauHinh.DinhDangSoThuTuCapLai = model.DinhDangSoThuTuCapLai;
+                    cauHinh.SoDonYeuCau = 0;
+                }
+            }
+            else
+            {
+                if (model.LoaiHanhDong == SoVaoSoEnum.SoVaoSoGoc) cauHinh.DinhDangSoThuTuSoGoc += model.DinhDangSoThuTuSoGoc;
+                if (model.LoaiHanhDong == SoVaoSoEnum.SoVaoSoGoc) cauHinh.SoDonYeuCau += model.SoDonYeuCau;
+                if (model.LoaiHanhDong == SoVaoSoEnum.SoVaoSoGoc) cauHinh.DinhDangSoThuTuCapLai += model.DinhDangSoThuTuCapLai;
+            }
+
+            // tìm trường cần cập nhật
+            var filter = Builders<TruongModel>.Filter.Eq(t => t.Id, model.IdTruong);
 
             //giá trị cập nhật
             var update = Builders<TruongModel>.Update.Set(t => t.CauHinh, cauHinh);

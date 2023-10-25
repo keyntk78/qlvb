@@ -106,6 +106,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DuLieuHocSinh
         public string? IdHinhThucDaoTao { get; set; } = string.Empty;
         public string? IdNamThi { get; set; } = string.Empty;
         public string? IdTruong { get; set; } = string.Empty;
+        public string NguoiThucHien { get; set; }
+
 
     }
 }

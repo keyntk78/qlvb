@@ -1,20 +1,11 @@
-﻿using CenIT.DegreeManagement.CoreAPI.Core.Enums;
-using CenIT.DegreeManagement.CoreAPI.Core.Models;
+﻿
 using CenIT.DegreeManagement.CoreAPI.Core.Provider;
-using CenIT.DegreeManagement.CoreAPI.Core.Utils;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
 {
@@ -71,14 +62,14 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
             return soGoc != null ? soGoc : null;
         }
 
-        public string GetHocSinhTheoSoGoc(TruongViewModel truong, DanhMucTotNghiepViewModel dmtn, SearchParamModel paramModel)
+        public string GetHocSinhTheoSoGoc(TruongViewModel truong, DanhMucTotNghiepViewModel dmtn, SoGocSearchParam paramModel)
         {
 
             int skip = ((paramModel.StartIndex - 1) * paramModel.PageSize) + paramModel.PageSize;
             string pagination = paramModel.PageSize < 0 ? $@"hocSinhs: '$hocSinhs'": $@"hocSinhs: {{ $slice: ['$hocSinhs', {skip}, {paramModel.PageSize}] }}," ;
-
             var cauHinh  = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong).Find(x => x.Id == truong.IdCha).FirstOrDefault().CauHinh;
-
+            var collectionNamThi = _mongoDatabase.GetCollection<NamThiModel>(_collectionNameNamThi);
+            var khoaThi = collectionNamThi.Find(x=>x.Id == dmtn.IdNamThi).FirstOrDefault().KhoaThis.Where(x=>x.Id == paramModel.IdKhoaThi).FirstOrDefault();
             var cmdRes = $@"
                         {{
                             'aggregate': 'SoGoc', 
@@ -124,7 +115,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                                      {{
                                                 $match: {{
                                                     IdDanhMucTotNghiep: '{dmtn.Id}',
-                                                    IdTruong: '{truong.Id}'
+                                                    IdTruong: '{truong.Id}',
+                                                    IdKhoaThi: '{paramModel.IdKhoaThi}'
                                                 }}
                                             }},
                                         {{
@@ -137,6 +129,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                                                 NoiSinh: '$NoiSinh',
                                                 GioiTinh: '$GioiTinh',
                                                 DanToc: '$DanToc',
+                                                HoiDong: '$HoiDong',
                                                 XepLoai: '$XepLoai',
                                                 SoHieuVanBang: '$SoHieuVanBang',
                                                 SoVaoSoCapBang: '$SoVaoSoCapBang'
@@ -169,15 +162,14 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
             var truongJson = JsonConvert.SerializeObject(truong);
             var cauHinhJson = JsonConvert.SerializeObject(cauHinh);
             var dmtnJson = JsonConvert.SerializeObject(dmtn);
+            var khoaThiJson = JsonConvert.SerializeObject(khoaThi);
 
             if (soGocJson == null)
             {
                 return null;
             }
 
-            string finalJson = $"{{\"Truong\": {truongJson}, \"DanhMucTotNghiep\": {dmtnJson}, \"CauHinh\": {cauHinhJson} ,\"SoGoc\": {soGocJson}}}";
-
-
+            string finalJson = $"{{\"Truong\": {truongJson}, \"DanhMucTotNghiep\": {dmtnJson}, \"KhoaThi\": {khoaThiJson}, \"CauHinh\": {cauHinhJson} ,\"SoGoc\": {soGocJson}}}";
             return finalJson;
         }
     }

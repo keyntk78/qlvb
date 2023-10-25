@@ -15,7 +15,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching
 {
     public class TrangChuCL
     {
-        private string _masterCacheKey = "TrangChuCLCache";
+        private string _masterCacheKey = "TrangChuCache";
 
         private CacheLayer _cache;
         private TrangChuBL _BL;
@@ -31,16 +31,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching
         /// </summary>
         /// <param name="modelSearch"></param>
         /// <returns></returns>
-        public string GetTraCuuHocSinhTotNghiep(TraCuuHocHinhTotNghiepSearchModel modelSearch)
+        public string GetTraCuuHocSinhTotNghiep(string idDonVi,TraCuuHocHinhTotNghiepSearchModel modelSearch)
         {
-            string objectKey = EHashMd5.FromObject(modelSearch);
+            string objectKey = EHashMd5.FromObject(modelSearch) + idDonVi;
             string rawKey = string.Concat("TrangChu_GetTraCuuHocSinhTotNghiep-", objectKey);
 
             //// See if the item is in the cache
             string result = _cache.GetCacheKey<string>(rawKey, _masterCacheKey)!;
             if (result != null) return result;
             //// Item not found in cache - retrieve it and insert it into the cache
-            result = _BL.GetTraCuuHocSinhTotNghiep( modelSearch);
+            result = _BL.GetTraCuuHocSinhTotNghiep(idDonVi, modelSearch);
             _cache.AddCacheItem(rawKey, result, _masterCacheKey);
             return result;
         }
@@ -51,16 +51,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongPhoiDaIn(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongPhoiDaIn(string idNamThi, string maHeDaoTao, string idDonVi)
         {
-            string objectKey = EHashMd5.FromObject(idNamThi + maHeDaoTao);
+            string objectKey = EHashMd5.FromObject(idNamThi + maHeDaoTao + idDonVi);
             string rawKey = string.Concat("TrangChu_GetSoLuongPhoiDaIn-", objectKey);
 
             //// See if the item is in the cache
             string result = _cache.GetCacheKey<string>(rawKey, _masterCacheKey)!;
             if (result != null) return result;
             //// Item not found in cache - retrieve it and insert it into the cache
-            result = _BL.GetSoLuongPhoiDaIn(idNamThi, maHeDaoTao);
+            result = _BL.GetSoLuongPhoiDaIn(idNamThi, maHeDaoTao, idDonVi);
             _cache.AddCacheItem(rawKey, result, _masterCacheKey);
             return result;
         }
@@ -71,16 +71,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongDonViDaGui(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongDonViDaGui(string idNamThi, string maHeDaoTao, string idDonVi)
         {
-            string objectKey = EHashMd5.FromObject(idNamThi + maHeDaoTao);
+            string objectKey = EHashMd5.FromObject(idNamThi + maHeDaoTao + idDonVi);
             string rawKey = string.Concat("TrangChu_GetSoLuongDonViDaGui-", objectKey);
 
             //// See if the item is in the cache
             string result = _cache.GetCacheKey<string>(rawKey, _masterCacheKey)!;
             if (result != null) return result;
             //// Item not found in cache - retrieve it and insert it into the cache
-            result = _BL.GetSoLuongDonViDaGui(idNamThi, maHeDaoTao);
+            result = _BL.GetSoLuongDonViDaGui(idNamThi, maHeDaoTao, idDonVi);
             _cache.AddCacheItem(rawKey, result, _masterCacheKey);
             return result;
         }
@@ -93,16 +93,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
         /// <returns></returns>
-        public string GetSoLuongDonYeuCauCapBanSao(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongDonYeuCauCapBanSao(string idNamThi, string maHeDaoTao, string idDonVi )
         {
-            string objectKey = EHashMd5.FromObject(idNamThi + maHeDaoTao);
+            string objectKey = EHashMd5.FromObject(idNamThi + maHeDaoTao + idDonVi);
             string rawKey = string.Concat("TrangChu_GetSoLuongDonYeuCauCapBanSao-", objectKey);
 
             //// See if the item is in the cache
             string result = _cache.GetCacheKey<string>(rawKey, _masterCacheKey)!;
             if (result != null) return result;
             //// Item not found in cache - retrieve it and insert it into the cache
-            result = _BL.GetSoLuongDonYeuCauCapBanSao(idNamThi, maHeDaoTao);
+            result = _BL.GetSoLuongDonYeuCauCapBanSao(idNamThi, maHeDaoTao, idDonVi);
             _cache.AddCacheItem(rawKey, result, _masterCacheKey);
             return result;
         }
@@ -121,16 +121,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching
             return result;
         }
 
-        public string GetThongKeTongQuatByPhong(string idNamThi, string maHeDaoTao)
+        public string GetThongKeTongQuatByPhong(string idNamThi, string maHeDaoTao, string idDonVi)
         {
-            string objectKey = EHashMd5.FromObject(idNamThi + maHeDaoTao);
+            string objectKey = EHashMd5.FromObject(idNamThi + maHeDaoTao + idDonVi);
             string rawKey = string.Concat("GetThongKeTongQuatByPhong-", objectKey);
 
             //// See if the item is in the cache
             string result = _cache.GetCacheKey<string>(rawKey, _masterCacheKey)!;
             if (result != null) return result;
             //// Item not found in cache - retrieve it and insert it into the cache
-            result = _BL.GetThongKeTongQuatByPhong(idNamThi, maHeDaoTao);
+            result = _BL.GetThongKeTongQuatByPhong(idNamThi, maHeDaoTao, idDonVi);
             _cache.AddCacheItem(rawKey, result, _masterCacheKey);
             return result;
         }
@@ -141,16 +141,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongHocSinhChuaDuyet(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongHocSinhChuaDuyet(string idNamThi, string maHeDaoTao, string idDonVi)
         {
-            string objectKey = EHashMd5.FromObject(idNamThi + maHeDaoTao);
+            string objectKey = EHashMd5.FromObject(idNamThi + maHeDaoTao + idDonVi);
             string rawKey = string.Concat("TrangChu_GetSoLuongHocSinhChuaDuyet-", objectKey);
 
             //// See if the item is in the cache
             string result = _cache.GetCacheKey<string>(rawKey, _masterCacheKey)!;
             if (result != null) return result;
             //// Item not found in cache - retrieve it and insert it into the cache
-            result = _BL.GetSoLuongHocSinhChuaDuyet(idNamThi, maHeDaoTao);
+            result = _BL.GetSoLuongHocSinhChuaDuyet(idNamThi, maHeDaoTao, idDonVi);
             _cache.AddCacheItem(rawKey, result, _masterCacheKey);
             return result;
         }
@@ -162,16 +162,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongHocSinhQuaTungNam(string maHeDaoTao)
+        public string GetSoLuongHocSinhQuaTungNam(string maHeDaoTao, string idDonVi)
         {
-            string objectKey = EHashMd5.FromObject(maHeDaoTao);
+            string objectKey = EHashMd5.FromObject(maHeDaoTao + idDonVi);
             string rawKey = string.Concat("TrangChu_GetSoLuongHocSinhQuaTungNam-", objectKey);
 
             //// See if the item is in the cache
             string result = _cache.GetCacheKey<string>(rawKey, _masterCacheKey)!;
             if (result != null) return result;
             //// Item not found in cache - retrieve it and insert it into the cache
-            result = _BL.GetSoLuongHocSinhQuaTungNam(maHeDaoTao);
+            result = _BL.GetSoLuongHocSinhQuaTungNam(maHeDaoTao, idDonVi);
             _cache.AddCacheItem(rawKey, result, _masterCacheKey);
             return result;
         }
@@ -182,16 +182,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongHocSinhTheoXepLoai(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongHocSinhTheoXepLoai(string idNamThi, string maHeDaoTao, string idDonVi)
         {
-            string objectKey = EHashMd5.FromObject(maHeDaoTao + idNamThi);
+            string objectKey = EHashMd5.FromObject(maHeDaoTao + idNamThi+ idDonVi);
             string rawKey = string.Concat("TrangChu_GetSoLuongHocSinhTheoXepLoai-", objectKey);
 
             //// See if the item is in the cache
             string result = _cache.GetCacheKey<string>(rawKey, _masterCacheKey)!;
             if (result != null) return result;
             //// Item not found in cache - retrieve it and insert it into the cache
-            result = _BL.GetSoLuongHocSinhTheoXepLoai(idNamThi,maHeDaoTao);
+            result = _BL.GetSoLuongHocSinhTheoXepLoai(idNamThi,maHeDaoTao, idDonVi);
             _cache.AddCacheItem(rawKey, result, _masterCacheKey);
             return result;
         }
@@ -202,16 +202,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongHocSinhCapPhatBang(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongHocSinhCapPhatBang(string idNamThi, string maHeDaoTao, string idDonVi)
         {
-            string objectKey = EHashMd5.FromObject(maHeDaoTao + idNamThi);
+            string objectKey = EHashMd5.FromObject(maHeDaoTao + idNamThi + idDonVi);
             string rawKey = string.Concat("TrangChu_GetSoLuongHocSinhCapPhatBangi-", objectKey);
 
             //// See if the item is in the cache
             string result = _cache.GetCacheKey<string>(rawKey, _masterCacheKey)!;
             if (result != null) return result;
             //// Item not found in cache - retrieve it and insert it into the cache
-            result = _BL.GetSoLuongHocSinhCapPhatBang(idNamThi, maHeDaoTao);
+            result = _BL.GetSoLuongHocSinhCapPhatBang(idNamThi, maHeDaoTao, idDonVi);
             _cache.AddCacheItem(rawKey, result, _masterCacheKey);
             return result;
         }

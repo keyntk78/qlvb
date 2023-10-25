@@ -71,9 +71,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo
             return result;
         }
 
-        public List<DonYeuCauCapBanSaoViewModel> GetSearchDonYeuCau(out int total, DonYeuCauCapBanSaoParamModel modelSearch)
+        public List<DonYeuCauCapBanSaoViewModel> GetSearchDonYeuCau(out int total, DonYeuCauCapBanSaoParamModel modelSearch, TruongModel donVi)
         {
-            string objectKey = EHashMd5.FromObject(modelSearch);
+            string objectKey = EHashMd5.FromObject(modelSearch) + EHashMd5.FromObject(donVi);
             string rawKey = string.Concat("DonYeuCau-GetSearchDonYeuCau-", objectKey);
             string rawKeyTotal = string.Concat(rawKey, "-Total");
 
@@ -84,7 +84,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo
             List<DonYeuCauCapBanSaoViewModel> donYeuCaus = _cache.GetCacheKey<List<DonYeuCauCapBanSaoViewModel>>(rawKey, _masterCacheKey)!;
             if (donYeuCaus != null) return donYeuCaus;
 
-            donYeuCaus = _BL.GetSearchDonYeuCau(out total, modelSearch);
+            donYeuCaus = _BL.GetSearchDonYeuCau(out total, modelSearch, donVi);
             _cache.AddCacheItem(rawKey, donYeuCaus, _masterCacheKey);
             _cache.AddCacheItem(rawKeyTotal, total, _masterCacheKey);
             return donYeuCaus;
@@ -110,9 +110,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo
         }
 
 
-        public List<DonYeuCauCapBanSaoViewModel> GetSearchDonYeuCauDaDuyet(out int total, HocSinhCapBanSaoParamModel modelSearch)
+        public List<DonYeuCauCapBanSaoViewModel> GetSearchDonYeuCauDaDuyet(out int total, HocSinhCapBanSaoParamModel modelSearch, TruongModel donVi)
         {
-            string objectKey = EHashMd5.FromObject(modelSearch);
+            string objectKey = EHashMd5.FromObject(modelSearch) + EHashMd5.FromObject(donVi);
             string rawKey = string.Concat("DonYeuCau-GetSearchDonYeuCauDaDuyet-", objectKey);
             string rawKeyTotal = string.Concat(rawKey, "-Total");
 
@@ -123,7 +123,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo
             List<DonYeuCauCapBanSaoViewModel> donYeuCaus = _cache.GetCacheKey<List<DonYeuCauCapBanSaoViewModel>>(rawKey, _masterCacheKey)!;
             if (donYeuCaus != null) return donYeuCaus;
 
-            donYeuCaus = _BL.GetSearchDonYeuCauDaDuyet(out total, modelSearch);
+            donYeuCaus = _BL.GetSearchDonYeuCauDaDuyet(out total, modelSearch, donVi);
             _cache.AddCacheItem(rawKey, donYeuCaus, _masterCacheKey);
             _cache.AddCacheItem(rawKeyTotal, total, _masterCacheKey);
             return donYeuCaus;

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CenIT.DegreeManagement.CoreAPI.Bussiness.Sys;
 using CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo;
@@ -9,9 +8,8 @@ using CenIT.DegreeManagement.CoreAPI.Core.Enums;
 using CenIT.DegreeManagement.CoreAPI.Core.Helpers;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Core.Utils;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.QuanLySo;
-using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.Search;
-using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.Sys;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc;
 using CenIT.DegreeManagement.CoreAPI.Processor;
 using CenIT.DegreeManagement.CoreAPI.Processor.Mail;
@@ -120,10 +118,23 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CapBang
                 return ResponseHelper.BadRequest("Nơi sinh không chính xác");
             if (response.MaLoi == (int)DonYeuCauCapBanSaoEnum.BirthDayIncorrect)
                 return ResponseHelper.BadRequest("Ngày sinh không chính xác");
+            else
+            {
 
-            _truongCL.UpdateSoDonYeuCau(user.TruongID);
+                var updateSoVaoSo = new UpdateCauHinhSoVaoSoInputModel()
+                {
+                    DinhDangSoThuTuSoGoc = 1,
+                    Nam = response.Nam,
+                    LoaiHanhDong = SoVaoSoEnum.SoVaoSoBanSao,
+                    IdTruong = model.IdTruong
+                };
 
-            return ResponseHelper.Success(_localizer.GetAddSuccessMessage(_nameDonYeuCau), model.HoTen);
+                _truongCL.UpdateCauHinhSoVaoSo(updateSoVaoSo);
+
+                return ResponseHelper.Success(_localizer.GetAddSuccessMessage(_nameDonYeuCau), model.HoTen);
+            }
+
+         
         }
 
 
@@ -132,7 +143,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CapBang
         public IActionResult GetSearchDonYeuCau([FromQuery] DonYeuCauCapBanSaoParamModel model)
         {
             int total;
-            var data = _donYeuCauCapBanSaoCL.GetSearchDonYeuCau(out total, model);
+            var user = _sysUserCL.GetByUsername(model.NguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+            var data = _donYeuCauCapBanSaoCL.GetSearchDonYeuCau(out total, model, donVi);
             var outputData = new
             {
                 DonYeuCaus = data,
@@ -146,7 +159,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CapBang
         public IActionResult GetSearchDonYeuCauDaDuyet([FromQuery] HocSinhCapBanSaoParamModel model)
         {
             int total;
-            var data = _donYeuCauCapBanSaoCL.GetSearchDonYeuCauDaDuyet(out total, model);
+            var user = _sysUserCL.GetByUsername(model.NguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+            var data = _donYeuCauCapBanSaoCL.GetSearchDonYeuCauDaDuyet(out total, model, donVi);
             var outputData = new
             {
                 DonYeuCaus = data,

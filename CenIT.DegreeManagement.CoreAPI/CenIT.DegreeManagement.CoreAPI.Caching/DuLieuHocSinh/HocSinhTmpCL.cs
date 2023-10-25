@@ -16,6 +16,11 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
     public class HocSinhTmpCl
     {
         private string _masterCacheKeyHocSinhTmpCl = "HocSinhTmpCl";
+        //private string _masterCacheKeySoGoc = "SoGocCache";
+        //private string _masterCacheKeyHocSinh = "HocSinhCache";
+        //private string _masterCacheKeyThongKe = "ThongKeCL";
+        //private string _masterCacheKeyTrangChu = "TrangChuCache";
+
         private CacheLayer _cache;
         private HocSinhTmpBL _BL;
 
@@ -59,6 +64,12 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
             {
                 // Invalidate the cache
                 _cache.InvalidateCache(_masterCacheKeyHocSinhTmpCl);
+                //_cache.InvalidateCache(_masterCacheKeySoGoc);
+                //_cache.InvalidateCache(_masterCacheKeyHocSinh);
+                //_cache.InvalidateCache(_masterCacheKeyThongKe);
+                //_cache.InvalidateCache(_masterCacheKeyTrangChu);
+
+
             }
             return result;
         }
@@ -70,6 +81,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
             {
                 // Invalidate the cache
                 _cache.InvalidateCache(_masterCacheKeyHocSinhTmpCl);
+                //_cache.InvalidateCache(_masterCacheKeySoGoc);
+                //_cache.InvalidateCache(_masterCacheKeyHocSinh);
+                //_cache.InvalidateCache(_masterCacheKeyThongKe);
+                //_cache.InvalidateCache(_masterCacheKeyTrangChu);
             }
             return result;
         }

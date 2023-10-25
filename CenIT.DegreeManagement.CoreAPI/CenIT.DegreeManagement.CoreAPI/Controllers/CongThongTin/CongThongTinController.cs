@@ -1,21 +1,20 @@
 ﻿using AutoMapper;
-using CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc;
-using CenIT.DegreeManagement.CoreAPI.Bussiness.Sys;
 using CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Caching.Phoi;
 using CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo;
 using CenIT.DegreeManagement.CoreAPI.Caching.Sys;
 using CenIT.DegreeManagement.CoreAPI.Caching.TinTuc;
+using CenIT.DegreeManagement.CoreAPI.Caching.XacMinhVanBang;
 using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Enums;
 using CenIT.DegreeManagement.CoreAPI.Core.Helpers;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Core.Utils;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.QuanLySo;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.Sys;
-using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.TinTuc;
 using CenIT.DegreeManagement.CoreAPI.Processor;
 using CenIT.DegreeManagement.CoreAPI.Processor.SendNotification;
@@ -26,7 +25,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Newtonsoft.Json;
-using System.Web.WebPages;
 
 namespace CenIT.DegreeManagement.CoreAPI.Controllers.CongThongTin
 {
@@ -43,6 +41,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CongThongTin
         private NamThiCL _namThiCl;
         private TinTucCL _tinTuc;
         private LoaiTinTucCL _loaiTinTuc;
+        private HuyBoVangBangCL _cacheHuyBoVanBang;
+        private ChinhSuaVanBangCL _chinhSuaVanBangCL;
+
+
         private readonly FirebaseNotificationUtils _firebaseNotificationUtils;
         private readonly BackgroundJobManager _backgroundJobManager;
         private SysDeviceTokenCL _sysDeviceTokenCL;
@@ -77,7 +79,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CongThongTin
             _sysDeviceTokenCL = new SysDeviceTokenCL(cacheService);
             _truong = new TruongCL(cacheService, configuration);
             _sysMessageConfigCL = new SysMessageConfigCL(cacheService);
-
+            _cacheHuyBoVanBang = new HuyBoVangBangCL(cacheService, configuration);
+            _chinhSuaVanBangCL = new ChinhSuaVanBangCL(cacheService, configuration);
 
         }
 
@@ -166,6 +169,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CongThongTin
                         IDDonVi = phong.Id,
                         ValueRedirect = jsonString
                     };
+
+                    var updateSoVaoSo = new UpdateCauHinhSoVaoSoInputModel()
+                    {
+                        DinhDangSoThuTuSoGoc = 1,
+                        Nam = response.Nam,
+                        LoaiHanhDong = SoVaoSoEnum.SoVaoSoBanSao,
+                        IdTruong = model.IdTruong
+                    };
+
+                    _truongCL.UpdateCauHinhSoVaoSo(updateSoVaoSo);
 
                     message.IdMessage = Guid.NewGuid().ToString();
                     var sendMessage = _messageCL.Save(message);
@@ -266,6 +279,61 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CongThongTin
             var data = _truongCL.GetPhong(idDonVi);
             return ResponseHelper.Ok(data);
         }
+
+        #region
+
+        [HttpGet("GetSearchHuyBoVanBang")]
+        [AllowAnonymous]
+        public IActionResult GetSearchHuyBoVanBang([FromQuery] SearchParamModel model)
+        {
+            int total;
+
+            var data = _cacheHuyBoVanBang.GetSerachHuyBoVanBang(out total, model);
+
+            var outputData = new
+            {
+                LichSus = data,
+                totalRow = total,
+                searchParam = model
+            };
+            return ResponseHelper.Ok(outputData);
+        }
+
+        [HttpGet("GetSerachPhuLucCapLaiVanBang")]
+        [AllowAnonymous]
+        public IActionResult GetSerachPhuLucCapLaiVanBang([FromQuery] SearchParamModel model)
+        {
+            int total;
+
+            var data = _chinhSuaVanBangCL.GetSerachPhuLucCapLaiVanBang(out total, model);
+
+            var outputData = new
+            {
+                LichSus = data,
+                totalRow = total,
+                searchParam = model
+            };
+            return ResponseHelper.Ok(outputData);
+        }
+
+        [HttpGet("GetSerachPhuLucChinhSuaVanBang")]
+        [AllowAnonymous]
+        public IActionResult GetSerachPhuLucChinhSuaVanBang([FromQuery] SearchParamModel model)
+        {
+            int total;
+
+            var data = _chinhSuaVanBangCL.GetSerachPhuLucChinhSuaVanBang(out total, model);
+
+            var outputData = new
+            {
+                LichSus = data,
+                totalRow = total,
+                searchParam = model
+            };
+            return ResponseHelper.Ok(outputData);
+        }
+
+        #endregion
 
         #region Tin tức
         [HttpGet("GetAllTinTuc")]

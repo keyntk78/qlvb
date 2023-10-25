@@ -56,12 +56,6 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh
         public string? IdSoCapPhatBang { get; set; } = string.Empty;
         public int SoLanIn { get; set; } = 0;
         public ThongTinPhatBangModel ThongTinPhatBang { get; set; } = new ThongTinPhatBangModel();
-        public List<ChinhSuaVanBangModel> LichSuChinhSuaVanBang { get; set; } = new List<ChinhSuaVanBangModel>();
-        public List<HuyBoVangBangModel> LichSuHuyBoVanBang { get; set; } = new List<HuyBoVangBangModel>();
-        public List<CapLaiVanBangModel> LichSuCapLaiVanBang { get; set; } = new List<CapLaiVanBangModel>();
-
-
-
     }
 
     public class KetQuaHocTapModel
@@ -126,6 +120,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh
     public class HocSinhViewModel : HocSinhModel
     {
         public string NamThi { get; set; } = string.Empty;
+        public string TenHeDaoTao { get; set; } = string.Empty;
         public SoGocModel SoGoc { get; set; } = new SoGocModel();
         public SoCapBanSaoModel SoCapBanSao { get; set; } = new SoCapBanSaoModel();
         public DanhMucTotNghiepModel DanhMucTotNghiep { get; set; } = new DanhMucTotNghiepModel();

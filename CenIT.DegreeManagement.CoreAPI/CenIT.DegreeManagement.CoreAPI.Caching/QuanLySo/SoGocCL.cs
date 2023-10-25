@@ -46,7 +46,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo
             return soGoc;
         }
 
-        public string GetHocSinhTheoSoGoc(TruongViewModel truong,DanhMucTotNghiepViewModel dmtn, SearchParamModel paramModel)
+        public string GetHocSinhTheoSoGoc(TruongViewModel truong,DanhMucTotNghiepViewModel dmtn, SoGocSearchParam paramModel)
         {
             var hashKey = EHashMd5.FromObject(truong) + EHashMd5.FromObject(dmtn) + EHashMd5.FromObject(paramModel);
             var rawKey = string.Concat("SoGoc-GetHocSinhTheoSoGoc-", hashKey);

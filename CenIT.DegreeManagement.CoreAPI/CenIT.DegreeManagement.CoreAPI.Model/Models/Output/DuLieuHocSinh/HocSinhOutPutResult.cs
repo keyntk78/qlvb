@@ -26,6 +26,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh
         public List<HocSinhModel>? HocSinhs { get; set; }
         public string TenTruong { get; set; } = string.Empty;
         public string MaDonYeuCau { get; set; } = string.Empty;
+        public string Nam { get; set; } = string.Empty;
+
 
     }
 }

@@ -39,6 +39,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.Shared
         private HocSinhCL _hocSinhCl;
         private DanTocCL _danTocCL;
         private NamThiCL _namThiCL;
+        private PhoiGocCL _phoiGocCL;
+
 
         private ILogger<SharedController> _logger;
         private readonly ShareResource _localizer;
@@ -55,6 +57,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.Shared
             _hocSinhCl = new HocSinhCL(cacheService, configuration);
             _danTocCL = new DanTocCL(cacheService, configuration);
             _namThiCL = new NamThiCL(cacheService, configuration);
+            _phoiGocCL = new PhoiGocCL(cacheService, configuration);
             _logger = logger;
             _localizer = shareResource;
             _fileService = fileService;
@@ -197,6 +200,33 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.Shared
         {
             var data = _namThiCL.GetKhoaThisByNam(idNamThi);
             return ResponseHelper.Ok(data);
+        }
+
+        [HttpGet("GetPhoiGocDangSuDung")]
+        [AllowAnonymous]
+        public IActionResult GetPhoiGocDangSuDung(string username)
+        {
+            var user = _sysUserCL.GetByUsername(username);
+            var donVi = _truongCL.GetById(user.TruongID);
+
+            var data = _phoiGocCL.GetPhoiDangSuDungByHDT(donVi.MaHeDaoTao);
+            return ResponseHelper.Ok(data);
+        }
+
+        /// <summary>
+        /// Lấy danh mục tốt nghiệp theo idNamThi và idHinhThucDaoTao
+        /// </summary>
+        /// <param name="idDanhMucTotNghiep"></param>
+        /// <returns></returns>
+        [HttpGet("GetByIdNamThi/{idNamThi}/{maHinhThucDaoTao}")]
+        [AllowAnonymous]
+        public IActionResult GetByIdNamThiAndMaHinhThucDaoTao(string idNamThi, string maHinhThucDaoTao, string nguoiThucHien)
+        {
+            var user = _sysUserCL.GetByUsername(nguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+            var danhMucTotNghieps = _danhMucTotNghiepCL.GetByIdNamThiAndMaHinhThucDaoTao(idNamThi, maHinhThucDaoTao, donVi);
+       
+            return ResponseHelper.Ok(danhMucTotNghieps);
         }
     }
 }

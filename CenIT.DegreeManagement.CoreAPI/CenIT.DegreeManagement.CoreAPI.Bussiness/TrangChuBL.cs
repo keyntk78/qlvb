@@ -3,6 +3,7 @@ using CenIT.DegreeManagement.CoreAPI.Core.Enums;
 using CenIT.DegreeManagement.CoreAPI.Core.Provider;
 using CenIT.DegreeManagement.CoreAPI.Core.Utils;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.Search;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
@@ -42,10 +43,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
         /// </summary>
         /// <param name="modelSearch"></param>
         /// <returns></returns>
-        public string GetTraCuuHocSinhTotNghiep(TraCuuHocHinhTotNghiepSearchModel modelSearch)
+        public string GetTraCuuHocSinhTotNghiep(string idDonVi, TraCuuHocHinhTotNghiepSearchModel modelSearch)
         {
             var matchHoTen = string.IsNullOrEmpty(modelSearch.HoTen) ? "" : $" HoTen: '{modelSearch.HoTen}',";
-
+            var matchIdDonVi = string.IsNullOrEmpty(idDonVi) ? "" : $" {{$match: {{'Truong.IdCha': '{idDonVi}', }},}},";
             string order = MongoPipeline.GenerateSortPipeline(modelSearch.Order, modelSearch.OrderDir, "HoTen");
             int skip = (modelSearch.StartIndex - 1) * modelSearch.PageSize;
             var cmdRes = $@"
@@ -96,6 +97,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
                                       DanhMucTotNghiep: {{ $arrayElemAt: ['$DanhMucTotNghieps', 0] }},
                                     }},
                                   }},
+                                 {matchIdDonVi}
                                  {order}
                                   {{
                                     $group: {{
@@ -144,8 +146,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongPhoiDaIn(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongPhoiDaIn(string idNamThi, string maHeDaoTao, string truongIdsString)
         {
+
             var cmdRes = $@"
                         {{
                             'aggregate': 'PhoiGoc', 
@@ -203,6 +206,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
                                             {{
                                               $match: {{
                                                 'DanhMucTotNghiep.IdNamThi': '{idNamThi}',
+                                                'IdTruong' : {{$in : [{truongIdsString}]  }}
                                               }},
                                             }},
                                           ],
@@ -236,7 +240,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
             return json;
         }
 
-        public string GetSoLuongDonViDaGui(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongDonViDaGui(string idNamThi, string maHeDaoTao, string idDonVi)
         {
             var cmdRes = $@"
                         {{
@@ -247,6 +251,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
                                         $match: {{
                                           Xoa: false,
                                           MaHeDaoTao: '{maHeDaoTao}',
+                                          IdCha : '{idDonVi}'
                                         }},
                                       }},
                                       {{
@@ -341,8 +346,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongDonYeuCauCapBanSao(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongDonYeuCauCapBanSao(string idNamThi, string maHeDaoTao, string truongIdsString)
         {
+          
             var cmdRes = $@"
                         {{
                             'aggregate': 'DonYeuCauCapBanSao', 
@@ -394,6 +400,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
                               {{
                                 $match: {{
                                   'Truong.MaHeDaoTao': '{maHeDaoTao}',
+                                   'IdTruong' : {{$in : [{truongIdsString}]  }}
                                 }},
                               }},
                                 {{
@@ -418,8 +425,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongHocSinhChuaDuyet(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongHocSinhChuaDuyet(string idNamThi, string maHeDaoTao, string truongIdsString)
         {
+
             var cmdRes = $@"
                         {{
                             'aggregate': 'HocSinh', 
@@ -429,6 +437,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
                                     $match: {{
                                       Xoa: false,
                                       TrangThai: 1,
+                                      'IdTruong' : {{$in : [{truongIdsString}]  }}
                                     }},
                                   }},
                                   {{
@@ -499,8 +508,14 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongHocSinhQuaTungNam(string maHeDaoTao)
+        public string GetSoLuongHocSinhQuaTungNam(string maHeDaoTao, string idDonVi)
         {
+            var truongs = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong)
+                         .Find(x => x.Xoa == false && x.IdCha == idDonVi)
+                         .ToList()
+                         .Select(x => x.Id)
+                         .ToArray();
+            var truongIdsString = string.Join(",", truongs.Select(x => $"'{x}'"));
             var cmdRes = $@"
                         {{
                             'aggregate': 'NamThi', 
@@ -573,6 +588,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
                                                       $match: {{
                                                         'TrangThai': {{ $gte: 1 }},
                                                         'Truong.MaHeDaoTao': '{maHeDaoTao}',
+                                                        'Truong.IdCha':'{idDonVi}'
                                                       }},
                                                     }},
                                                 ],
@@ -637,8 +653,15 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongHocSinhTheoXepLoai(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongHocSinhTheoXepLoai(string idNamThi, string maHeDaoTao, string idDonVi)
         {
+            //var truongs = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong)
+            //             .Find(x => x.Xoa == false && x.IdCha == idDonVi)
+            //             .ToList()
+            //             .Select(x => x.Id)
+            //             .ToArray();
+            //var truongIdsString = string.Join(",", truongs.Select(x => $"'{x}'"));
+
             var cmdRes = $@"
                         {{
                             'aggregate': 'HocSinh', 
@@ -681,6 +704,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
                                       {{
                                         $match: {{
                                           'Truongs.MaHeDaoTao': '{maHeDaoTao}',
+                                          'Truongs.IdCha': '{idDonVi}',
                                           'DanhMucTotNghieps.IdNamThi': '{idNamThi}',
                                         }},
                                       }},
@@ -721,8 +745,15 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
         /// <param name="idNamThi"></param>
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
-        public string GetSoLuongHocSinhCapPhatBang(string idNamThi, string maHeDaoTao)
+        public string GetSoLuongHocSinhCapPhatBang(string idNamThi, string maHeDaoTao, string idDonVi)
         {
+            //var truongs = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong)
+            //             .Find(x => x.Xoa == false && x.IdCha == idDonVi)
+            //             .ToList()
+            //             .Select(x => x.Id)
+            //             .ToArray();
+            //var truongIdsString = string.Join(",", truongs.Select(x => $"'{x}'"));
+
             var cmdRes = $@"
                         {{
                             'aggregate': 'HocSinh', 
@@ -764,6 +795,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
                               {{
                                 $match: {{
                                   'Truongs.MaHeDaoTao': '{maHeDaoTao}',
+                                  'Truongs.IdCha': '{idDonVi}',
                                   'DanhMucTotNghieps.IdNamThi': '{idNamThi}',
                                 }},
                               }},
@@ -797,12 +829,19 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness
             return json;
         }
 
-        public string GetThongKeTongQuatByPhong(string idNamThi, string maHeDaoTao)
+        public string GetThongKeTongQuatByPhong(string idNamThi, string maHeDaoTao, string idDonVi)
         {
-            string soLuongPhoiDaIn =  GetSoLuongPhoiDaIn(idNamThi, maHeDaoTao);
-            string soLuongDonViDaGui = GetSoLuongDonViDaGui(idNamThi, maHeDaoTao);
-            string soLuongDonYeuCauCapBanSao = GetSoLuongDonYeuCauCapBanSao(idNamThi, maHeDaoTao);
-            string soLuongHocSinhChuaDuyet = GetSoLuongHocSinhChuaDuyet(idNamThi, maHeDaoTao);
+            var truongs = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong)
+                          .Find(x => x.Xoa == false && x.IdCha == idDonVi)
+                          .ToList()
+                          .Select(x => x.Id)
+                          .ToArray();
+            var truongIdsString = string.Join(",", truongs.Select(x => $"'{x}'"));
+
+            string soLuongPhoiDaIn =  GetSoLuongPhoiDaIn(idNamThi, maHeDaoTao, truongIdsString);
+            string soLuongDonViDaGui = GetSoLuongDonViDaGui(idNamThi, maHeDaoTao, idDonVi);
+            string soLuongDonYeuCauCapBanSao = GetSoLuongDonYeuCauCapBanSao(idNamThi, maHeDaoTao, truongIdsString);
+            string soLuongHocSinhChuaDuyet = GetSoLuongHocSinhChuaDuyet(idNamThi, maHeDaoTao, truongIdsString);
 
             string finalJson = $"{{\"SoLuongPhoiDaIn\": {(soLuongPhoiDaIn != null ? soLuongPhoiDaIn : "null")}" +
                 $",\"SoLuongDonViDaGui\": {(soLuongDonViDaGui != null ? soLuongDonViDaGui : "null")} " +

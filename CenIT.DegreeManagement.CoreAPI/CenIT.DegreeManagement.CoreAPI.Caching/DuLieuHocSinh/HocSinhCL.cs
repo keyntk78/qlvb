@@ -18,7 +18,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
         private string _masterCacheKeySoCapBanSao = "SoCapBanSaoCaches";
         private string _masterCacheKeySoCapPhatBang = "SoCapPhatBang";
         private string _masterCacheKeyThongKe = "ThongKeCL";
-        private string _masterCacheKeyTrangChu = "TrangChuCL";
+        private string _masterCacheKeyTrangChu = "TrangChuCache";
 
         private CacheLayer _cache;
         private HocSinhBL _BL;
@@ -383,19 +383,26 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
         {
             string objectKey = EHashMd5.FromObject(idTruong + idDanhMucTotNghiep);
             string rawKey = string.Concat("GetAllPreview", objectKey);
+            string rawKeyNam = string.Concat("GetAllPreview-Nam", objectKey);
+
 
             var hocSinhs = _cache.GetCacheKey<List<HocSinhModel>>(rawKey, _masterCacheKey)!;
-            if (hocSinhs != null) 
+            var nam = _cache.GetCacheKey<string>(rawKeyNam, _masterCacheKey)!;
+
+            if (hocSinhs != null && nam != null) 
                 return new HocSinhResult
                 {
                     MaLoi = (int)HocSinhEnum.Success,
                     HocSinhs = hocSinhs,
+                    Nam = nam
                 };
             // Item not found in cache - retrieve it and insert it into the cache
             var result = _BL.GetAllPreviewHocSinhVaoSoGoc(idTruong, idDanhMucTotNghiep);
             if (result.MaLoi > 0)
             {
                 _cache.AddCacheItem(rawKey, result.HocSinhs, _masterCacheKey);
+                _cache.AddCacheItem(rawKeyNam, result.Nam, _masterCacheKey);
+
             }
             return result;
         }
@@ -404,9 +411,11 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
         {
             string objectKey = EHashMd5.FromObject(model.IdTruong + model.IdDanhMucTotNghiep);
             string rawKey = string.Concat("GetAllPreview", objectKey);
+            string rawKeyNam = string.Concat("GetAllPreview-Nam", objectKey);
 
             var hocSinhs = _cache.GetCacheKey<List<HocSinhModel>>(rawKey, _masterCacheKey)!;
-            if (hocSinhs != null)
+            var nam = _cache.GetCacheKey<string>(rawKeyNam, _masterCacheKey)!;
+            if (hocSinhs != null && nam != null)
             {
                 var result = await _BL.PutIntoSoGoc(model, hocSinhs);
                 if (result.MaLoi > 0)
@@ -418,6 +427,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
 
 
                 }
+
+                result.Nam = nam;
+                result.SoluongHocSinh = hocSinhs.Count();
 
                 return result;
             }
@@ -688,7 +700,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
         }
 
 
-        public List<HocSinhXMVBModel> GetSearchHocSinhXacMinhVB(out int total, HocSinhSearchXacMinhVBModel modelSearch)
+        public List<HocSinhXMVBModel> GetSearchHocSinhXacMinhVB(out int total, HocSinhSearchXacMinhVBModel modelSearch,string idDonVi)
         {
             string objectKey = EHashMd5.FromObject(modelSearch);
             string rawKey = string.Concat("HocSinhs-GetSearchHocSinhXacMinhVB-", objectKey);
@@ -702,7 +714,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
             List<HocSinhXMVBModel> hocSinhs = _cache.GetCacheKey<List<HocSinhXMVBModel>>(rawKey, _masterCacheKey)!;
             if (hocSinhs != null) return hocSinhs;
             // Item not found in cache - retrieve it and insert it into the cache
-            hocSinhs = _BL.GetSearchHocSinhXacMinhVB(out total, modelSearch);
+            hocSinhs = _BL.GetSearchHocSinhXacMinhVB(out total, modelSearch, idDonVi);
             _cache.AddCacheItem(rawKey, hocSinhs);
             _cache.AddCacheItem(rawKeyTotal, total);
             return hocSinhs;
@@ -729,6 +741,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
             {
                 // Invalidate the cache
                 _cache.InvalidateCache(_masterCacheKey);
+                _cache.InvalidateCache(_masterCacheKeySoGoc);
+                _cache.InvalidateCache(_masterCacheKeyTrangChu);
+                _cache.InvalidateCache(_masterCacheKeyThongKe);
             }
             return result;
         }

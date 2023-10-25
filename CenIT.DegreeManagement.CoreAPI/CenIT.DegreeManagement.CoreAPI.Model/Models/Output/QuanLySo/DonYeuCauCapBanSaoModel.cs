@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DanhMuc;
 
 namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc
 {
@@ -31,6 +32,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc
         public string? SoVaoSoBanSao { get; set; }
         public string? NguoiDuyet { get; set; }
         public DateTime? NgayDuyet { get; set; }
+        public string? IdPhoiBanSao { get; set; } = string.Empty;
+        public string? IdSoCapBanSao { get; set; } = string.Empty;
+
     }
 
     public class ThongTinNguoiYeuCauModel
@@ -45,6 +49,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc
     public class DonYeuCauCapBanSaoViewModel : DonYeuCauCapBanSaoModel
     {
         public HocSinhModel HocSinh { get; set; } = new HocSinhModel();
+        public TruongModel Truong { get; set; } = new TruongModel();
+
     }
 
     public class DonYeuCauCapBanSaoParamModel : SearchParamModel
@@ -53,6 +59,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc
         public string? Ma { get; set; }
         public string? HoTen { get; set; }
         public string? CCCD { get; set; }
+        public string? NguoiThucHien { get; set; }
+
     }
 
     public class HocSinhCapBanSaoParamModel : DonYeuCauCapBanSaoParamModel

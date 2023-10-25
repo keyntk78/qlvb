@@ -14,9 +14,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DanhMuc
         public string TenDiaPhuongCapBang { get; set; } = string.Empty;
         public string TenUyBanNhanDan { get; set; } = string.Empty;
         public string HoTenNguoiKySoGoc { get; set; } = string.Empty;
-        public string DinhDangSoThuTuSoGoc { get; set; } = string.Empty;
-        public string DinhDangSoThuTuCapLai { get; set; } = string.Empty;
-        public string SoHieuBanSao { get; set; } = string.Empty;
+        public int DinhDangSoThuTuSoGoc { get; set; } = 0;
+        public int DinhDangSoThuTuCapLai { get; set; } = 0;
+        public string Nam { get; set; } = string.Empty;
         public string NguoiKyXacMinh { get; set; } = string.Empty;
 
         //Trường 

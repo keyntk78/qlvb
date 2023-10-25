@@ -2,20 +2,22 @@
 using CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Caching.Phoi;
+using CenIT.DegreeManagement.CoreAPI.Caching.Sys;
 using CenIT.DegreeManagement.CoreAPI.Caching.XacMinhVanBang;
 using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Enums;
 using CenIT.DegreeManagement.CoreAPI.Core.Enums.TraCuu;
 using CenIT.DegreeManagement.CoreAPI.Core.Helpers;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
-using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.XacMinhVanBang;
 using CenIT.DegreeManagement.CoreAPI.Models.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Processor.UploadFile;
 using CenIT.DegreeManagement.CoreAPI.Resources;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
 {
@@ -25,6 +27,11 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
     {
         private readonly ShareResource _localizer;
         private HocSinhCL _cacheLayer;
+        private TruongCL _truongCL;
+        private SysUserCL _sysUserCL;
+        private PhoiGocCL _phoiGocCL;
+
+
         private ChinhSuaVanBangCL _cacheChinhSuaVanBang;
 
         private readonly IMapper _mapper;
@@ -38,6 +45,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
             _fileService = fileService;
             _cacheChinhSuaVanBang = new ChinhSuaVanBangCL(cacheService, configuration);
             _mapper = mapper;
+            _truongCL = new TruongCL(cacheService, configuration);
+            _sysUserCL = new SysUserCL(cacheService);
+            _phoiGocCL = new PhoiGocCL(cacheService, configuration);
         }
 
 
@@ -61,19 +71,43 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
                     return ResponseHelper.BadRequest(fileResult.Item2);
                 }
             }
-            
-            #endregion
 
-            var data = await _cacheChinhSuaVanBang.Create(model);
-            if (data == (int)LichSuChinhSuaVanBangEnum.Fail)
+            #endregion
+            var user = _sysUserCL.GetByUsername(model.NguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+
+            var data = await _cacheChinhSuaVanBang.Create(model, donVi);
+            if (data.MaLoi == (int)LichSuChinhSuaVanBangEnum.Fail)
                 return ResponseHelper.BadRequest("Chỉnh sửa văn bằng thất bại");
-            if (data == (int)LichSuChinhSuaVanBangEnum.NotExist)
+            if (data.MaLoi == (int)LichSuChinhSuaVanBangEnum.NotExist)
                 return ResponseHelper.BadRequest("Học sinh không tồn tại");
-            if (data == (int)LichSuChinhSuaVanBangEnum.SoHieuExist)
+            if (data.MaLoi == (int)LichSuChinhSuaVanBangEnum.SoHieuExist)
                 return ResponseHelper.BadRequest("Số hiệu đã tồn tại");
-            if (data == (int)LichSuChinhSuaVanBangEnum.SoVaoSoExist)
+            if (data.MaLoi == (int)LichSuChinhSuaVanBangEnum.SoVaoSoExist)
                 return ResponseHelper.BadRequest("Số vào sổ đã tồn tại");
-            return ResponseHelper.Success("Chỉnh sửa văn bằng thành công");
+            else
+            {
+                if (model.LoaiHanhDong == LoaiHanhDongEnum.CapLai)
+                {
+                    var updateSoVaoSo = new UpdateCauHinhSoVaoSoInputModel()
+                    {
+                        DinhDangSoThuTuSoGoc = 1,
+                        Nam = data.Nam,
+                        LoaiHanhDong = SoVaoSoEnum.SoVaoSoGoc,
+                        IdTruong = donVi.Id
+                    };
+                    _truongCL.UpdateCauHinhSoVaoSo(updateSoVaoSo);
+                    await _phoiGocCL.CapNhatThongSoPhoi("1", data.IdPhoi, 1);
+
+                    return ResponseHelper.Success("Cấp lại văn bằng thành công");
+                } 
+                else
+                {
+                    return ResponseHelper.Success("Chỉnh sửa văn bằng thành công");
+
+                }
+            }
+    
         }
 
         [HttpGet("GetSearchLichSuChinhSuaVanBang")]
@@ -84,6 +118,20 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
 
             var hocSinh = _cacheLayer.GetHocSinhByCccd(cccd);
             HocSinhDTO hocSinhMp = _mapper.Map<HocSinhDTO>(hocSinh);
+            // Tạo một bản sao của hocSinh để giữ nguyên giá trị cũ
+            var phucLuc = _cacheChinhSuaVanBang.GetThongTinChinhSuaMoiNhat(hocSinh.Id);
+            if (phucLuc != null)
+            {
+                hocSinhMp = _mapper.Map<HocSinhDTO>(phucLuc);
+                hocSinhMp.HoiDong = phucLuc.HoiDongThi;
+                hocSinhMp.DanhMucTotNghiep.NgayCapBang = phucLuc.NgayCap;
+                hocSinhMp.DanhMucTotNghiep.IdNamThi = phucLuc.IdNamThi;
+                hocSinhMp.MaHinhThucDaoTao = phucLuc.MaHTDT;
+                hocSinhMp.Id = hocSinh.Id;
+                hocSinhMp.SoHieuVanBang = string.IsNullOrEmpty(phucLuc.SoHieuVanBangCapLai) ? phucLuc.SoHieuVanBangCu : phucLuc.SoHieuVanBangCapLai;
+                hocSinhMp.SoVaoSoCapBang = string.IsNullOrEmpty(phucLuc.SoVaoSoCapBangCapLai) ? phucLuc.SoVaoSoCapBangCu : phucLuc.SoVaoSoCapBangCapLai;
+            }
+
             var data = _cacheChinhSuaVanBang.GetSearchLichSuChinhSuaVanBang(out total, hocSinhMp.Id, model);
 
             var outputData = new
@@ -96,6 +144,29 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
             return ResponseHelper.Ok(outputData);
         }
 
+
+        [HttpGet("GetHocSinhByCccd")]
+        [AllowAnonymous]
+        public IActionResult GetHocSinhByCccd(string cccd)
+        {
+            var hocSinh = _cacheLayer.GetHocSinhByCccd(cccd);
+            HocSinhDTO hocSinhMp = _mapper.Map<HocSinhDTO>(hocSinh);
+            // Tạo một bản sao của hocSinh để giữ nguyên giá trị cũ
+            var phucLuc = _cacheChinhSuaVanBang.GetThongTinChinhSuaMoiNhat(hocSinh.Id);
+            if (phucLuc != null)
+            {
+                hocSinhMp = _mapper.Map<HocSinhDTO>(phucLuc);
+                hocSinhMp.HoiDong = phucLuc.HoiDongThi;
+                hocSinhMp.DanhMucTotNghiep.NgayCapBang = phucLuc.NgayCap;
+                hocSinhMp.DanhMucTotNghiep.IdNamThi = phucLuc.IdNamThi;
+                hocSinhMp.MaHinhThucDaoTao = phucLuc.MaHTDT;
+                hocSinhMp.Id = hocSinh.Id;
+                hocSinhMp.SoHieuVanBang = string.IsNullOrEmpty(phucLuc.SoHieuVanBangCapLai) ? phucLuc.SoHieuVanBangCu : phucLuc.SoHieuVanBangCapLai;
+                hocSinhMp.SoVaoSoCapBang = string.IsNullOrEmpty(phucLuc.SoVaoSoCapBangCapLai) ? phucLuc.SoVaoSoCapBangCu : phucLuc.SoVaoSoCapBangCapLai;
+            }
+
+            return ResponseHelper.Ok(hocSinhMp);
+        }
 
         [HttpGet("GetChinhSuaVanBangById")]
         [AllowAnonymous]
@@ -112,5 +183,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
             };
             return ResponseHelper.Ok(outputData);
         }
+
+
     }
 }

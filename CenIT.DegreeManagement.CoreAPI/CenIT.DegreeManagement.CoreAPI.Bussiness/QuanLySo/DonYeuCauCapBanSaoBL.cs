@@ -88,7 +88,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
 
                 string soHieu = "";
                 string soVaoSo = "";
-                var randomSoVaoSo = SoVaoSoBanSao(out soVaoSo, out soHieu, idDonViQuanLy, model.IdTruong);
+                string namHt = "";
+
+                var randomSoVaoSo = SoVaoSoBanSao(out soVaoSo, out soHieu, out namHt ,idDonViQuanLy, model.IdTruong);
 
                 var donYeuCau = new DonYeuCauCapBanSaoModel();
                 ModelProvider.MapProperties(model, donYeuCau);
@@ -103,7 +105,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                 await colectionDonYeuCauCapBanSao.InsertOneAsync(donYeuCau);
                 if (donYeuCau.Id != null)
                 {
-                    return new HocSinhResult() { MaLoi = (int)DonYeuCauCapBanSaoEnum.Success, MaDonYeuCau = donYeuCau.Ma };
+                    return new HocSinhResult() { MaLoi = (int)DonYeuCauCapBanSaoEnum.Success, MaDonYeuCau = donYeuCau.Ma, Nam = namHt };
                 }
                 return new HocSinhResult() { MaLoi = (int)DonYeuCauCapBanSaoEnum.Fail };
             }
@@ -216,11 +218,12 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
             return json;
         }
 
-        public List<DonYeuCauCapBanSaoViewModel> GetSearchDonYeuCau(out int total, DonYeuCauCapBanSaoParamModel modelSearch)
+        public List<DonYeuCauCapBanSaoViewModel> GetSearchDonYeuCau(out int total, DonYeuCauCapBanSaoParamModel modelSearch, TruongModel donVi)
         {
             var filterBuilder = Builders<DonYeuCauCapBanSaoViewModel>.Filter;
             var colectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(collectionNameHocSinh);
             var colectionDonYeuCauCapBanSao = _mongoDatabase.GetCollection<DonYeuCauCapBanSaoViewModel>(collectionNameDonYeuCauCapBanSao);
+            var colectionTruongHoc = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong);
 
             var filters = new List<FilterDefinition<DonYeuCauCapBanSaoViewModel>>
             {
@@ -251,8 +254,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                               d.HocSinh = h;
                               return d;
                           }
+                      ).Join(
+                          colectionTruongHoc.AsQueryable(),
+                          d => d.IdTruong,
+                          h => h.Id,
+                          (d, h) =>
+                          {
+                              d.Truong = h;
+                              return d;
+                          }
                       ).ToList();
-
             total = donYeuCauVM.Count;
 
             switch (modelSearch.Order)
@@ -272,11 +283,12 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
             return donYeuCauVM;
         }
 
-        public List<DonYeuCauCapBanSaoViewModel> GetSearchDonYeuCauDaDuyet(out int total, HocSinhCapBanSaoParamModel modelSearch)
+        public List<DonYeuCauCapBanSaoViewModel> GetSearchDonYeuCauDaDuyet(out int total, HocSinhCapBanSaoParamModel modelSearch, TruongModel donVi)
         {
             var filterBuilder = Builders<DonYeuCauCapBanSaoViewModel>.Filter;
             var colectionHocSinh = _mongoDatabase.GetCollection<HocSinhModel>(collectionNameHocSinh);
             var colectionDonYeuCauCapBanSao = _mongoDatabase.GetCollection<DonYeuCauCapBanSaoViewModel>(collectionNameDonYeuCauCapBanSao);
+            var colectionTruongHoc = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong);
 
             var filters = new List<FilterDefinition<DonYeuCauCapBanSaoViewModel>>
             {
@@ -306,6 +318,15 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                           (d, h) =>
                           {
                               d.HocSinh = h;
+                              return d;
+                          }
+                      ).Join(
+                          colectionTruongHoc.AsQueryable(),
+                          d => d.IdTruong,
+                          h => h.Id,
+                          (d, h) =>
+                          {
+                              d.Truong = h;
                               return d;
                           }
                       ).ToList();
@@ -532,12 +553,15 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                 donYeuCau.TrangThai = TrangThaiDonYeuCauEnum.DaDuyet;
                 donYeuCau.NguoiCapNhat = model.NguoiThucHien;
                 donYeuCau.NguoiDuyet = model.NguoiThucHien;
+                donYeuCau.IdPhoiBanSao = phoiBanSao.Id;
+                donYeuCau.IdSoCapBanSao = soBanSao.Id;
                 donYeuCau.NgayDuyet = DateTime.Now;
                 donYeuCau.NgayCapNhat = DateTime.Now;
+
                 if (string.IsNullOrEmpty(hocSinh.IdSoCapBanSao)){
-                    hocSinh.SoVaoSoBanSao = Regex.Replace(hocSinh.SoVaoSoCapBang, @"\/", "");
-                    hocSinh.IdSoCapBanSao = soBanSao.Id;
-                    hocSinh.IdPhoiBanSao = phoiBanSao.Id;
+                    //hocSinh.SoVaoSoBanSao = Regex.Replace(hocSinh.SoVaoSoCapBang, @"\/", "");
+                    //hocSinh.IdSoCapBanSao = soBanSao.Id;
+                    //hocSinh.IdPhoiBanSao = phoiBanSao.Id;
                     phoiBanSao.SoLuongPhoi -= 1;
                     phoiBanSao.SoLuongPhoiDaSuDung += 1;
                 }
@@ -681,7 +705,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
         }
 
 
-        private bool SoVaoSoBanSao(out string soVaoSo, out string soHieu, string idDonViQuanLy, string idTruong)
+        private bool SoVaoSoBanSao(out string soVaoSo, out string soHieu, out string namHT , string idDonViQuanLy, string idTruong)
         {
 
             var filter = Builders<TruongModel>.Filter.And(
@@ -698,21 +722,24 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                                            Builders<TruongModel>.Filter.Eq(t => t.Id, idTruong)
                                          )).FirstOrDefault();
 
-            int namHienTai = DateTime.Now.Year;
+            int stt = 0;
+            var nam = truong.CauHinh.Nam;
+            if (donViQuanLy.CauHinh.Nam == DateTime.Now.Year.ToString())
+            {
+                stt = truong.CauHinh.SoDonYeuCau;
+            }
+            else
+            {
+                nam = DateTime.Now.Year.ToString();
+            }
 
-            // Tạo một bộ lọc để lấy các bản ghi trong năm hiện tại
-            var filterDonYeuCau = Builders<DonYeuCauCapBanSaoModel>.Filter.Where(x => x.NgayTao.Year == namHienTai);
-
-            // Lấy số lượng bản ghi
-            long count = _mongoDatabase.GetCollection<DonYeuCauCapBanSaoModel>(_collectionDonYeuCauCapBanSaoName).CountDocuments(filterDonYeuCau);
-
-            // tiền tố + mã trường + loại bằng(THCS:2, THPT:1) + SỐ TỰ RANDOM + /NĂM
-            int loaiBang = donViQuanLy.DonViQuanLy == (int)TypeUnitEnum.So ? (int)LoaiVBCCEnum.THPT : (int)LoaiVBCCEnum.THCS;
-            string soBatDau = (donViQuanLy.CauHinh.SoBatDau + count).ToString();
+            //// tiền tố + mã trường + loại bằng(THCS:2, THPT:1) + SỐ TỰ RANDOM + /NĂM
+            string soBatDau = (donViQuanLy.CauHinh.SoBatDau + stt).ToString();
             string chuoiSo = soBatDau.PadLeft(donViQuanLy.CauHinh.SoKyTu, '0');
-            soVaoSo = donViQuanLy.CauHinh.TienToBanSao + "-" + truong.Ma + loaiBang.ToString() + chuoiSo + "/" + namHienTai.ToString();
-            soHieu = truong.Ma + loaiBang.ToString() + chuoiSo;
+            soVaoSo = donViQuanLy.CauHinh.TienToBanSao + "-" + chuoiSo + "/" + nam + "-" + truong.Ma;
+            soHieu = truong.Ma  + chuoiSo;
 
+            namHT = nam;
             return true;
         }
 

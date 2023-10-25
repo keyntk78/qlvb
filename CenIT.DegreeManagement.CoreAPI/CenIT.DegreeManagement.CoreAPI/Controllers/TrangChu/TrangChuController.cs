@@ -1,4 +1,5 @@
 ﻿using CenIT.DegreeManagement.CoreAPI.Caching;
+using CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Caching.Sys;
 using CenIT.DegreeManagement.CoreAPI.Core.Caching;
@@ -18,6 +19,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.TrangChu
         private ILogger<TrangChuController> _logger;
         private readonly ShareResource _localizer;
         private TrangChuCL _trangChuCL;
+        private SysUserCL _sysUserCL;
+        private TruongCL _truongCL;
+
+
 
         private MessageCL _messageCL;
 
@@ -28,6 +33,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.TrangChu
             _localizer = shareResource;
             _trangChuCL = new TrangChuCL(cacheService, configuration);
             _messageCL = new MessageCL(cacheService);
+            _sysUserCL = new SysUserCL(cacheService);
+            _truongCL = new TruongCL(cacheService, configuration);
+
         }
         #region MESSAGE
         /// <summary>
@@ -115,7 +123,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.TrangChu
         [HttpGet("GetTraCuuHocSinhTotNghiep")]
         public IActionResult GetTraCuuHocSinhTotNghiep([FromQuery] TraCuuHocHinhTotNghiepSearchModel modelSearch)
         {
-            var data = _trangChuCL.GetTraCuuHocSinhTotNghiep(modelSearch);
+            var user = _sysUserCL.GetByUsername(modelSearch.NguoiThucHien);
+            var data = _trangChuCL.GetTraCuuHocSinhTotNghiep(user.TruongID,modelSearch);
 
             return Ok(ResponseHelper.ResultJson(data));
         }
@@ -144,9 +153,12 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.TrangChu
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
         [HttpGet("GetSoLuongHocSinhQuaTungNam")]
-        public IActionResult GetSoLuongHocSinhQuaTungNam(string maHeDaoTao)
+        public IActionResult GetSoLuongHocSinhQuaTungNam(string nguoiThucHien)
         {
-            var data = _trangChuCL.GetSoLuongHocSinhQuaTungNam(maHeDaoTao);
+            var user = _sysUserCL.GetByUsername(nguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+            if (donVi == null) return ResponseHelper.BadRequest("Không tìm thấy người thực hiện");
+            var data = _trangChuCL.GetSoLuongHocSinhQuaTungNam(donVi.MaHeDaoTao, donVi.Id);
 
             return Ok(ResponseHelper.ResultJson(data));
         }
@@ -159,9 +171,12 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.TrangChu
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
         [HttpGet("GetSoLuongHocSinhTheoXepLoai")]
-        public IActionResult GetSoLuongHocSinhTheoXepLoai(string idNamThi, string maHeDaoTao)
+        public IActionResult GetSoLuongHocSinhTheoXepLoai(string idNamThi, string nguoiThucHien)
         {
-            var data = _trangChuCL.GetSoLuongHocSinhTheoXepLoai(idNamThi, maHeDaoTao);
+            var user = _sysUserCL.GetByUsername(nguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+            if (donVi == null) return ResponseHelper.BadRequest("Không tìm thấy người thực hiện");
+            var data = _trangChuCL.GetSoLuongHocSinhTheoXepLoai(idNamThi, donVi.MaHeDaoTao, donVi.Id);
 
             return Ok(ResponseHelper.ResultJson(data));
         }
@@ -174,9 +189,12 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.TrangChu
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
         [HttpGet("GetSoLuongHocSinhCapPhatBang")]
-        public IActionResult GetSoLuongHocSinhCapPhatBang(string idNamThi, string maHeDaoTao)
+        public IActionResult GetSoLuongHocSinhCapPhatBang(string idNamThi, string nguoiThucHien)
         {
-            var data = _trangChuCL.GetSoLuongHocSinhCapPhatBang(idNamThi, maHeDaoTao);
+            var user = _sysUserCL.GetByUsername(nguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+            if (donVi == null) return ResponseHelper.BadRequest("Không tìm thấy người thực hiện");
+            var data = _trangChuCL.GetSoLuongHocSinhCapPhatBang(idNamThi, donVi.MaHeDaoTao, donVi.Id);
 
             return Ok(ResponseHelper.ResultJson(data));
         }
@@ -189,9 +207,13 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.TrangChu
         /// <param name="maHeDaoTao"></param>
         /// <returns></returns>
         [HttpGet("GetThongKeTongQuatByPhong")]
-        public IActionResult GetThongKeTongQuatByPhong(string idNamThi, string maHeDaoTao)
+        public IActionResult GetThongKeTongQuatByPhong(string idNamThi, string nguoiThucHien)
         {
-            var data = _trangChuCL.GetThongKeTongQuatByPhong(idNamThi, maHeDaoTao);
+            var user = _sysUserCL.GetByUsername(nguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+            if (donVi == null) return ResponseHelper.BadRequest("Không tìm thấy người thực hiện");
+
+            var data = _trangChuCL.GetThongKeTongQuatByPhong(idNamThi, donVi.MaHeDaoTao, donVi.Id);
 
             return Ok(ResponseHelper.ResultJson(data));
         }

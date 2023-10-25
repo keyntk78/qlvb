@@ -14,7 +14,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Input.XacMinhVanBang
         public DateTime NgayTrenCongVan { get; set; }
         public string? PathFileYeuCau { get; set; }
         public IFormFile? FileYeuCau { get; set; }
-        public string HoTenNguoiThucHien { get; set; } = null!;
+        public string NguoiThucHien { get; set; } = null!;
     }
 
     public class XacMinhVangBangInputModel : XacMinhVangBangInputBaseModel

@@ -6,6 +6,7 @@ using CenIT.DegreeManagement.CoreAPI.Caching.XacMinhVanBang;
 using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Helpers;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.QuanLySo;
 using CenIT.DegreeManagement.CoreAPI.Models.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Resources;
 using Microsoft.AspNetCore.Authorization;
@@ -34,17 +35,17 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.QuanLySo
 
         [HttpGet("GetSerachPhuLuc")]
         [AllowAnonymous]
-        public IActionResult GetSerachPhuLuc(string? namThi, [FromQuery] SearchParamModel model)
+        public IActionResult GetSerachPhuLuc([FromQuery]PhuLucSoGocSearchModel searchModel)
         {
             int total;
 
-            var phuLucs = _cacheLayer.GetSerachPhuLuc(out total, namThi, model);
+            var phuLucs = _cacheLayer.GetSerachPhuLuc(out total, searchModel);
 
             var outputData = new
             {
                 totalRow = total,
                 PhuLuc = phuLucs,
-                searchParam = model
+                searchParam = searchModel
             };
             return ResponseHelper.Ok(outputData);
         }

@@ -265,7 +265,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
         /// Lấy danh mục tốt nghiệp theo idnamThi và idHinhThucDaoTao
         /// </summary>
         /// <returns></returns>
-        public List<DanhMucTotNghiepViewModel> GetByIdNamThiAndMaHinhThucDaoTao(string idNamThi, string maHinhThucDaoTao)
+        public List<DanhMucTotNghiepViewModel> GetByIdNamThiAndMaHinhThucDaoTao(string idNamThi, string maHinhThucDaoTao, TruongModel donVi)
         {
           
 
@@ -282,6 +282,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                Builders<DanhMucTotNghiepViewModel>.Filter.Eq(dmtn => dmtn.Xoa, false),
                Builders<DanhMucTotNghiepViewModel>.Filter.Eq(dmtn => dmtn.IdNamThi, idNamThi),
                Builders<DanhMucTotNghiepViewModel>.Filter.Eq(dmtn => dmtn.IdHinhThucDaoTao, hinhThucDaoTao.Id),
+               Builders<DanhMucTotNghiepViewModel>.Filter.Eq(dmtn => dmtn.MaHeDaoTao, donVi.MaHeDaoTao),
                Builders<DanhMucTotNghiepViewModel>.Filter.Eq(dmtn => dmtn.Khoa, false)
              );
 
@@ -331,7 +332,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
             if (string.IsNullOrEmpty(namThi)) return (int)EnumDanhMucTotNghiep.NotExistNamThi;
             if (!KiemTraNgayCapBang(namThi, model.NgayCapBang)) return (int)EnumDanhMucTotNghiep.YearNotMatchDate;
             if (TrungTieuDe(model.TieuDe, model.Id)) return (int)EnumDanhMucTotNghiep.ExistName;
-            if (TrungIdNamAndIdHinhThucDaoTao(model.IdNamThi, model.IdHinhThucDaoTao, model.Id, model.MaHeDaoTao)) return (int)EnumDanhMucTotNghiep.ExistYearAndHTDT;
+            //if (TrungIdNamAndIdHinhThucDaoTao(model.IdNamThi, model.IdHinhThucDaoTao, model.Id, model.MaHeDaoTao)) return (int)EnumDanhMucTotNghiep.ExistYearAndHTDT;
             try
             {
                 var danhMucTotNghiepModel = new DanhMucTotNghiepModel();
@@ -365,7 +366,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
             if (string.IsNullOrEmpty(namThi)) return (int)EnumDanhMucTotNghiep.NotExistNamThi;
             if (!KiemTraNgayCapBang(namThi, model.NgayCapBang)) return (int)EnumDanhMucTotNghiep.YearNotMatchDate;
             if (TrungTieuDe(model.TieuDe, model.Id)) return (int)EnumDanhMucTotNghiep.ExistName;
-            if (TrungIdNamAndIdHinhThucDaoTao(model.IdNamThi, model.IdHinhThucDaoTao ,model.Id, model.MaHeDaoTao)) return (int)EnumDanhMucTotNghiep.ExistYearAndHTDT;
+            //if (TrungIdNamAndIdHinhThucDaoTao(model.IdNamThi, model.IdHinhThucDaoTao ,model.Id, model.MaHeDaoTao)) return (int)EnumDanhMucTotNghiep.ExistYearAndHTDT;
             try
             {
                 var filter = Builders<DanhMucTotNghiepModel>.Filter.And(

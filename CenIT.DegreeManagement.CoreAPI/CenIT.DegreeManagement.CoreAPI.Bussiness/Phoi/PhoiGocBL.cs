@@ -513,6 +513,21 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.Phoi
             return phoiGoc;
         }
 
+        public PhoiGocModel GetPhoiDangSuDungByHDT(string maHeDaoTao)
+        {
+
+            var filter = Builders<PhoiGocModel>.Filter.And(
+               Builders<PhoiGocModel>.Filter.Eq(pg => pg.Xoa, false),
+               Builders<PhoiGocModel>.Filter.Eq(pg => pg.TinhTrang, TinhTrangPhoiEnum.DangSuDung),
+               Builders<PhoiGocModel>.Filter.Eq(pg => pg.MaHeDaoTao, maHeDaoTao)
+            );
+
+            var phoiGoc = _mongoDatabase.GetCollection<PhoiGocModel>(_collectionNamePhoiGoc)
+                                        .Find(filter).FirstOrDefault();
+            return phoiGoc;
+        }
+
+
 
         /// <summary>
         /// Cập nhật lại số bắt đầu
@@ -531,7 +546,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.Phoi
             if (phoiGoc == null)
                 return (int)PhoiEnum.NotFound;
 
-            phoiGoc.SoBatDau = soBatDau;
+            //phoiGoc.SoBatDau = soBatDau;
             phoiGoc.SoLuongPhoi -= soluongphoi;
             phoiGoc.SoLuongPhoiDaSuDung += soluongphoi;
 

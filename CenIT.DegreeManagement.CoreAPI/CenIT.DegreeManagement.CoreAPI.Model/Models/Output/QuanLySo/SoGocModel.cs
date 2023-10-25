@@ -32,4 +32,11 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc
         public string? IdDanhMucTotNghiep { get; set; }
         public string? IdNamThi { get; set; }
     }
+
+    public class SoGocSearchParam : SearchParamModel
+    {
+        public string? IdDanhMucTotNghiep { get; set; }
+        public string? IdKhoaThi { get; set; }
+        public string? IdTruong { get; set; }
+    }
 }
