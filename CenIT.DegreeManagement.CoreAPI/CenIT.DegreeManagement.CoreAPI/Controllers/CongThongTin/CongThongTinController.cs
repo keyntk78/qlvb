@@ -172,10 +172,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CongThongTin
 
                     var updateSoVaoSo = new UpdateCauHinhSoVaoSoInputModel()
                     {
-                        DinhDangSoThuTuSoGoc = 1,
+                        SoDonYeuCau = 1,
                         Nam = response.Nam,
                         LoaiHanhDong = SoVaoSoEnum.SoVaoSoBanSao,
-                        IdTruong = model.IdTruong
+                        IdTruong = truong.IdCha
                     };
 
                     _truongCL.UpdateCauHinhSoVaoSo(updateSoVaoSo);
@@ -274,9 +274,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CongThongTin
         }
 
         [HttpGet("GetPhong")]
-        public IActionResult GetPhong(string idDonVi)
+        public IActionResult GetPhong()
         {
-            var data = _truongCL.GetPhong(idDonVi);
+            var data = _truongCL.GetDonViQuanLySo();
             return ResponseHelper.Ok(data);
         }
 

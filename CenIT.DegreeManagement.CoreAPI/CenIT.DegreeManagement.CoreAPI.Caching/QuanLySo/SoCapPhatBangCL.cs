@@ -26,7 +26,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo
             _BL = new SoCapPhatBangBL(configuration);
         }
 
-        public string GetHocSinhTheoSoCapPhatBang(TruongViewModel truong, DanhMucTotNghiepViewModel dmtn, SearchParamModel paramModel)
+        public string GetHocSinhTheoSoCapPhatBang(TruongViewModel truong, DanhMucTotNghiepViewModel dmtn, SoCapPhatBangSearchParam paramModel)
         {
             var hashKey = EHashMd5.FromObject(truong) + EHashMd5.FromObject(dmtn) + EHashMd5.FromObject(paramModel);
             var rawKey = string.Concat("SoCapPhatBang-GetHocSinhTheoSoCapPhatBang-", hashKey);

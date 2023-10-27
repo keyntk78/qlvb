@@ -1876,19 +1876,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
         #endregion
 
         #region Cấp bản sao
-        public HocSinhInBangModel GetHocSinhDaDuaVaoSoBanSao(string idHocSinh, string idDonYeuCau)
+        public HocSinhInBangModel GetHocSinhDaDuaVaoSoBanSao(string idHocSinh ,string idDonYeuCau, TruongModel donVi)
         {
-            var trangThais = new List<TrangThaiHocSinhEnum>
-                {
-                        TrangThaiHocSinhEnum.DaDuyet,
-                        TrangThaiHocSinhEnum.DaDuaVaoSoGoc,
-                        TrangThaiHocSinhEnum.DaInBang,
-                        TrangThaiHocSinhEnum.DaNhanBang,
-                };
-
             var filter = Builders<HocSinhInBangModel>.Filter.And(
                        Builders<HocSinhInBangModel>.Filter.Eq(hs => hs.Xoa, false),
-                       Builders<HocSinhInBangModel>.Filter.In(hs => hs.TrangThai, trangThais),
                        Builders<HocSinhInBangModel>.Filter.Eq(hs => hs.Id, idHocSinh)
                      );
 
@@ -1902,7 +1893,6 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
 
             var donYeuCau = _mongoDatabase.GetCollection<DonYeuCauCapBanSaoModel>(_collectionDonYeuCauCapBanSaoName)
                                 .Find(d=>d.Xoa == false && d.Id == idDonYeuCau).FirstOrDefault();
-
 
             var danhMucTotNghieps = danhMucTotNghiepCollection.Find(d => d.Xoa == false)
                .ToList()
@@ -1949,27 +1939,15 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                                       hs.NgayCapBang = dmtn.NgayCapBang;
                                       return hs;
                                   }
-                              ).GroupJoin(
-                                  soCapBanSaoCollection.AsQueryable(),
-                                  hs => hs.IdSoCapBanSao,
-                                  s => s.Id,
-                                  (hs, sGroup) =>
-                                  {
-                                      var so = sGroup.FirstOrDefault(); // Use FirstOrDefault to handle null case
-                                      if (so != null)
-                                      {
-                                          hs.UyBanNhanDan = so.UyBanNhanDan;
-                                          hs.DiaPhuongCapBang = so.DiaPhuongCapBang;
-                                          hs.NguoiKyBang = so.NguoiKyBang;
-                                          hs.CoQuanCapBang = so.CoQuanCapBang;
-
-                                      }
-
-                                      return hs;
-                                  }
                               )
                       .FirstOrDefault();
             hocSinhVM.SoLuongBanSao = donYeuCau.SoLuongBanSao;
+            hocSinhVM.SoVaoSoBanSao = donYeuCau.SoVaoSoBanSao;
+            hocSinhVM.IdPhoiBanSao = donYeuCau.IdPhoiBanSao;
+            hocSinhVM.UyBanNhanDan = donVi.CauHinh.TenUyBanNhanDan;
+            hocSinhVM.DiaPhuongCapBang = donVi.CauHinh.TenDiaPhuongCapBang;
+            hocSinhVM.NguoiKyBang = donVi.CauHinh.HoTenNguoiKySoGoc;
+            hocSinhVM.CoQuanCapBang = donVi.CauHinh.TenCoQuanCapBang;
 
             return hocSinhVM;
         }
@@ -2434,7 +2412,6 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                         TrangThaiHocSinhEnum.DaInBang,
                         TrangThaiHocSinhEnum.DaNhanBang,
                         TrangThaiHocSinhEnum.HuyBo
-
                 }),
 
                 !string.IsNullOrEmpty(modelSearch.HoTen)
@@ -2454,6 +2431,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
                     : null,
                 !string.IsNullOrEmpty(modelSearch.CCCD)
                     ? filterBuilder.Regex("CCCD", new BsonRegularExpression(modelSearch.CCCD, "i"))
+                    : null,
+
+                 !string.IsNullOrEmpty(modelSearch.Search)
+                    ? filterBuilder.Or(
+                        filterBuilder.Regex("HoTen", new BsonRegularExpression(modelSearch.Search, "i")),
+                        filterBuilder.Regex("DanToc", new BsonRegularExpression(modelSearch.Search, "i")),
+                        filterBuilder.Regex("CCCD", new BsonRegularExpression(modelSearch.Search, "i")),
+                        filterBuilder.Regex("SoHieuVanBang", new BsonRegularExpression(modelSearch.Search, "i")),
+                        filterBuilder.Regex("SoVaoSoCapBang", new BsonRegularExpression(modelSearch.Search, "i"))
+                    )
                     : null
             };
 
@@ -2503,19 +2490,45 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh
             {
                 case "0":
                     result = modelSearch.OrderDir.ToUpper() == "ASC"
-                        ? result.OrderBy(x => x.STT).ToList()
-                        : result.OrderByDescending(x => x.STT).ToList();
+                       ? result.OrderBy(x => x.HoTen.Split(' ').LastOrDefault()).ToList()
+                       : result.OrderByDescending(x => x.HoTen.Split(' ').LastOrDefault()).ToList();
                     break;
                 case "1":
                     result = modelSearch.OrderDir.ToUpper() == "ASC"
                         ? result.OrderBy(x => x.HoTen.Split(' ').LastOrDefault()).ToList()
                         : result.OrderByDescending(x => x.HoTen.Split(' ').LastOrDefault()).ToList();
                     break;
-                case "2":
+                case "hoTen":
                     result = modelSearch.OrderDir.ToUpper() == "ASC"
-                        ? result.OrderBy(x => x.CCCD).ToList()
-                        : result.OrderByDescending(x => x.CCCD).ToList();
+                       ? result.OrderBy(x => x.HoTen.Split(' ').LastOrDefault()).ToList()
+                       : result.OrderByDescending(x => x.HoTen.Split(' ').LastOrDefault()).ToList();
                     break;
+                case "cccd":
+                    result = modelSearch.OrderDir.ToUpper() == "ASC"
+                       ? result.OrderBy(x => x.CCCD).ToList()
+                       : result.OrderByDescending(x =>x.CCCD).ToList();
+                    break;
+                case "gioiTinh_fm":
+                    result = modelSearch.OrderDir.ToUpper() == "ASC"
+                       ? result.OrderBy(x => x.GioiTinh).ToList()
+                       : result.OrderByDescending(x => x.GioiTinh).ToList();
+                    break;
+                case "ngaySinh_fm":
+                    result = modelSearch.OrderDir.ToUpper() == "ASC"
+                       ? result.OrderBy(x => x.NgaySinh).ToList()
+                       : result.OrderByDescending(x => x.NgaySinh).ToList();
+                    break;
+                case "soHieuVanBang":
+                    result = modelSearch.OrderDir.ToUpper() == "ASC"
+                       ? result.OrderBy(x => x.SoHieuVanBang).ToList()
+                       : result.OrderByDescending(x => x.SoHieuVanBang).ToList();
+                    break;
+                case "soVaoSoCapBang":
+                    result = modelSearch.OrderDir.ToUpper() == "ASC"
+                       ? result.OrderBy(x => x.SoHieuVanBang).ToList()
+                       : result.OrderByDescending(x => x.NgaySinh).ToList();
+                    break;
+
             }
             if (modelSearch.PageSize > 0)
             {

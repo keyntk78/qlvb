@@ -1,28 +1,19 @@
 ﻿using AutoMapper;
-using CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc;
-using CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Caching.Phoi;
 using CenIT.DegreeManagement.CoreAPI.Caching.Sys;
-using CenIT.DegreeManagement.CoreAPI.Controllers.Phoi;
 using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Enums;
 using CenIT.DegreeManagement.CoreAPI.Core.Helpers;
-using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Core.Utils;
-using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.Phoi;
-using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.Phoi;
 using CenIT.DegreeManagement.CoreAPI.Models.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Models.Shared;
 using CenIT.DegreeManagement.CoreAPI.Models.Sys.Truong;
 using CenIT.DegreeManagement.CoreAPI.Processor.UploadFile;
 using CenIT.DegreeManagement.CoreAPI.Resources;
-using DocumentFormat.OpenXml.Bibliography;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Mvc.Html;
 
 namespace CenIT.DegreeManagement.CoreAPI.Controllers.Shared
 {

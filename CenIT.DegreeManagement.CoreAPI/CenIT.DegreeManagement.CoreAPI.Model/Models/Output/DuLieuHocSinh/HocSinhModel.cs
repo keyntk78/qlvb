@@ -151,8 +151,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh
         public string? NamThi { get; set; } = string.Empty;
         public string Truong { get; set; } = string.Empty;
         public int SoLuongBanSao { get; set; }
-
-    }
+     }
 
     public class HocSinhXacMinhVBViewModel
     {

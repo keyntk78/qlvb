@@ -1,4 +1,6 @@
-﻿using CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc;
+﻿using CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc;
+using CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc;
+using CenIT.DegreeManagement.CoreAPI.Caching.Sys;
 using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Enums;
 using CenIT.DegreeManagement.CoreAPI.Core.Helpers;
@@ -20,6 +22,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.DanhMuc
         private ILogger<TruongController> _logger;
         private readonly ShareResource _localizer;
         private readonly IFileService _fileService;
+        private SysUserCL _sysUserCL;
 
 
         public TruongController(ICacheService cacheService, IConfiguration configuration, ShareResource shareResource, ILogger<TruongController> logger, IFileService fileService) : base(cacheService, configuration)
@@ -27,7 +30,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.DanhMuc
             _truongCl = new TruongCL(cacheService, configuration);
             _logger = logger;
             _localizer = shareResource;
-            _fileService = fileService;
+            _fileService = fileService; 
+            _sysUserCL = new SysUserCL(cacheService);
+
         }
 
         /// <summary>
@@ -155,10 +160,17 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.DanhMuc
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetSearch")]
-        public IActionResult GetSearch([FromQuery] SearchParamModel model)
+        public IActionResult GetSearch(string nguoiThucHien ,[FromQuery] SearchParamModel model)
         {
+            var user = _sysUserCL.GetByUsername(nguoiThucHien);
+            string idDonVi = "";
+            if (!string.IsNullOrEmpty(user.TruongID) && CheckString.CheckBsonId(user.TruongID))
+            {
+                idDonVi = _truongCl.GetById(user.TruongID).Id;
+            }
+
             int total;
-            var data = _truongCl.GetSearch(out total, model);
+            var data = _truongCl.GetSearch(out total, model, idDonVi);
             var outputData = new
             {
                 Truongs = data,

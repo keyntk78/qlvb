@@ -254,7 +254,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc
         /// </summary>
         /// <param name="modelSearch"></param>
         /// <returns></returns>
-        public List<TruongViewModel> GetSearch(out int total, SearchParamModel modelSearch)
+        public List<TruongViewModel> GetSearch(out int total, SearchParamModel modelSearch, string idDonVi)
         {
             var HDTs = _mongoDatabase.GetCollection<HeDaoTaoModel>(_collectionNamHeDaoTao).Find(h => true && h.Xoa == false).ToList();
             var HTDTs = _mongoDatabase.GetCollection<HinhThucDaoTaoModel>(_collectionNamHinhThucDaoTao).Find(ht => true && ht.Xoa == false).ToList();
@@ -299,7 +299,14 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc
                               return tr;
                           }
                       ).ToList();
+
+            if (!string.IsNullOrEmpty(idDonVi))
+            {
+              clt = clt.Where(x =>x.Xoa == false && (x.Id == idDonVi || x.IdCha == idDonVi)).ToList();
+            }
+
             total = clt.Count();
+
 
             // order & OrderDir
             switch (modelSearch.Order.ToLower())
@@ -317,7 +324,13 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc
                     clt = modelSearch.OrderDir.ToUpper() == "ASC" ? clt.OrderBy(x => x.Ten).ToList() : clt.OrderByDescending(x => x.Ten).ToList();
                     break;
             }
-            clt = clt.Skip(modelSearch.PageSize * modelSearch.StartIndex).Take(modelSearch.PageSize).ToList();
+
+            if(modelSearch.PageSize != -1)
+            {
+                clt = clt.Skip(modelSearch.PageSize * modelSearch.StartIndex).Take(modelSearch.PageSize).ToList();
+
+            }
+
             return clt;
         }
 
@@ -381,6 +394,14 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc
             var truongVM = truongCollection.Find(x => x.Xoa == false  && x.LaPhong == true && donVi.IdCha == x.Id)
                                   .FirstOrDefault();
             return truongVM;
+        }
+
+        public TruongViewModel? GetDonViQuanLySo()
+        {
+            var truongCollection = _mongoDatabase.GetCollection<TruongViewModel>(_collectionNameTruong);
+            var donVi = truongCollection.Find(x=> x.Xoa == false && x.DonViQuanLy == 1 && x.LaPhong == true).FirstOrDefault();
+            if (donVi == null) return null;
+            return donVi;
         }
 
 
@@ -574,8 +595,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc
             else
             {
                 if (model.LoaiHanhDong == SoVaoSoEnum.SoVaoSoGoc) cauHinh.DinhDangSoThuTuSoGoc += model.DinhDangSoThuTuSoGoc;
-                if (model.LoaiHanhDong == SoVaoSoEnum.SoVaoSoGoc) cauHinh.SoDonYeuCau += model.SoDonYeuCau;
-                if (model.LoaiHanhDong == SoVaoSoEnum.SoVaoSoGoc) cauHinh.DinhDangSoThuTuCapLai += model.DinhDangSoThuTuCapLai;
+                if (model.LoaiHanhDong == SoVaoSoEnum.SoVaoSoBanSao) cauHinh.SoDonYeuCau += model.SoDonYeuCau;
+                if (model.LoaiHanhDong == SoVaoSoEnum.SoVaoSoCapLai) cauHinh.DinhDangSoThuTuCapLai += model.DinhDangSoThuTuCapLai;
             }
 
             // tìm trường cần cập nhật

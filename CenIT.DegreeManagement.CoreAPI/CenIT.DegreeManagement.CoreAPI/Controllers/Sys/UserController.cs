@@ -1,4 +1,6 @@
-﻿using CenIT.DegreeManagement.CoreAPI.Caching.Sys;
+﻿using CenIT.DegreeManagement.CoreAPI.Bussiness.Sys;
+using CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc;
+using CenIT.DegreeManagement.CoreAPI.Caching.Sys;
 using CenIT.DegreeManagement.CoreAPI.Core.Attributes;
 using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Enums;
@@ -7,6 +9,7 @@ using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Core.Provider;
 using CenIT.DegreeManagement.CoreAPI.Core.Utils;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.Sys;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.Sys;
 using CenIT.DegreeManagement.CoreAPI.Models.Sys.UserDTO;
 using CenIT.DegreeManagement.CoreAPI.Processor;
 using CenIT.DegreeManagement.CoreAPI.Processor.Mail;
@@ -29,6 +32,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.Sys
         private readonly IFileService _fileService;
         private ISendMailService _sendMailService;
         private readonly BackgroundJobManager _backgroundJobManager;
+        private TruongCL _truongCl;
 
         private readonly string _nameController = "User";
 
@@ -40,7 +44,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.Sys
             _fileService = fileService;
             _sendMailService = sendMailService; 
             _backgroundJobManager = backgroundJobManager;
-
+            _truongCl = new TruongCL(cacheService, configuration);
 
         }
 
@@ -52,10 +56,20 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.Sys
         /// <returns></returns>
         [HttpGet]
         [Route("GetAllByParams")]
-        public IActionResult View([FromQuery]SearchParamModel model)
+        public IActionResult View(string nguoiThucHien, [FromQuery]SearchParamModel model)
         {
-            var data = _cacheLayer.GetAll(model);
-          
+            var user = _cacheLayer.GetByUsername(nguoiThucHien);
+            string idTruongs = "";
+            if (!string.IsNullOrEmpty(user.TruongID) && CheckString.CheckBsonId(user.TruongID))
+            {
+                var searchParach = new SearchParamModel() { PageSize = -1 };
+                int total = 0;
+                var donVis = _truongCl.GetSearch(out total, searchParach, user.TruongID).Select(x => x.Id).ToList();
+                idTruongs = string.Join(",", donVis);
+            }
+
+            var data = _cacheLayer.GetSearch(model, idTruongs);
+
             return ResponseHelper.Ok(data);
         }
 
@@ -172,18 +186,6 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.Sys
         [HttpDelete]
         [Route("Delete")]
         public IActionResult Delete(int id)
-        {
-            var response = _cacheLayer.Delete(id);
-            if (response == (int)UserEnum.Fail)
-            {
-                return ResponseHelper.NotFound(_localizer.GetDeleteErrorMessage(NameControllerEnum.User.ToStringValue()));
-            }
-            return ResponseHelper.Success(_localizer.GetDeleteSuccessMessage(NameControllerEnum.User.ToStringValue()));
-
-        }
-
-        [HttpGet]
-        public IActionResult Test(int id)
         {
             var response = _cacheLayer.Delete(id);
             if (response == (int)UserEnum.Fail)

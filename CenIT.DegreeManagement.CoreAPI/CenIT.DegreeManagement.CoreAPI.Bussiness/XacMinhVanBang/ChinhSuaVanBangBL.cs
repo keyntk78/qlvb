@@ -1,4 +1,5 @@
-﻿using CenIT.DegreeManagement.CoreAPI.Core.Enums;
+﻿using CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Core.Enums;
 using CenIT.DegreeManagement.CoreAPI.Core.Enums.TraCuu;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Core.Provider;
@@ -39,16 +40,35 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
             {
                 //var conllectionHocSinh = _mongoDatabase.GetCollection<HocSinhViewModel>(_collectionHocSinhName);
                 var conllectionPhoGoc = _mongoDatabase.GetCollection<PhoiGocModel>(_collectionNamePhoiGoc);
+                var conllectionPhuLuc = _mongoDatabase.GetCollection<PhuLucSoGocModel>(_collectionPhuLucSoGocName);
+
 
                 var phoiGocDangSuDung = conllectionPhoGoc.Find(t => t.Xoa == false && t.TinhTrang == TinhTrangPhoiEnum.DangSuDung && t.MaHeDaoTao == donVi.MaHeDaoTao).FirstOrDefault();
 
                 var hocSinh = GetHocSinhById(model.IdHocSinh);
+                var phuLucMoiNhat = conllectionPhuLuc
+                               .Find(x => x.IdHocSinh == model.IdHocSinh)
+                               .ToList()
+                               .OrderByDescending(x => x.NgayTao)
+                               .FirstOrDefault();
+
+                if(phuLucMoiNhat != null)
+                {
+                    ModelProvider.MapProperties(phuLucMoiNhat, hocSinh);
+                    hocSinh.HoiDong = phuLucMoiNhat.HoiDongThi;
+                    hocSinh.DanhMucTotNghiep.NgayCapBang = phuLucMoiNhat.NgayCap;
+                    hocSinh.DanhMucTotNghiep.IdNamThi = phuLucMoiNhat.IdNamThi;
+                    hocSinh.MaHinhThucDaotao = phuLucMoiNhat.MaHTDT;
+                    hocSinh.Id = phuLucMoiNhat.IdHocSinh;
+                    hocSinh.SoHieuVanBang = string.IsNullOrEmpty(phuLucMoiNhat.SoHieuVanBangCapLai) ? phuLucMoiNhat.SoHieuVanBangCu : phuLucMoiNhat.SoHieuVanBangCapLai;
+                    hocSinh.SoVaoSoCapBang = string.IsNullOrEmpty(phuLucMoiNhat.SoVaoSoCapBangCapLai) ? phuLucMoiNhat.SoVaoSoCapBangCu : phuLucMoiNhat.SoVaoSoCapBangCapLai;
+                }
 
                 if (hocSinh == null) return new HocSinhResult() { MaLoi = (int)LichSuChinhSuaVanBangEnum.NotExist };
                 int countEdit = 0;
                 string noiDungChinhSua = NoiDungChinhSua(model, hocSinh, out countEdit);
 
-                if(countEdit == 0) return new HocSinhResult() { MaLoi = (int)LichSuChinhSuaVanBangEnum.NotExist };
+                if(countEdit == 0) return new HocSinhResult() { MaLoi = (int)LichSuChinhSuaVanBangEnum.NotEdit };
 
                 var chinhSuaVanBang = new PhuLucSoGocModel();
                 ModelProvider.MapProperties(model, chinhSuaVanBang);
@@ -464,7 +484,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.XacMinhVanBang
                 edits += 1;
             }
 
-            if (oldModel.HoiDong != newModel.HoiDongThi)
+            if (oldModel.HoiDong != newModel.HoiDongThi && !string.IsNullOrEmpty(oldModel.HoiDong))
             {
 
                 noiDungChinhSua += $"Hội đồng thi:\n + {oldModel.HoiDong} => {newModel.HoiDongThi}\n";

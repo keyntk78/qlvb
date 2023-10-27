@@ -70,6 +70,25 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.Sys
         }
 
         /// <summary>
+        /// Lấy danh sách user SearchParamModel
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public List<UserModel> GetSearch(SearchParamModel model, string idTruongs)
+        {
+            var hashKey = EHashMd5.FromObject(model) + idTruongs;
+            var rawKey = string.Concat("GetAllUser-", hashKey);
+            //Get item from cache
+            List<UserModel> users = _cache.GetCacheKey<List<UserModel>>(rawKey, _masterCacheKey)!;
+            if (users == null)
+            {
+                users = _userBL.GetSearch(model, idTruongs);
+                _cache.AddCacheItem(rawKey, users);
+            }
+            return users;
+        }
+
+        /// <summary>
         /// Lấy user theo id
         /// </summary>
         /// <param name="model"></param>

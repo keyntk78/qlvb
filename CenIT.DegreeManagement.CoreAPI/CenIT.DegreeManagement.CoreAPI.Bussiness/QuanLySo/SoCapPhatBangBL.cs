@@ -39,7 +39,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
         }
 
 
-        public string GetHocSinhTheoSoCapPhatBang(TruongViewModel truong, DanhMucTotNghiepViewModel dmtn , SearchParamModel paramModel)
+        public string GetHocSinhTheoSoCapPhatBang(TruongViewModel truong, DanhMucTotNghiepViewModel dmtn , SoCapPhatBangSearchParam paramModel)
         {
             int skip = ((paramModel.StartIndex - 1) * paramModel.PageSize) + paramModel.PageSize;
             string pagination = paramModel.PageSize < 0 ? $@"hocSinhs: '$hocSinhs'" : $@"hocSinhs: {{ $slice: ['$hocSinhs', {skip}, {paramModel.PageSize}] }},";
@@ -90,7 +90,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                                      {{
                                                 $match: {{
                                                     IdDanhMucTotNghiep: '{dmtn.Id}',
-                                                    IdTruong: '{truong.Id}'
+                                                    IdTruong: '{truong.Id}',
+                                                    IdKhoaThi: '{paramModel.IdKhoaThi}'
                                                 }}
                                             }},
                                         {{
@@ -103,6 +104,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                                                 NoiSinh: '$NoiSinh',
                                                 GioiTinh: '$GioiTinh',
                                                 DanToc: '$DanToc',
+                                                HoiDong: '$HoiDong',
                                                 XepLoai: '$XepLoai',
                                                 SoHieuVanBang: '$SoHieuVanBang',
                                                 SoVaoSoCapBang: '$SoVaoSoCapBang'

@@ -57,16 +57,16 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo
         }
 
 
-        public string GetSerachDonYeuCapBanSao(DonYeuCauCapBanSaoParamModel modelSearch)
+        public string GetSerachDonYeuCapBanSao(DonYeuCauCapBanSaoParamModel modelSearch, TruongModel donVi)
         {
-            string objectKey = EHashMd5.FromObject(modelSearch);
+            string objectKey = EHashMd5.FromObject(modelSearch) + EHashMd5.FromObject(donVi);
             string rawKey = string.Concat("GetSerachDonYeuCapBanSao-", objectKey);
 
             //// See if the item is in the cache
             string result = _cache.GetCacheKey<string>(rawKey, _masterCacheKey)!;
             if (result != null) return result;
             //// Item not found in cache - retrieve it and insert it into the cache
-            result = _BL.GetSerachDonYeuCapBanSao(modelSearch);
+            result = _BL.GetSerachDonYeuCapBanSao(modelSearch, donVi);
             _cache.AddCacheItem(rawKey, result, _masterCacheKey);
             return result;
         }

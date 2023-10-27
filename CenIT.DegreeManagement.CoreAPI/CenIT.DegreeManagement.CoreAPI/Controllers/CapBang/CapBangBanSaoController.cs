@@ -123,10 +123,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CapBang
 
                 var updateSoVaoSo = new UpdateCauHinhSoVaoSoInputModel()
                 {
-                    DinhDangSoThuTuSoGoc = 1,
+                    SoDonYeuCau = 1,
                     Nam = response.Nam,
                     LoaiHanhDong = SoVaoSoEnum.SoVaoSoBanSao,
-                    IdTruong = model.IdTruong
+                    IdTruong = user.TruongID
                 };
 
                 _truongCL.UpdateCauHinhSoVaoSo(updateSoVaoSo);
@@ -175,7 +175,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CapBang
         [AllowAnonymous]
         public IActionResult GetSerachDonYeuCapBanSao([FromQuery] DonYeuCauCapBanSaoParamModel modelSearch)
         {
-            var data = _donYeuCauCapBanSaoCL.GetSerachDonYeuCapBanSao(modelSearch);
+            var user = _sysUserCL.GetByUsername(modelSearch.NguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+            var data = _donYeuCauCapBanSaoCL.GetSerachDonYeuCapBanSao(modelSearch, donVi);
 
             return Ok(ResponseHelper.ResultJson(data));
         }
@@ -307,9 +309,13 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CapBang
         }
 
         [HttpGet("GetHocSinhDaDuaVaoSoBanSao")]
-        public IActionResult GetHocSinhDaDuaVaoSoBanSao(string idHocSinh, string idDonYeuCau)
+        [AllowAnonymous]
+        public IActionResult GetHocSinhDaDuaVaoSoBanSao(string idHocSinh, string idDonYeuCau, string nguoiThucHien)
         {
-            var data = _hocSinhCL.GetHocSinhDaDuaVaoSoBanSao(idHocSinh, idDonYeuCau);
+            var user = _sysUserCL.GetByUsername(nguoiThucHien);
+            var donVi = _truongCL.GetById(user.TruongID);
+            var data = _hocSinhCL.GetHocSinhDaDuaVaoSoBanSao(idHocSinh, idDonYeuCau, donVi);
+
             return data != null ? ResponseHelper.Ok(data)
                 : ResponseHelper.NotFound(_localizer.GetNotExistMessage(_nameDonYeuCau));
         }

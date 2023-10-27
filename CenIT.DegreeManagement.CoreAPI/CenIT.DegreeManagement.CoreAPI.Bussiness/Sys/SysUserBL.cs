@@ -18,6 +18,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.Sys
 
         #region Name function or procedure
         private string _user_getall = "fn_sys_user_getall";
+        private string _user_getall_by_truongs = "fn_sys_user_getall_by_truongs";
         private string _user_save = "p_sys_user_save";
         private string _user_getid = "fn_sys_user_getbyid";
         private string _user_delete = "p_sys_user_delete";
@@ -54,6 +55,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.Sys
         private string is_update_profile = "@is_update_profile";
         private string p_old_password = "@p_old_password";
         private string p_new_password = "@p_new_password";
+        private string p_id_truongs = "@_id_truongs";
+
         #endregion
 
         private string p_created_by = "@p_created_by";
@@ -82,6 +85,28 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.Sys
                  };
 
             var returnValue = new ConnectionProcessor(_connectionString).ExcuteStoreProcedureReturnQuery(_user_getall, parameters);
+
+            var list = ModelProvider.CreateListFromTable<UserModel>(returnValue);
+
+            return list;
+
+        }
+
+        public List<UserModel> GetSearch(SearchParamModel model, string idTruongs)
+        {
+
+            DbParameter[] parameters = new DbParameter[]
+                 {
+                    new NpgsqlParameter(EnumExtensions.ToStringValue(EnumParam.search), model.Search),
+                    new NpgsqlParameter(EnumExtensions.ToStringValue(EnumParam.order), model.Order),
+                    new NpgsqlParameter(EnumExtensions.ToStringValue(EnumParam.order_dir), model.OrderDir),
+                    new NpgsqlParameter(EnumExtensions.ToStringValue(EnumParam.page_index), model.StartIndex),
+                    new NpgsqlParameter(EnumExtensions.ToStringValue(EnumParam.page_size), model.PageSize),
+                    new NpgsqlParameter(p_id_truongs, string.IsNullOrEmpty(idTruongs) ? DBNull.Value : idTruongs),
+
+                 };
+
+            var returnValue = new ConnectionProcessor(_connectionString).ExcuteStoreProcedureReturnQuery(_user_getall_by_truongs, parameters);
 
             var list = ModelProvider.CreateListFromTable<UserModel>(returnValue);
 

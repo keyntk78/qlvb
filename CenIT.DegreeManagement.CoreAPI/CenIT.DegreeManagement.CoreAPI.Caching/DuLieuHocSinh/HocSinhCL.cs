@@ -4,7 +4,9 @@ using CenIT.DegreeManagement.CoreAPI.Core.Enums;
 using CenIT.DegreeManagement.CoreAPI.Core.Utils;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.ThongKe;
 using Microsoft.Extensions.Configuration;
 
@@ -540,14 +542,14 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh
         #endregion
 
         #region Cấp bản sao
-        public HocSinhInBangModel GetHocSinhDaDuaVaoSoBanSao(string idHocSinh, string idDonYeuCau)
+        public HocSinhInBangModel GetHocSinhDaDuaVaoSoBanSao(string idHocSinh ,string idDonYeuCau, TruongModel donVi)
         {
-            string objectKey = EHashMd5.FromObject(idHocSinh);
+            string objectKey = EHashMd5.FromObject(idDonYeuCau + idHocSinh);
             string rawKey = string.Concat("GetHocSinhDaDuaVaoSoBanSao", objectKey);
 
             var hocSinh = _cache.GetCacheKey<HocSinhInBangModel>(rawKey, _masterCacheKey)!;
             if (hocSinh != null) return hocSinh;
-            hocSinh = _BL.GetHocSinhDaDuaVaoSoBanSao(idHocSinh, idDonYeuCau);
+            hocSinh = _BL.GetHocSinhDaDuaVaoSoBanSao(idHocSinh, idDonYeuCau, donVi);
             _cache.AddCacheItem(rawKey, hocSinh, _masterCacheKey);
             return hocSinh;
         }

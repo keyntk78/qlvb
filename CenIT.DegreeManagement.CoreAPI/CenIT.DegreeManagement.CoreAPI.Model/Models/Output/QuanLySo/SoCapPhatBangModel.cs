@@ -24,4 +24,11 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc
         public TruongViewModel Truong { get; set; } = new TruongViewModel();
         public List<HocSinhModel> HocSinhs { get; set; } = new List<HocSinhModel>();
     }
+
+    public class SoCapPhatBangSearchParam : SearchParamModel
+    {
+        public string? IdDanhMucTotNghiep { get; set; }
+        public string? IdKhoaThi { get; set; }
+        public string? IdTruong { get; set; }
+    }
 }

@@ -106,6 +106,18 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc
             return truong;
         }
 
+        public TruongViewModel? GetDonViQuanLySo()
+        {
+            var rawKey = string.Concat("Truong-GetPhong-");
+            var truong = _cache.GetCacheKey<TruongViewModel>(rawKey, _masterCacheKey)!;
+            if (truong == null)
+            {
+                truong = _BL.GetDonViQuanLySo();
+                _cache.AddCacheItem(rawKey, truong, _masterCacheKey);
+            }
+            return truong;
+        }
+
         /// <summary>
         /// Lấy tất cả trương
         /// </summary>
@@ -196,9 +208,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc
         /// </summary>
         /// <param name="modelSearch"></param>
         /// <returns></returns>
-        public List<TruongViewModel> GetSearch(out int total, SearchParamModel modelSearch)
+        public List<TruongViewModel> GetSearch(out int total, SearchParamModel modelSearch, string idDonVi)
         {
-            string objectKey = EHashMd5.FromObject(modelSearch);
+            string objectKey = EHashMd5.FromObject(modelSearch) + idDonVi;
             string rawKey = string.Concat("Truongs-GetSearch-", objectKey);
             string rawKeyTotal = string.Concat(rawKey, "-Total");
 
@@ -209,7 +221,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc
             List<TruongViewModel> truongs = _cache.GetCacheKey<List<TruongViewModel>>(rawKey, _masterCacheKey)!;
             if (truongs != null) return truongs;
             // Item not found in cache - retrieve it and insert it into the cache
-            truongs = _BL.GetSearch(out total, modelSearch);
+            truongs = _BL.GetSearch(out total, modelSearch, idDonVi);
             _cache.AddCacheItem(rawKey, truongs, _masterCacheKey);
             _cache.AddCacheItem(rawKeyTotal, total, _masterCacheKey);
             return truongs;

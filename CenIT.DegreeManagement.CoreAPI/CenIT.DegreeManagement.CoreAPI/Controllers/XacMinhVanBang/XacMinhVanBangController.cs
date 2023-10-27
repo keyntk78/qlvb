@@ -37,11 +37,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
         private MonThiCL _monThiCL;
         private HocSinhTmpCl _hocSinhTmpCl;
         private SysUserCL _sysUserCL;
-
-
         private readonly IMapper _mapper;
-
-
         private ILogger<XacMinhVanBangController> _logger;
         private readonly IFileService _fileService;
 
@@ -93,6 +89,9 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
             return hocSinh != null ? ResponseHelper.Ok(hocSinh)
                 : ResponseHelper.NotFound(_localizer.GetNotExistMessage(NameControllerEnum.HocSinh.ToStringValue()), cccd);
         }
+
+
+        #region Xác minh văn bằng
 
         /// <summary>
         /// Lấy thông tin học sinh theo cccd
@@ -195,7 +194,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
               : ResponseHelper.NotFound(_localizer.GetAddErrorMessage("Lần xác mình không tồn tại"));
         }
 
-
+        #endregion
 
         #region Import
 

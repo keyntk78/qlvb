@@ -79,6 +79,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.XacMinhVanBang
             var data = await _cacheChinhSuaVanBang.Create(model, donVi);
             if (data.MaLoi == (int)LichSuChinhSuaVanBangEnum.Fail)
                 return ResponseHelper.BadRequest("Chỉnh sửa văn bằng thất bại");
+            if (data.MaLoi == (int)LichSuChinhSuaVanBangEnum.NotEdit)
+                return ResponseHelper.BadRequest("Không có thông tin nào chỉnh sửa");
             if (data.MaLoi == (int)LichSuChinhSuaVanBangEnum.NotExist)
                 return ResponseHelper.BadRequest("Học sinh không tồn tại");
             if (data.MaLoi == (int)LichSuChinhSuaVanBangEnum.SoHieuExist)

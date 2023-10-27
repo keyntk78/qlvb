@@ -43,9 +43,6 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.CapBang
         private SysMessageConfigCL _sysMessageConfigCL;
         private TruongCL _truongCL;
 
-
-
-
         public CapBangBanChinhController(ICacheService cacheService, IConfiguration configuration, BackgroundJobManager backgroundJobManager, FirebaseNotificationUtils firebaseNotificationUtils, ShareResource shareResource, ILogger<CapBangBanChinhController> logger, IMapper mapper) : base(cacheService, configuration)
         {
             _cacheLayer = new HocSinhCL(cacheService, configuration);

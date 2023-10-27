@@ -7,7 +7,6 @@ using CenIT.DegreeManagement.CoreAPI.Core.Utils;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Processor.UploadFile;
 using CenIT.DegreeManagement.CoreAPI.Resources;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +14,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.DanhMuc
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class MonThiController : BaseAppController
     {
         private MonThiCL _cacheLayer;

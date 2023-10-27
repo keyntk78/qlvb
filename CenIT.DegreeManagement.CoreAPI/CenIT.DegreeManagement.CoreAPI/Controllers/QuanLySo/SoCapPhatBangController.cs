@@ -5,6 +5,7 @@ using CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo;
 using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Helpers;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc;
 using CenIT.DegreeManagement.CoreAPI.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -45,17 +46,17 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.QuanLySo
         /// <returns></returns>
         [HttpGet("GetHocSinhTheoSoCapPhatBang")]
         [AllowAnonymous]
-        public IActionResult GetHocSinhTheoSoCapPhatBang(string idTruong, string idDanhMucTotNghiep, [FromQuery] SearchParamModel paramModel)
+        public IActionResult GetHocSinhTheoSoCapPhatBang([FromQuery]SoCapPhatBangSearchParam modelSearch)
         {
-            var truong = _truongCL.GetById(idTruong);
-            var dmtn = _danhMucTotNghiepCL.GetById(idDanhMucTotNghiep);
+            var truong = _truongCL.GetById(modelSearch.IdTruong);
+            var dmtn = _danhMucTotNghiepCL.GetById(modelSearch.IdDanhMucTotNghiep);
             string soCapPhatBang = "";
             if (truong == null || dmtn == null)
             {
                 return Ok(ResponseHelper.ResultJson(soCapPhatBang));
             }
 
-            soCapPhatBang = _cacheLayer.GetHocSinhTheoSoCapPhatBang(truong, dmtn, paramModel);
+            soCapPhatBang = _cacheLayer.GetHocSinhTheoSoCapPhatBang(truong, dmtn, modelSearch);
 
             return Ok(ResponseHelper.ResultJson(soCapPhatBang));
         }

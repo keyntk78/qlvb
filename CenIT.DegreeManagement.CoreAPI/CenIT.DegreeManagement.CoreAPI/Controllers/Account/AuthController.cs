@@ -83,7 +83,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.Account
 
                 // Lấy đơn vị trường
                 TruongModel truong = new TruongModel();
-                if (!string.IsNullOrEmpty(userLogin.TruongID))
+                if (!string.IsNullOrEmpty(userLogin.TruongID) && CheckString.CheckBsonId(userLogin.TruongID))
                 {
                     truong = _truongCL.GetById(userLogin.TruongID);
                 }

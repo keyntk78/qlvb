@@ -37,6 +37,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc
 
     }
 
+
+
     public class ThongTinNguoiYeuCauModel
     {
         public string HoTenNguoiYeuCau { get; set; } = null!;
@@ -59,7 +61,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc
         public string? Ma { get; set; }
         public string? HoTen { get; set; }
         public string? CCCD { get; set; }
-        public string? NguoiThucHien { get; set; }
+        public string NguoiThucHien { get; set; }
 
     }
 

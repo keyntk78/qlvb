@@ -115,7 +115,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
             }
         }
 
-        public string GetSerachDonYeuCapBanSao(DonYeuCauCapBanSaoParamModel modelSearch)
+        public string GetSerachDonYeuCapBanSao(DonYeuCauCapBanSaoParamModel modelSearch, TruongModel donVi)
         {
             string order = MongoPipeline.GenerateSortPipeline(modelSearch.Order, modelSearch.OrderDir, "HoTen");
             string pagination = MongoPipeline.GeneratePaginationPipeline(modelSearch.PageSize, modelSearch.StartIndex, "$donYeuCaus");
@@ -123,6 +123,14 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
             string matchMa = string.IsNullOrEmpty(modelSearch.Ma) ? "" : $@"'Ma': '{modelSearch.Ma}',";
             string matchHoTen = string.IsNullOrEmpty(modelSearch.HoTen) ? "" : $@"'HoTen': '{modelSearch.HoTen}',";
             string matchCCCD = string.IsNullOrEmpty(modelSearch.CCCD) ? "" : $@"'CCCD': '{modelSearch.CCCD}',";
+
+            var truongs = _mongoDatabase.GetCollection<TruongModel>(_collectionNameTruong)
+                         .Find(x => x.Xoa == false && x.IdCha == donVi.Id)
+                         .ToList()
+                         .Select(x => x.Id)
+                         .ToArray();
+            var truongIdsString = string.Join(",", truongs.Select(x => $"'{x}'"));
+
             var cmdRes = $@"
                         {{
                             'aggregate': 'DonYeuCauCapBanSao', 
@@ -166,7 +174,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                                       SoLuongBanSao: '$SoLuongBanSao',
                                       SoDienThoaiNguoiYeuCau: '$ThongTinNguoiYeuCau.SoDienThoaiNguoiYeuCau',
                                       TrangThai: '$TrangThai',
-                                      PhuongThucNhan: '$PhuongThucNhan'
+                                      PhuongThucNhan: '$PhuongThucNhan',
+                                      IdTruong: '$HocSinh.IdTruong'
                                     }},
                                   }},
                                   {{
@@ -182,6 +191,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                                             {matchHoTen}
                                             {matchMa}
                                             {matchCCCD}
+                                            'IdTruong' : {{$in : [{truongIdsString}]  }}
                                     }},
                                   }},
                                   {{
@@ -339,6 +349,7 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
             {
                 donYeuCauVM = donYeuCauVM.Where(x => x.HocSinh.CCCD == modelSearch.CCCD).ToList();
             }
+            donYeuCauVM = donYeuCauVM.Where(x => x.Truong.IdCha == donVi.Id).ToList();
 
             total = donYeuCauVM.Count;
 
@@ -723,10 +734,10 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
                                          )).FirstOrDefault();
 
             int stt = 0;
-            var nam = truong.CauHinh.Nam;
+            var nam = donViQuanLy.CauHinh.Nam;
             if (donViQuanLy.CauHinh.Nam == DateTime.Now.Year.ToString())
             {
-                stt = truong.CauHinh.SoDonYeuCau;
+                stt = donViQuanLy.CauHinh.SoDonYeuCau;
             }
             else
             {
