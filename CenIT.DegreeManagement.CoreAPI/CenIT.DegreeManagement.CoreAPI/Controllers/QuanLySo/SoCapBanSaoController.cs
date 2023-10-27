@@ -2,6 +2,7 @@
 using CenIT.DegreeManagement.CoreAPI.Bussiness.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Bussiness.Phoi;
+using CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo;
 using CenIT.DegreeManagement.CoreAPI.Caching.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Caching.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Caching.Phoi;
@@ -9,6 +10,7 @@ using CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo;
 using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Helpers;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc;
 using CenIT.DegreeManagement.CoreAPI.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -61,6 +63,30 @@ namespace CenIT.DegreeManagement.CoreAPI.Controllers.QuanLySo
             soBanSao = _cacheLayer.GetHocSinhTheoCapBanSao(truong, dmtn, paramModel);
 
             return Ok(ResponseHelper.ResultJson(soBanSao));
+        }
+
+
+        [HttpGet("GetHocSinhCapBanSao")]
+        [AllowAnonymous]
+        public IActionResult GetHocSinhCapBanSao([FromQuery] SoCapBanSaoSearchParamModel model)
+        {
+            int total;
+            //var user = _sysUserCL.GetByUsername(model.NguoiThucHien);
+            //var donVi = _truongCL.GetById(user.TruongID);
+            var truong = _truongCL.GetById(model.IdTruong);
+            var cauHinhDonViQuanLy = _truongCL.GetById(truong.IdCha).CauHinh;
+            var dmtn = _danhMucTotNghiepCL.GetById(model.IdDanhMucTotNghiep);
+            var data = _cacheLayer.GetHocSinhCapBanSao(out total, model);
+            var outputData = new
+            {
+                DonViQuanLy = cauHinhDonViQuanLy,
+                Truong = truong,
+                DanhMucTotNghiep = dmtn,
+                DonYeuCaus = data,
+                totalRow = total,
+                searchParam = model
+            };
+            return ResponseHelper.Ok(outputData);
         }
     }
 }

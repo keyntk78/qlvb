@@ -2,6 +2,7 @@
 using CenIT.DegreeManagement.CoreAPI.Core.Caching;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Core.Utils;
+using CenIT.DegreeManagement.CoreAPI.Model.Models.Input.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DanhMuc;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DuLieuHocSinh;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc;
@@ -37,6 +38,26 @@ namespace CenIT.DegreeManagement.CoreAPI.Caching.QuanLySo
                 _cache.AddCacheItem(rawKey, soBanSaoVM, _masterCacheKey);
             }
             return soBanSaoVM;
+        }
+
+        public List<HocSinhCapBanSaoViewModel> GetHocSinhCapBanSao(out int total, SoCapBanSaoSearchParamModel paramModel)
+        {
+            string objectKey = EHashMd5.FromObject(paramModel);
+            string rawKey = string.Concat("SoCapBanSao-GetHocSinhCapBanSao-", objectKey);
+            string rawKeyTotal = string.Concat(rawKey, "-Total");
+
+            total = 0;
+            int? cacheTotal = _cache.GetCacheKey<int>(rawKeyTotal);
+            total = cacheTotal ?? 0;
+
+            // See if the item is in the cache
+            List<HocSinhCapBanSaoViewModel> hocSinhs = _cache.GetCacheKey<List<HocSinhCapBanSaoViewModel>>(rawKey, _masterCacheKey)!;
+            if (hocSinhs != null) return hocSinhs;
+            // Item not found in cache - retrieve it and insert it into the cache
+            hocSinhs = _BL.GetHocSinhCapBanSao(out total, paramModel);
+            _cache.AddCacheItem(rawKey, hocSinhs);
+            _cache.AddCacheItem(rawKeyTotal, total);
+            return hocSinhs;
         }
     }
 }

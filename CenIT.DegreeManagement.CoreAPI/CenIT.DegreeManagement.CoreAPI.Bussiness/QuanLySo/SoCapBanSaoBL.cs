@@ -1,4 +1,5 @@
-﻿using CenIT.DegreeManagement.CoreAPI.Core.Enums;
+﻿using CenIT.DegreeManagement.CoreAPI.Bussiness.DuLieuHocSinh;
+using CenIT.DegreeManagement.CoreAPI.Core.Enums;
 using CenIT.DegreeManagement.CoreAPI.Core.Models;
 using CenIT.DegreeManagement.CoreAPI.Core.Provider;
 using CenIT.DegreeManagement.CoreAPI.Model.Models.Output.DanhMuc;
@@ -145,6 +146,49 @@ namespace CenIT.DegreeManagement.CoreAPI.Bussiness.QuanLySo
             string finalJson = $"{{\"Truong\": {truongJson}, \"DanhMucTotNghiep\": {dmtnJson} ,\"SoCapBanSao\": {soCapBanSao}}}";
 
             return finalJson;
+        }
+
+        public List<HocSinhCapBanSaoViewModel> GetHocSinhCapBanSao(out int total, SoCapBanSaoSearchParamModel paramModel)
+        {
+            var collectionDonYeuCau = _mongoDatabase.GetCollection<HocSinhCapBanSaoViewModel>(_collectionDonYeuCauCapBanSaoName);
+            var collectionHocSinh = _mongoDatabase.GetCollection<HocSinhViewModel>(_collectionHocSinhName);
+
+            var donYeuCaus = collectionDonYeuCau.Find(x => x.IdTruong == paramModel.IdTruong && (int)x.TrangThai >= (int)TrangThaiDonYeuCauEnum.DaDuyet).ToList();
+
+            donYeuCaus = donYeuCaus
+                            .Join(
+                                collectionHocSinh.AsQueryable(),
+                              d => d.IdHocSinh,
+                              hs => hs.Id,
+                              (d, hs) =>
+                              {
+                                  d.HocSinh = hs;
+                                  return d;
+                              }
+                          )
+                          .Where(x=>x.HocSinh.IdKhoaThi == paramModel.IdKhoaThi && x.HocSinh.IdDanhMucTotNghiep == paramModel.IdDanhMucTotNghiep).ToList();
+
+            total = donYeuCaus.Count;
+
+            switch (paramModel.Order)
+            {
+                case "0":
+                    donYeuCaus = paramModel.OrderDir.ToUpper() == "ASC"
+                        ? donYeuCaus.OrderBy(x => x.HocSinh.HoTen.Split(' ').LastOrDefault()).ToList()
+                        : donYeuCaus.OrderByDescending(x => x.HocSinh.HoTen.Split(' ').LastOrDefault()).ToList();
+                    break;
+                case "1":
+                    donYeuCaus = paramModel.OrderDir.ToUpper() == "ASC"
+                        ? donYeuCaus.OrderBy(x => x.HocSinh.HoTen.Split(' ').LastOrDefault()).ToList()
+                        : donYeuCaus.OrderByDescending(x => x.HocSinh.HoTen.Split(' ').LastOrDefault()).ToList();
+                    break;
+            }
+            if (paramModel.PageSize > 0)
+            {
+                donYeuCaus = donYeuCaus.Skip(paramModel.PageSize * paramModel.StartIndex).Take(paramModel.PageSize).ToList();
+            }
+            return donYeuCaus;
+
         }
     }
 }

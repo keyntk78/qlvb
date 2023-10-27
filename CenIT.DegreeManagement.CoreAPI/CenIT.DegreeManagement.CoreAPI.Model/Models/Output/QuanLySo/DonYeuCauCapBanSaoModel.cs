@@ -94,4 +94,8 @@ namespace CenIT.DegreeManagement.CoreAPI.Model.Models.Output.SoGoc
         public int PhuongThucNhan { get; set; } = 0;
     }
 
+    public class HocSinhCapBanSaoViewModel : DonYeuCauCapBanSaoModel
+    {
+        public HocSinhModel HocSinh { get; set; } = new HocSinhModel();
+    }
 }
